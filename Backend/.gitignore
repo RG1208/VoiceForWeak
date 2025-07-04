@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / compiled files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.egg-info/
+.Python
+build/
+dist/
+
+# Virtual environment
+venv/
+env/
+.env/
+
+# Editor-specific files
+.vscode/ # VS Code settings
+.idea/ # PyCharm/IntelliJ settings
+*.sublime-project
+*.sublime-workspace
+
+# Logs and temporary files
+*.log
+tmp/
+*.sqlite3 # If using SQLite for development, keep out of version control
+instance/ # Flask instance folder for configuration and database files
+
+# Uploaded files (if applicable)
+uploads/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Flask-specific
+migrations/ # If using Flask-Migrate, for generated migration scripts
