@@ -8,8 +8,6 @@ const Header: React.FC = () => {
 
   const navigation = [
     { name: 'Home', path: '/' },
-    { name: 'Voice Assistant', path: '/voice-assistant' },
-    { name: 'Scheme Recommender', path: '/scheme-recommender' },
     { name: 'Contact', path: '/contact' },
     { name: 'Login', path: '/login' },
   ];

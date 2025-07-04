@@ -8,7 +8,7 @@ const VoiceAssistant: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<string | null>(null);
   const [recordingTime, setRecordingTime] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<number | null>(null);
 
   // Simulate voice recording
   const startRecording = () => {
@@ -42,10 +42,10 @@ const VoiceAssistant: React.FC = () => {
   // Simulate ML analysis
   const analyzeRecording = async () => {
     setIsAnalyzing(true);
-    
+
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 3000));
-    
+
     // Mock analysis response
     const mockAnalysis = `Based on your voice input, I understand you're facing a human rights concern. Here's what I recommend:
 
@@ -89,11 +89,10 @@ Would you like me to connect you with specific resources in your area, or do you
             <div className="relative inline-block">
               <button
                 onClick={isRecording ? stopRecording : startRecording}
-                className={`w-32 h-32 rounded-full flex items-center justify-center transition-all duration-300 ${
-                  isRecording
-                    ? 'bg-red-500 hover:bg-red-600 animate-pulse'
-                    : 'bg-blue-500 hover:bg-blue-600 hover:scale-105'
-                } text-white shadow-lg`}
+                className={`w-32 h-32 rounded-full flex items-center justify-center transition-all duration-300 ${isRecording
+                  ? 'bg-red-500 hover:bg-red-600 animate-pulse'
+                  : 'bg-blue-500 hover:bg-blue-600 hover:scale-105'
+                  } text-white shadow-lg`}
                 disabled={isAnalyzing}
               >
                 {isRecording ? (
@@ -102,7 +101,7 @@ Would you like me to connect you with specific resources in your area, or do you
                   <Mic className="h-12 w-12" />
                 )}
               </button>
-              
+
               {isRecording && (
                 <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
                   <div className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
@@ -164,7 +163,7 @@ Would you like me to connect you with specific resources in your area, or do you
                   <span>{isAnalyzing ? 'Analyzing...' : 'Get AI Analysis'}</span>
                 </button>
               </div>
-              
+
               <div className="text-center text-sm text-gray-600">
                 Recording length: {formatTime(recordingTime)}
               </div>

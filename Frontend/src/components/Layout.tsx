@@ -1,21 +1,28 @@
-import React from 'react';
-import Header from './Header';
-import Footer from './Footer';
+import { Outlet, useLocation } from "react-router-dom";
+import ProtectedHeader from "./protectedHeader";
+import PublicHeader from "./Header";
+import Footer from "./Footer";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
+export default function Layout() {
+  const location = useLocation();
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const protectedPaths = ["/dashboard", "/voice-assistant", "/scheme-recommender"];
+  const isProtected = protectedPaths.some((path) =>
+    location.pathname.startsWith(path)
+  );
+
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header />
+    <div className="flex flex-col min-h-screen">
+      {/* Header */}
+      {isProtected ? <ProtectedHeader /> : <PublicHeader />}
+
+      {/* Page Content */}
       <main className="flex-grow">
-        {children}
+        <Outlet />
       </main>
+
+      {/* Footer */}
       <Footer />
     </div>
   );
-};
-
-export default Layout;
+}

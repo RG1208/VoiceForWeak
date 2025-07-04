@@ -66,10 +66,10 @@ const SchemeRecommender: React.FC = () => {
 
   const analyzeAndRecommend = async () => {
     setIsAnalyzing(true);
-    
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 3000));
-    
+
     // Mock recommendations based on form data
     const mockRecommendations: SchemeRecommendation[] = [
       {
@@ -116,7 +116,7 @@ const SchemeRecommender: React.FC = () => {
         return (
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-gray-900 mb-4">Personal Information</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -229,7 +229,7 @@ const SchemeRecommender: React.FC = () => {
         return (
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-gray-900 mb-4">Economic Information</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -319,7 +319,7 @@ const SchemeRecommender: React.FC = () => {
         return (
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-gray-900 mb-4">Additional Information</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Disability Status</label>
@@ -375,7 +375,7 @@ const SchemeRecommender: React.FC = () => {
                 <span className="text-sm font-medium text-gray-600">{Math.round((currentStep / totalSteps) * 100)}%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
-                <div 
+                <div
                   className="bg-teal-600 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${(currentStep / totalSteps) * 100}%` }}
                 ></div>
@@ -451,9 +451,9 @@ const SchemeRecommender: React.FC = () => {
                   </div>
                   <Search className="h-6 w-6 text-gray-400" />
                 </div>
-                
+
                 <p className="text-gray-600 mb-4">{scheme.description}</p>
-                
+
                 <div className="mb-4">
                   <h4 className="font-semibold text-gray-900 mb-2">Eligibility Criteria:</h4>
                   <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
@@ -462,12 +462,12 @@ const SchemeRecommender: React.FC = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="mb-4">
                   <h4 className="font-semibold text-gray-900 mb-2">Benefits:</h4>
                   <p className="text-sm text-gray-600">{scheme.benefits}</p>
                 </div>
-                
+
                 <a
                   href={scheme.applicationLink}
                   target="_blank"

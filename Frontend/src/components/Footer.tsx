@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-blue-400" />
-                <span className="text-gray-400">+1 (555) 123-4567</span>
+                <span className="text-gray-400">+91 XXXXXXXXXX</span>
               </li>
               <li className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4 text-blue-400" />
@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            © 2024 Voice for Weak. All rights reserved. Built with accessibility and compassion.
+            ©  Voice for Weak. All rights reserved. Built with accessibility and compassion.
           </p>
         </div>
       </div>
