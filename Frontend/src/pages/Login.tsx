@@ -9,14 +9,15 @@ export default function Login() {
 
     const navigate = useNavigate();
 
-    function handleChange(e) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function handleChange(event: { target: { name: any; value: any; }; }) {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value,
+            [event.target.name]: event.target.value,
         });
     }
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e: { preventDefault: () => void; }) {
         e.preventDefault();
         if (!formData.email || !formData.password) {
             alert("Please fill in all fields");
@@ -36,22 +37,12 @@ export default function Login() {
             if (res.ok) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("user_id", data.user_id);
-                localStorage.setItem("role", data.role); // Store role
 
-                // Redirect based on role
-                if (data.role === "admin") {
-                    navigate('/admin');
-                } else if (data.role === "student") {
-                    navigate('/student');
-                } else if (data.role === "teacher") {
-                    navigate('/teacher');
-                } else {
-                    alert("Unknown role");
-                }
+                navigate("/dashboard")
             }
 
         } catch (err) {
-            alert("Network error");
+            console.error(err);
         }
     }
 
