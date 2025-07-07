@@ -1,0 +1,561 @@
+IPC Section,Name,Description,Punishment,Bailable/Non-Bailable,Cognizable/Non-Cognizable,Category
+1,Title and extent of operation of the Code,Specifies the name and territorial applicability of the IPC.,Not Applicable,Not Applicable,Not Applicable,General Provisions
+2,Punishment of offences committed within India,States that anyone who commits an offence in India shall be punished under the IPC.,As per the specific offence,Depends on the offence,Depends on the offence,General Provisions
+3,"Punishment of offences committed beyond, but which by law may be tried within, India","Provides that even if an act is committed outside India, if Indian law allows it to be tried in India, IPC will apply.",As per the specific offence,Depends on the offence,Depends on the offence,General Provisions
+4,Extension of Code to extra-territorial offences,"IPC applies to Indian citizens outside India, offences on Indian registered ships and aircraft, and cybercrimes committed outside but impacting India.",As per the specific offence,Depends on the offence,Depends on the offence,General Provisions
+5,Certain laws not to be affected by this Act,States that IPC does not affect special/local laws unless otherwise stated.,Not Applicable,Not Applicable,Not Applicable,General Provisions
+6,Definitions in the Code to be understood subject to exceptions,Words defined apply subject to exceptions mentioned,Not Applicable,Not Applicable,Not Applicable,General Explanation
+7,Sense of expression once explained,An expression explained once will hold same meaning throughout,Not Applicable,Not Applicable,Not Applicable,General Explanation
+8,Gender,Masculine includes feminine,Not Applicable,Not Applicable,Not Applicable,General Explanation
+9,Number,Singular includes plural and vice versa,Not Applicable,Not Applicable,Not Applicable,General Explanation
+10,"“Man”, “Woman”",Man = male human being; Woman = female human being,Not Applicable,Not Applicable,Not Applicable,Definitions
+11,“Person”,"Includes company, association or body of persons",Not Applicable,Not Applicable,Not Applicable,Definitions
+12,“Public”,Any class of public or community,Not Applicable,Not Applicable,Not Applicable,Definitions
+14,“Servant of Government”,Government employee or anyone legally authorized,Not Applicable,Not Applicable,Not Applicable,Definitions
+17,“Government”,Refers to Central or State Government,Not Applicable,Not Applicable,Not Applicable,Definitions
+18,“India”,Territory of India as per law,Not Applicable,Not Applicable,Not Applicable,Definitions
+19,“Judge”,Any person legally authorized to give judgment,Not Applicable,Not Applicable,Not Applicable,Definitions
+20,“Court of Justice”,Includes judges empowered to act judicially,Not Applicable,Not Applicable,Not Applicable,Definitions
+21,“Public servant”,"A comprehensive list including govt employees, police, etc.",Not Applicable,Not Applicable,Not Applicable,Definitions
+22,“Moveable property”,Includes corporeal property except land,Not Applicable,Not Applicable,Not Applicable,Definitions
+23,"“Wrongful gain”, “Wrongful loss”",Gain by unlawful means; loss to someone unlawfully,Not Applicable,Not Applicable,Not Applicable,Definitions
+24,“Dishonestly”,With intent to cause wrongful gain or loss,Not Applicable,Not Applicable,Not Applicable,Definitions
+25,“Fraudulently”,With intent to defraud,Not Applicable,Not Applicable,Not Applicable,Definitions
+26,“Reason to believe”,A belief held with sufficient cause,Not Applicable,Not Applicable,Not Applicable,Definitions
+27,"Property in possession of wife, clerk or servant",Presumed to belong to the master,Not Applicable,Not Applicable,Not Applicable,Explanation
+28,“Counterfeit”,Causing something to resemble another with intent to deceive,Not Applicable,Not Applicable,Not Applicable,Definitions
+29,“Document”,Any matter expressed upon any substance with intent to be used as evidence,Not Applicable,Not Applicable,Not Applicable,Definitions
+29A,“Electronic record”,"As defined in the Information Technology Act, 2000",Not Applicable,Not Applicable,Not Applicable,Definitions
+30,“Valuable security”,Document securing legal right or obligation,Not Applicable,Not Applicable,Not Applicable,Definitions
+31,“A will”,Legal declaration of testamentary intention,Not Applicable,Not Applicable,Not Applicable,Definitions
+32,Words referring to acts include illegal omissions,Omissions count as acts if legally bound to act,Not Applicable,Not Applicable,Not Applicable,Explanation
+33,"“Act”, “Omission”",Act = single or series of acts; Omission = not doing something legally bound to do,Not Applicable,Not Applicable,Not Applicable,Definitions
+34,Acts done by several persons in furtherance of common intention,Each is liable as if done by them individually,Depends on offence,Depends on offence,Depends on offence,Constructive Liability
+35,When act is criminal due to knowledge or intention,Liability based on mental element,Depends on offence,Depends on offence,Depends on offence,Constructive Liability
+36,Effect caused partly by act and partly by omission,Still criminal,Depends on offence,Depends on offence,Depends on offence,Constructive Liability
+37,Co-operation by doing one of several acts,"When combined acts constitute offence, each liable",Depends on offence,Depends on offence,Depends on offence,Constructive Liability
+38,Persons concerned may be guilty of different offences,"Even if involved in one act, different individuals can be guilty of different crimes",Depends on offence,Depends on offence,Depends on offence,Constructive Liability
+39,“Voluntarily”,Act done knowingly and intentionally,Not Applicable,Not Applicable,Not Applicable,Definitions
+40,“Offence”,An act punishable by law,Not Applicable,Not Applicable,Not Applicable,Definitions
+41,“Special law”,Law applicable to particular subject,Not Applicable,Not Applicable,Not Applicable,Definitions
+42,“Local law”,Law applicable to particular part of India,Not Applicable,Not Applicable,Not Applicable,Definitions
+43,"“Illegal”, “Legally bound to do”",Anything contrary to law; legally bound = required by law,Not Applicable,Not Applicable,Not Applicable,Definitions
+44,“Injury”,"Harm to body, mind, reputation or property",Not Applicable,Not Applicable,Not Applicable,Definitions
+45,“Life”,Human life,Not Applicable,Not Applicable,Not Applicable,Definitions
+46,“Death”,Death of a human being unless contrary appears,Not Applicable,Not Applicable,Not Applicable,Definitions
+47,“Animal”,Any living creature other than human,Not Applicable,Not Applicable,Not Applicable,Definitions
+48,“Vessel”,Anything made for conveyance by water,Not Applicable,Not Applicable,Not Applicable,Definitions
+49,"“Year”, “Month”",As per the Gregorian calendar,Not Applicable,Not Applicable,Not Applicable,Definitions
+50,“Section”,Section of the Code,Not Applicable,Not Applicable,Not Applicable,Definitions
+51,“Oath”,Includes affirmation/substitution by law,Not Applicable,Not Applicable,Not Applicable,Definitions
+52,“Good faith”,Done with due care and attention,Not Applicable,Not Applicable,Not Applicable,Definitions
+52A,“Harbour”,"Giving shelter, food or aid to a criminal",Not Applicable,Not Applicable,Not Applicable,Definitions
+53,Punishments,"Lists types of punishment: death, life imprisonment, imprisonment (rigorous/simple), forfeiture of property, and fine",Not Applicable,Not Applicable,Not Applicable,Punishment Classification
+53A,Construction of reference to transportation,Clarifies that “transportation” now means imprisonment for life or a term,Not Applicable,Not Applicable,Not Applicable,Interpretation
+54,Commutation of sentence of death,Appropriate government may commute death sentence,Death → Life imprisonment or lesser,Not Applicable,Not Applicable,Sentence Modification
+55,Commutation of life imprisonment,Government may commute life imprisonment to a lesser term (not exceeding 14 years),Life → Up to 14 years,Not Applicable,Not Applicable,Sentence Modification
+55A,"""Appropriate Government""",Defines which government can commute sentence,Not Applicable,Not Applicable,Not Applicable,Definitions
+57,Fractions of terms of punishment,Life imprisonment = 20 years for calculation purposes unless specified otherwise,Not Applicable,Not Applicable,Not Applicable,Interpretation
+60,Sentence may be partly rigorous or simple,Allows court to split imprisonment as partly rigorous and partly simple,Not Applicable,Not Applicable,Not Applicable,Sentencing Flexibility
+63,Amount of fine,Court may impose any amount of fine unless limits are specified,Not Applicable,Not Applicable,Not Applicable,Sentencing
+64,Imprisonment for non-payment of fine,Imprisonment may be imposed if fine not paid,As per terms of court,Depends on primary offence,Depends on primary offence,Default Punishment
+65,Limit to imprisonment when both fine and imprisonment are awarded,Imprisonment for default of fine should not exceed 1/4th of max imprisonment,Not Applicable,Not Applicable,Not Applicable,Sentencing Rules
+66,Description of imprisonment for non-payment of fine,Imprisonment type (rigorous/simple) depends on type of primary offence,Not Applicable,Not Applicable,Not Applicable,Sentencing Rules
+67,Imprisonment for default when offence punishable with fine only,May be simple imprisonment up to certain durations,Up to 2 months to 6 months based on fine amount,Not Applicable,Not Applicable,Default Punishment
+68,Termination of imprisonment on payment,Imprisonment ends once fine is paid,Not Applicable,Not Applicable,Not Applicable,Sentencing Relief
+69,Termination on proportional payment,Partial payment leads to proportional reduction in sentence,Not Applicable,Not Applicable,Not Applicable,Sentencing Relief
+70,Fine recoverable for 6 years or during imprisonment,Fine enforceable within 6 years or while convict is in prison,Not Applicable,Not Applicable,Not Applicable,Recovery Provisions
+71,Limit of punishment for compound offences,Offender shall not be punished for more than the maximum of the gravest offence,Not Applicable,Not Applicable,Not Applicable,Sentencing Limit
+72,Doubt in judgmentnot specifiedguilty of one of several offences,Minimum punishment among doubtful offences applied,Not Applicable,Not Applicable,Not Applicable,Sentencing Limit
+73,Solitary confinement,Allowed in case of rigorous imprisonment not exceeding 3 months,Max 3 months in total,Not Applicable,Not Applicable,Sentencing Type
+74,Limit of solitary confinement,"Max 14 days at a time, intervals of at least 14 days, not >3 months in total",Not Applicable,Not Applicable,Not Applicable,Sentencing Rules
+75,Enhanced punishment for repeat offenders,"If convicted again under Chapters XII or XVII, may face enhanced punishment",Enhanced punishment,Depends on underlying offence,Depends on underlying offence,Habitual Offenders
+76,Act done by person bound or by mistake of fact believing himself bound by law,No offence if act done under legal compulsion or mistake of fact believing so,Not Applicable,Not Applicable,Not Applicable,General Exception
+77,Act of Judge acting judicially,No offence if Judge acts judicially in good faith,Not Applicable,Not Applicable,Not Applicable,General Exception
+78,Act done under Court judgment/order,No offence for acts done under Court orders in good faith,Not Applicable,Not Applicable,Not Applicable,General Exception
+79,Act justified or by mistake of fact believing so,No offence if act done justified by law or believed to be so by mistake of fact,Not Applicable,Not Applicable,Not Applicable,General Exception
+80,Accident in doing lawful act,No offence if harm caused by accident while doing lawful act with proper care,Not Applicable,Not Applicable,Not Applicable,General Exception
+81,Act likely to cause harm to prevent greater harm,No offence if act done without criminal intent to prevent other harm,Not Applicable,Not Applicable,Not Applicable,General Exception
+82,Act of child under 7 years,No offence,Not Applicable,Not Applicable,Not Applicable,General Exception
+83,Act of child 7–12 of immature understanding,No offence if child lacks sufficient maturity,Not Applicable,Not Applicable,Not Applicable,General Exception
+84,Act of unsound mind,No offence,Not Applicable,Not Applicable,Not Applicable,General Exception
+85,Act by intoxication against will,No offence if incapable of judgment due to involuntary intoxication,Not Applicable,Not Applicable,Not Applicable,General Exception
+86,Offence requiring intent by intoxicated person,Knowledge attributed; intent not presumed,Not Applicable,Not Applicable,Not Applicable,General Exception
+87,Act not intended to cause death or grievous hurt done by consent,No offence,Not Applicable,Not Applicable,Not Applicable,General Exception
+88,Act done by consent for person’s benefit,No offence if act done in good faith with consent for benefit,Not Applicable,Not Applicable,Not Applicable,General Exception
+89,Act for benefit of child or insane person by/with guardian consent,No offence (with provisos),Not Applicable,Not Applicable,Not Applicable,General Exception
+90,Consent under fear/misconception/insanity/child,Such consent invalid,Not Applicable,Not Applicable,Not Applicable,General Exception
+91,Acts independently offences,No exception where act is offence apart from harm caused,Not Applicable,Not Applicable,Not Applicable,General Exception
+92,Act for benefit without consent,No offence if done in good faith (with provisos),Not Applicable,Not Applicable,Not Applicable,General Exception
+93,Communication in good faith,No offence if communication made in good faith,Not Applicable,Not Applicable,Not Applicable,General Exception
+94,Compulsion by threats,"No offence for acts under threat, except murder/offences against State",Not Applicable,Not Applicable,Not Applicable,General Exception
+95,Slight harm,No offence if harm is trivial,Not Applicable,Not Applicable,Not Applicable,General Exception
+96,Things done in private defence,No offence,Not Applicable,Not Applicable,Not Applicable,Private Defence
+97,Right of private defence of body/property,Defines right,Not Applicable,Not Applicable,Not Applicable,Private Defence
+98,Right against act of unsound mind person etc.,Same right as against sane person,Not Applicable,Not Applicable,Not Applicable,Private Defence
+99,"No right against certain acts, limits to defence",Defines limitations,Not Applicable,Not Applicable,Not Applicable,Private Defence
+100,Private defence of body extends to causing death,Lists circumstances where death may be caused,Not Applicable,Not Applicable,Not Applicable,Private Defence
+101,Right to cause harm other than death,Defines scope where death not justified,Not Applicable,Not Applicable,Not Applicable,Private Defence
+102,Commencement/continuance of defence of body,When defence begins and continues,Not Applicable,Not Applicable,Not Applicable,Private Defence
+103,Private defence of property extends to causing death,Lists when death may be caused,Not Applicable,Not Applicable,Not Applicable,Private Defence
+104,Right to cause harm other than death in defence of property,When other harm allowed,Not Applicable,Not Applicable,Not Applicable,Private Defence
+105,Commencement/continuance of defence of property,When defence begins and continues,Not Applicable,Not Applicable,Not Applicable,Private Defence
+106,Right against deadly assault with risk to innocent,Permits risk to innocent if necessary for defence,Not Applicable,Not Applicable,Not Applicable,Private Defence
+107,Abetment of a thing,"Instigating, engaging in conspiracy, or intentionally aiding a person to commit an offence",Based on abetted offence,Depends on abetted offence,Depends on abetted offence,Abetment
+108,Abettor,Defines abettor as a person who abets offence,Not Applicable,Not Applicable,Not Applicable,Definition
+108A,Abetment in India of offences outside India,"If act would be offence in India, abettor is liable",Based on abetted offence,Depends on abetted offence,Depends on abetted offence,Abetment
+109,Punishment if act abetted is committed and no separate provision exists,Same as for abetted offence,Same as offence abetted,Depends on abetted offence,Depends on abetted offence,Abetment
+110,Abetment when abetted person acts with different intention,Abettor still liable,Same as for abetted offence,Depends on abetted offence,Depends on abetted offence,Abetment
+111,Liability when different act done than abetted,Liable if likely consequence,Punishment for act done,Depends on act done,Depends on act done,Abetment
+112,Cumulative punishment for act abetted and act done,Liable for both,Combined punishment,Depends on offences,Depends on offences,Abetment
+113,Liability for unintended consequence,Abettor liable for the effect caused,As per outcome,Depends on outcome,Depends on outcome,Abetment
+114,Abettor present when offence committed,Treated as principal offender,Same as principal offender,Depends on offence,Depends on offence,Abetment
+115,"Abetment of offence punishable with death/life imprisonment, if not committed","Up to 7 years + fine; if act causes harm, up to 14 years + fine",7 or 14 years + fine,Non-Bailable,Cognizable,Abetment
+116,"Abetment of offence punishable with imprisonment, if not committed",One-fourth of max term for offence + fine; higher if abettor is public servant,Varies,Bailable,Cognizable,Abetment
+117,Abetting offence by public or >10 persons,Up to 3 years + fine,3 years + fine,Bailable,Cognizable,Abetment
+118,Concealing design to commit offence punishable with death/life imprisonment,Up to 7 years + fine if offence committed; 3 years + fine if not,3 or 7 years + fine,Non-Bailable,Cognizable,Concealment
+119,Public servant concealing design of offence it’s his duty to prevent,"If offence committed: 7 years (if punishable with death/life), else 1/2 of offender’s term; if not committed: 1/4 + fine",Varies,Non-Bailable,Cognizable,Concealment
+120,Concealing design to commit offence punishable with imprisonment,If offence committed: 1/4 of punishment; if not: fine or up to 1/8 of punishment,Varies,Bailable,Non-Cognizable,Concealment
+120A,Definition of criminal conspiracy,When two or more persons agree to do an illegal act or a legal act by illegal means. Mere agreement is sufficient to constitute conspiracy for illegal acts.,Not Applicable (Definition only),Not Applicable,Not Applicable,Criminal Conspiracy
+120B,Punishment of criminal conspiracy,"- If the conspiracy is to commit an offence punishable with death, life imprisonment or rigorous imprisonment ≥ 2 years: same as for the offence. - In other cases: up to 6 months + fine or both.",Same as abetted offence or up to 6 months + fine,Serious: Non-Bailable; Minor: Bailable,Serious: Cognizable; Minor: Non-Cognizable,Criminal Conspiracy
+121,Waging war against the Government of India,"Waging, attempting to wage, or abetting war against India",Death or life imprisonment + fine,Non-Bailable,Cognizable,Offences Against the State
+121A,Conspiracy to commit offences punishable by Section 121,Conspiring to wage war or overawe the government by criminal force,Life imprisonment or up to 10 years + fine,Non-Bailable,Cognizable,Offences Against the State
+122,Collecting arms with intent to wage war,"Collecting men, arms, or ammunition to wage war",Life imprisonment or 10 years + fine,Non-Bailable,Cognizable,Offences Against the State
+123,Concealing design to wage war,Intent to facilitate war against India by concealment,Up to 10 years + fine,Non-Bailable,Cognizable,Offences Against the State
+124,Assaulting President or Governor to compel/restrain lawful power,Using force to influence or restrict constitutional authority,Up to 7 years + fine,Non-Bailable,Cognizable,Offences Against the State
+124A,Sedition,"Bringing or attempting to bring hatred, contempt, or disaffection toward the government by words, signs, or writing",Life imprisonment + fine or 3 years + fine or fine,Non-Bailable,Cognizable,Offences Against the State
+125,Waging war against an Asiatic power allied with India,Similar to Section 121 but against foreign ally,Life imprisonment or 7 years + fine,Non-Bailable,Cognizable,Offences Against the State
+126,Depredation on territories at peace with India,Robbery/violence in territories of friendly powers,Up to 7 years + fine + forfeiture,Non-Bailable,Cognizable,Offences Against the State
+127,Receiving property taken during such war/depredation,Knowingly receiving property captured in acts under 125 or 126,Up to 7 years + fine + forfeiture,Non-Bailable,Cognizable,Offences Against the State
+128,Public servant voluntarily allowing prisoner of war/state to escape,Intentional act by public servant,Life imprisonment or up to 10 years + fine,Non-Bailable,Cognizable,Offences Against the State
+129,Public servant negligently allowing escape,Negligence in duty leading to escape,Up to 2 years + fine,Bailable,Cognizable,Offences Against the State
+130,"Aiding escape, rescuing or harbouring prisoner of war/state",Knowingly helping escape or concealing such persons,Life imprisonment or up to 10 years + fine,Non-Bailable,Cognizable,Offences Against the State
+131,"Abetting mutiny, or attempting to seduce a soldier, sailor or airman from his duty","Inciting or trying to persuade a soldier, sailor, or airman to revolt or disobey duty","Life imprisonment or imprisonment up to 10 years, and fine",Non-Bailable,Cognizable,"Offences relating to the Army, Navy and Air Force"
+132,"Abetment of mutiny, if mutiny is committed in consequence",Abetting mutiny which actually occurs due to such abetment,"Death or life imprisonment, or imprisonment up to 10 years, and fine",Non-Bailable,Cognizable,"Offences relating to the Army, Navy and Air Force"
+133,"Abetment of assault by soldier, sailor or airman on his superior officer when in execution of his office",Aiding or instigating a soldier/sailor/airman to assault their superior officer,"Imprisonment up to 10 years, and fine",Non-Bailable,Cognizable,"Offences relating to the Army, Navy and Air Force"
+134,"Abetment of such assault, if the assault is committed",If the assault mentioned in Section 133 is actually committed,Same as Section 133: Up to 10 years and fine,Non-Bailable,Cognizable,"Offences relating to the Army, Navy and Air Force"
+135,"Abetment of desertion of soldier, sailor or airman",Helping or encouraging military personnel to desert service,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,"Offences relating to the Army, Navy and Air Force"
+136,Harbouring deserter,Knowingly sheltering a deserter from the armed forces,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,"Offences relating to the Army, Navy and Air Force"
+137,Deserter concealed on board merchant vessel through negligence of master,Ship master negligently concealing a deserter,Fine up to ₹500,Bailable,Non-Cognizable,"Offences relating to the Army, Navy and Air Force"
+138,"Abetment of act of insubordination by soldier, sailor or airman",Instigating or helping military personnel to disobey superiors,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,"Offences relating to the Army, Navy and Air Force"
+139,Persons subject to certain Acts,Clarifies IPC application to persons governed by military/naval laws,Not a penal section,Not Specified,Not Specified,"Offences relating to the Army, Navy and Air Force"
+140,"Wearing garb or carrying token used by soldier, sailor or airman",Unauthorized use of military uniforms or marks,"Imprisonment up to 3 months, or fine up to ₹500, or both",Bailable,Non-Cognizable,"Offences relating to the Army, Navy and Air Force"
+141,Unlawful assembly,Assembly of 5+ persons with a common unlawful object,Not penal; defines the term,Not Specified,Not Specified,Offences Against Public Tranquillity
+142,Being member of unlawful assembly,Joining or continuing in unlawful assembly,Not penal; defines membership,Not Specified,Not Specified,Offences Against Public Tranquillity
+143,Punishment for unlawful assembly,Being a member of unlawful assembly,"Imprisonment up to 6 months, or fine, or both",Bailable,Cognizable,Offences Against Public Tranquillity
+144,Joining unlawful assembly armed with deadly weapon,Participating with a deadly weapon,"Imprisonment up to 2 years, or fine, or both",Bailable,Cognizable,Offences Against Public Tranquillity
+145,"Joining or continuing in unlawful assembly, knowing it is ordered to disperse",Defying lawful command to disperse,"Imprisonment up to 2 years, or fine, or both",Bailable,Cognizable,Offences Against Public Tranquillity
+146,Rioting,Use of force or violence by unlawful assembly,Not penal; defines offence,Not Specified,Not Specified,Offences Against Public Tranquillity
+147,Punishment for rioting,Participation in rioting,"Imprisonment up to 2 years, or fine, or both",Bailable,Cognizable,Offences Against Public Tranquillity
+148,Rioting armed with deadly weapon,Participation in rioting with weapon,"Imprisonment up to 3 years, or fine, or both",Bailable,Cognizable,Offences Against Public Tranquillity
+149,Offence by member of unlawful assembly,Member held guilty of offence committed by assembly in pursuit of common object,Punishment as per committed offence,Depends on offence,Depends on offence,Offences Against Public Tranquillity
+150,Hiring persons for unlawful assembly,Hiring/encouraging people to join unlawful assembly,Same as for member of unlawful assembly,Bailable,Cognizable,Offences Against Public Tranquillity
+151,Knowingly joining assembly commanded to disperse,Continuing after command to disperse,"Imprisonment up to 6 months, or fine, or both",Bailable,Cognizable,Offences Against Public Tranquillity
+152,Assaulting public servant suppressing riot,Obstructing public servant during riot control,"Imprisonment up to 3 years, or fine, or both",Bailable,Cognizable,Offences Against Public Tranquillity
+153,Wantonly giving provocation to cause riot,Provoking with intent to riot,If riot committed: 1 year or fine or both; if not: 6 months or fine or both,Bailable,Non-Cognizable,Offences Against Public Tranquillity
+153A,Promoting enmity between groups,"On religion, caste, language, etc.","Up to 3 years or 5 years (if in place of worship), and fine",Non-Bailable,Cognizable,Offences Against Public Tranquillity
+153AA,Carrying arms in procession or mass training,Arms in processions/drills,"Imprisonment up to 3 years, and fine",Non-Bailable,Cognizable,Offences Against Public Tranquillity
+153B,Imputations against national integration,Speech or writing prejudicial to integration,"Up to 3 years or 5 years, and fine",Non-Bailable,Cognizable,Offences Against Public Tranquillity
+154,Owner of land where unlawful assembly held,Landowner’s liability for unlawful gathering,Same punishment as for unlawful assembly,Bailable,Cognizable,Offences Against Public Tranquillity
+155,Beneficiary of riot,If riot is committed for another’s benefit,Same punishment as rioter,Bailable,Cognizable,Offences Against Public Tranquillity
+156,Agent of beneficiary of riot,Agent responsible for facilitating riot,Same punishment as rioter,Bailable,Cognizable,Offences Against Public Tranquillity
+157,Harbouring persons hired for unlawful assembly,Providing shelter to hired rioters,"Imprisonment up to 6 months, or fine, or both",Bailable,Non-Cognizable,Offences Against Public Tranquillity
+158,Being hired to take part in unlawful assembly or riot or to go armed,Accepting hire to riot or bear arms,"Imprisonment up to 6 months, or fine, or both",Bailable,Cognizable,Offences Against Public Tranquillity
+159,Affray,Fighting in public causing disturbance,Not penal; defines affray,Not Specified,Not Specified,Offences Against Public Tranquillity
+160,Punishment for affray,Engaging in affray,"Imprisonment up to 1 month, or fine up to ₹100, or both",Bailable,Non-Cognizable,Offences Against Public Tranquillity
+166,"Public servant disobeying law, with intent to cause injury",Knowingly disobeying legal obligation to cause injury,"Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Of Offences by or Relating to Public Servants
+166A,Public servant disobeying direction under law,"Especially in investigation of offences against women (e.g., rape, etc.)","Rigorous imprisonment 6 months to 2 years, and fine",Non-Bailable,Cognizable,Of Offences by or Relating to Public Servants
+166B,Punishment for non-treatment of victim,Hospital personnel not providing free medical treatment to rape or acid attack victim,"Imprisonment up to 1 year, or fine, or both",Bailable,Cognizable,Of Offences by or Relating to Public Servants
+167,Public servant framing incorrect document with intent to cause injury,Willfully framing wrong record or writing,"Imprisonment up to 3 years, or fine, or both",Bailable,Non-Cognizable,Of Offences by or Relating to Public Servants
+168,Public servant unlawfully engaging in trade,Public servant involved in trade while in service,"Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Of Offences by or Relating to Public Servants
+169,Public servant unlawfully buying or bidding for property,Bidding/purchasing property without authority,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,Of Offences by or Relating to Public Servants
+170,Personating a public servant,Pretending to be a public servant to gain advantage,"Imprisonment up to 2 years, or fine, or both",Bailable,Cognizable,Of Offences by or Relating to Public Servants
+171,Wearing garb or carrying token used by public servant with fraudulent intent,Fraudulent imitation of appearance of public servant,"Imprisonment up to 3 months, or fine up to ₹500, or both",Bailable,Non-Cognizable,Of Offences by or Relating to Public Servants
+171A,"“Candidate”, “Electoral right” defined",Defines the terms: candidate and electoral right,Not a penal section,Not Specified,Not Specified,Offences Relating to Elections
+171B,Bribery,Giving or accepting gratification to influence election results,Not penal itself; see Section 171E for punishment,Not Specified,Not Specified,Offences Relating to Elections
+171C,Undue influence at elections,Interference with free exercise of electoral rights,Not penal itself; see Section 171F for punishment,Not Specified,Not Specified,Offences Relating to Elections
+171D,Personation at elections,Voting or attempting to vote in another's name,Not penal itself; see Section 171F for punishment,Not Specified,Not Specified,Offences Relating to Elections
+171E,Punishment for bribery,Bribery at elections,"Imprisonment up to 1 year, or fine, or both; if treating (food/drinks), then fine only",Bailable,Non-Cognizable,Offences Relating to Elections
+171F,Punishment for undue influence or personation,Committing undue influence or impersonation during elections,"Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Offences Relating to Elections
+171G,False statement in connection with an election,Publishing false statements about a candidate’s character,Fine only,Bailable,Non-Cognizable,Offences Relating to Elections
+171H,Illegal payments in connection with an election,Unauthorized election expenses without candidate’s permission,Fine up to ₹500,Bailable,Non-Cognizable,Offences Relating to Elections
+171-I,Failure to keep election accounts,Not maintaining required record of election expenses,Fine up to ₹500,Bailable,Non-Cognizable,Offences Relating to Elections
+172,Absconding to avoid service of summons,Intentionally avoiding summons or legal process,"Imprisonment up to 1 month (6 months if in criminal case), or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+173,Preventing service or publication,Obstructing lawful delivery of summons or public notice,"Imprisonment up to 1 month (6 months if in criminal case), or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+174,Non-attendance in obedience to order,Failure to attend as required by legal summons,"Imprisonment up to 1 month (6 months if in criminal case), or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+174A,Non-appearance under CrPC §82,Failure to appear as declared a proclaimed offender,"Imprisonment up to 3 years, and fine (7 years if declared offender)",Non-Bailable,Cognizable,Contempts of the Lawful Authority
+175,Omission to produce document,Refusing to produce documents legally bound to produce,"Imprisonment up to 1 month (6 months if criminal case), or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+176,Omission to give notice/info,Failure to give legally required information,"Imprisonment up to 1 month (6 months if criminal case), or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+177,Furnishing false information,Giving false information to public servant,"Imprisonment up to 6 months, or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+178,Refusing oath or affirmation,Refusing to take oath when legally required,"Imprisonment up to 6 months, or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+179,Refusing to answer questions,Refusal to answer when bound to state the truth,"Imprisonment up to 6 months, or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+180,Refusing to sign statement,Legally required signature refused,"Imprisonment up to 3 months, or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+181,False statement on oath,Making a false statement under oath to public servant,"Imprisonment up to 3 years, and fine",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+182,False information to public servant,False report to cause injury via misuse of power,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+183,Resistance to lawful property seizure,Preventing lawful seizure of property,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+184,Obstructing property sale,Hindering official auction or sale by public servant,"Imprisonment up to 1 month, or fine up to ₹200, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+185,Illegal bid or purchase at official sale,Unlawfully bidding in government-authorized sale,"Imprisonment up to 1 month, or fine up to ₹200, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+186,Obstructing public servant,Voluntarily obstructing public servant during duty,"Imprisonment up to 3 months, or fine up to ₹500, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+187,Omission to assist public servant,Failure to assist public servant when bound by law,"Imprisonment up to 1 month, or fine up to ₹200, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+188,Disobedience to order by public servant,Violating lawful order from public servant,"Simple imprisonment up to 1 month and/or ₹200 fine (6 months/₹1,000 if danger caused)",Bailable,"Cognizable (if danger), otherwise Non-Cognizable",Contempts of the Lawful Authority
+189,Threat of injury to public servant,Threatening injury to deter lawful actions,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+190,Threat to deter person from seeking public protection,Threatening someone to stop them from approaching a public servant,"Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Contempts of the Lawful Authority
+191,Giving false evidence,Making a false statement under oath,Not penal (defines offence),Not Specified,Not Specified,False Evidence & Public Justice
+192,Fabricating false evidence,Creating false documents/statements to mislead,Not penal (defines offence),Not Specified,Not Specified,False Evidence & Public Justice
+193,Punishment for false evidence,Giving or fabricating false evidence,Imprisonment up to 7 years and fine (3 years in other proceedings),Bailable,Non-Cognizable,False Evidence & Public Justice
+194,False evidence to convict capital offence,Giving evidence to convict someone of a capital offence,Life imprisonment or death if executed,Non-Bailable,Cognizable,False Evidence & Public Justice
+195,False evidence to convict life/other imprisonment,Giving evidence to convict of imprisonment for life or other term,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,False Evidence & Public Justice
+195A,Threat to give false evidence,Threatening anyone to give false evidence,Same as for false evidence,Non-Bailable,Cognizable,False Evidence & Public Justice
+196,Using false evidence,Using evidence known to be false,Same punishment as giving false evidence,Bailable,Non-Cognizable,False Evidence & Public Justice
+197,False certificate,Issuing false certificate,Same punishment as false evidence,Bailable,Non-Cognizable,False Evidence & Public Justice
+198,Using false certificate,Using known false certificate,Same as Section 197,Bailable,Non-Cognizable,False Evidence & Public Justice
+199,False statement in declaration,False declaration accepted as evidence,Same as Section 193,Bailable,Non-Cognizable,False Evidence & Public Justice
+200,Using false declaration,Using such declaration knowing it is false,Same as Section 199,Bailable,Non-Cognizable,False Evidence & Public Justice
+201,Disappearance of evidence,Causing disappearance to protect offender,"7 years (capital), 3 years (life), 1 year (other) + fine",Depends on offence,Depends on offence,False Evidence & Public Justice
+202,Not informing offence,Failure to inform offence by person legally bound,"Imprisonment up to 6 months, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+203,False information of offence,Giving false info about a committed offence,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+204,Destruction of evidence,Destroying document to prevent it from being evidence,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+205,False personation in proceeding,Pretending to be someone in a legal proceeding,"Imprisonment up to 3 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+206,Fraudulent concealment to prevent seizure,Hiding/removing property from lawful seizure,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+207,Fraudulent claim to prevent seizure,False claim to avoid lawful seizure,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+208,Fraudulently suffering decree,Allowing decree against self for unduly amount,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+209,False claim in court,Knowingly making a false claim,"Imprisonment up to 2 years, and fine",Bailable,Non-Cognizable,False Evidence & Public Justice
+210,Fraudulently obtaining decree,Getting decree for unduly sum,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+211,False charge of offence,False accusation intending to injure,Up to 2 years (if minor offence); 7 years (if serious offence),Bailable/Non-Bailable (depends),Cognizable,False Evidence & Public Justice
+212,Harbouring offender,Sheltering a person guilty of offence,"5 years (capital), 3 years (life), 1 year (others)",Bailable,Non-Cognizable,False Evidence & Public Justice
+213,Taking gift to screen offender,Accepting reward to hide offender,"7 years (capital), 3 years (others) + fine",Non-Bailable,Cognizable,False Evidence & Public Justice
+214,Offering gift to screen offender,Offering reward to conceal offence,Same as Section 213,Non-Bailable,Cognizable,False Evidence & Public Justice
+215,Gift to recover stolen property,Taking gift to help recover property instead of prosecuting,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+216,Harbouring escaped offender,Sheltering escaped criminal,"7 years (capital), 3 years (others)",Non-Bailable,Cognizable,False Evidence & Public Justice
+216A,Harbouring robbers/dacoits,Knowingly harbouring dacoits,Rigorous imprisonment up to 7 years and fine,Non-Bailable,Cognizable,False Evidence & Public Justice
+217,Public servant saving offender/property,Disobeying law to save offender or property,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+218,Framing incorrect record to save person,Public servant falsifying records,"Imprisonment up to 3 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+219,Judicial officer acting corruptly,Giving decision contrary to law,"Imprisonment up to 7 years, or fine, or both",Non-Bailable,Cognizable,False Evidence & Public Justice
+220,Committing unlawful confinement,Wrongful confinement knowing it to be illegal,"Imprisonment up to 7 years, or fine, or both",Non-Bailable,Cognizable,False Evidence & Public Justice
+221,Omission to apprehend,Failing to arrest when bound to,Up to 3 years (or 7 years if capital offence),Bailable,Cognizable,False Evidence & Public Justice
+222,Omission to apprehend sentenced person,Public servant not arresting convicted person,3 or 7 years depending on sentence,Bailable,Cognizable,False Evidence & Public Justice
+223,Negligent escape,Letting escape happen due to negligence,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+224,Resistance to arrest,Resisting one’s own lawful arrest,"Imprisonment up to 2 years, or fine, or both",Bailable,Cognizable,False Evidence & Public Justice
+225,Resisting another's arrest,Helping someone escape lawful arrest,Imprisonment up to 2 years (up to 7 if capital),Non-Bailable (capital); otherwise Bailable,Cognizable,False Evidence & Public Justice
+225A,Omission to apprehend (not otherwise provided),Failure to arrest/stop escape in unspecified case,Same as original punishment,Bailable,Cognizable,False Evidence & Public Justice
+225B,Obstruction to apprehension/rescue,Obstructing arrest or helping escape,Same as original punishment,Bailable,Cognizable,False Evidence & Public Justice
+227,Violation of remission conditions,Violating condition of sentence remission,Imprisonment for remaining sentence,Bailable,Cognizable,False Evidence & Public Justice
+228,Insult or interruption in judicial proceeding,Insulting or interrupting public servant in court,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Non-Cognizable,False Evidence & Public Justice
+228A,Disclosure of rape victim identity,Publishing name/address of rape victim,Imprisonment up to 2 years and fine,Bailable,Cognizable,False Evidence & Public Justice
+229,Personation of juror or assessor,Impersonating juror in legal process,Imprisonment up to 2 years,Bailable,Non-Cognizable,False Evidence & Public Justice
+229A,Bail absconding,Failure to appear in court when on bail,"Imprisonment up to 1 year, or fine, or both",Bailable,Cognizable,False Evidence & Public Justice
+230,“Coin” and “Indian coin” defined,Legal definitions,Not penal,Not Specified,Not Specified,Coin & Govt Stamps
+231,Counterfeiting coin,Making fake coin,Imprisonment up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+232,Counterfeiting Indian coin,Counterfeiting Indian coin,"Life imprisonment, or up to 10 years + fine",Non-Bailable,Cognizable,Coin & Govt Stamps
+233,Making/selling tools for counterfeiting coin,Making/selling instruments to counterfeit,Up to 3 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+234,Making/selling tools for Indian coin,For Indian coin,Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+235,Possession of tools/materials to counterfeit coin,Keeping tools for counterfeiting,Up to 3 years + fine (7 years if Indian coin),Bailable / Non-Bailable,Cognizable,Coin & Govt Stamps
+236,Abetting counterfeiting outside India,Aiding fake coin manufacturing abroad,Same as for counterfeiting coin,Non-Bailable,Cognizable,Coin & Govt Stamps
+237,Import/export counterfeit coin,Bringing counterfeit coins into/out of India,Up to 3 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+238,Import/export counterfeit Indian coin,"Same, but Indian coin",Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+239,Delivering counterfeit coin knowingly,Giving fake coin to others,Up to 5 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+240,Delivering counterfeit Indian coin knowingly,"Same, but Indian coin",Up to 10 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+241,Delivering coin later found counterfeit,Did not know it was fake initially,Up to 2 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+242,Possession of counterfeit coin,Knew coin was fake when received,Up to 3 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+243,Possession of counterfeit Indian coin,"Same, Indian coin",Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+244,Mint worker making coins of wrong spec,Employed in mint violating standards,Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+245,Unlawfully taking coin tool from mint,Taking coining instrument,Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+246,Altering coin composition,Changing metal/weight,Up to 3 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+247,Altering Indian coin composition,"Same, Indian coin",Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+248,Altering coin appearance,To make it pass as another coin,Up to 3 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+249,Altering Indian coin appearance,"Same, Indian coin",Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+250,Delivering altered coin,Knew it was altered,Up to 3 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+251,Delivering altered Indian coin,"Same, Indian coin",Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+252,Possession of altered coin,Knew it was altered when received,Up to 3 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+253,Possession of altered Indian coin,"Same, Indian coin",Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+254,Delivering altered coin (unaware initially),Deliverer didn't know it was altered initially,Up to 2 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+255,Counterfeiting government stamp,Forging revenue/postage stamp,Life imprisonment or 10 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+256,Possession of tools to counterfeit stamp,Tools/materials to forge stamps,Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+257,Making/selling tools for fake stamp,Tools for stamp forgery,Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+258,Selling counterfeit stamp,Selling knowingly fake stamp,Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+259,Possession of counterfeit stamp,Knowing it's forged,Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+260,Using known fake stamp,Using a counterfeit stamp knowingly,Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+261,Removing writing/stamp to cheat Govt,Altering stamp or document to cause loss to govt,Up to 3 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+262,Using previously used Govt stamp,Reusing used stamp,Up to 2 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+263,Erasing used mark on stamp,Tampering with stamp to reuse,Up to 3 years + fine,Bailable,Cognizable,Coin & Govt Stamps
+263A,Prohibition of fictitious stamps,"Using, possessing or selling fake ""non-existent"" stamps",Up to 7 years + fine,Non-Bailable,Cognizable,Coin & Govt Stamps
+264,Fraudulent use of false instrument for weighing,Using knowingly a false instrument for weighing fraudulently,"Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Offences Relating to Weights and Measures
+265,Fraudulent use of false weight or measure,Fraudulently using false weight or measure,"Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Offences Relating to Weights and Measures
+266,Being in possession of false weight or measure,Having in possession any false weight or measure for fraudulent use,"Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Offences Relating to Weights and Measures
+267,Making or selling false weight or measure,"Making, selling or disposing of any false weight or measure knowingly","Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Offences Relating to Weights and Measures
+268,Public nuisance,"Doing any act or illegal omission causing common injury, danger or annoyance to public",Not punishable directly under this section,not specified,not specified,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+269,Negligent act likely to spread infection of disease dangerous to life,Negligently doing act likely to spread infection of disease dangerous to life,"Imprisonment up to 6 months, or fine, or both",Bailable,Non-Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+270,Malignant act likely to spread infection of disease dangerous to life,Malignantly doing act likely to spread infection of disease dangerous to life,"Imprisonment up to 2 years, or fine, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+271,Disobedience to quarantine rule,Knowingly disobeying quarantine rule,"Imprisonment up to 6 months, or fine, or both",Bailable,Non-Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+272,Adulteration of food or drink intended for sale,Adulterating food or drink to make it harmful,"Imprisonment up to 6 months, and fine up to ₹1,000",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+273,Sale of noxious food or drink,Selling noxious food or drink,"Imprisonment up to 6 months, and fine up to ₹1,000",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+274,Adulteration of drugs,Adulterating drugs to make them harmful,"Imprisonment up to 6 months, and fine up to ₹1,000",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+275,Sale of adulterated drugs,Selling adulterated drugs,"Imprisonment up to 6 months, and fine up to ₹1,000",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+276,Sale of drug as a different drug or preparation,Selling drug as different drug or preparation,"Imprisonment up to 6 months, and fine up to ₹1,000",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+277,Fouling water of public spring or reservoir,Fouling public spring or reservoir,"Imprisonment up to 3 months, or fine up to ₹500, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+278,Making atmosphere noxious to health,Making atmosphere noxious to health,Fine up to ₹500,Bailable,Non-Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+279,Rash driving or riding on a public way,Driving/riding rashly on public way,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+280,Rash navigation of vessel,Navigating vessel rashly,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+281,"Exhibition of false light, mark or buoy",Exhibiting false light/mark/buoy to mislead navigation,"Imprisonment up to 7 years, or fine, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+282,Conveying person by water for hire in unsafe or overloaded vessel,Using unsafe or overloaded vessel for carrying people,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+283,Danger or obstruction in public way or line of navigation,Causing danger/obstruction in public way or navigation,Fine up to ₹200,Bailable,Non-Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+284,Negligent conduct with respect to poisonous substance,Negligent handling of poisonous substance,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+285,Negligent conduct with respect to fire or combustible matter,Negligent handling of fire/combustible matter,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+286,Negligent conduct with respect to explosive substance,Negligent handling of explosive substance,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+287,Negligent conduct with respect to machinery,Negligent handling of machinery,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+288,Negligent conduct with respect to pulling down or repairing buildings,Negligent handling during demolition or repair of buildings,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+289,Negligent conduct with respect to animal,Negligent handling of animal causing danger,"Imprisonment up to 6 months, or fine up to ₹1,000, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+290,Punishment for public nuisance in cases not otherwise provided for,Committing public nuisance not covered under other sections,Fine up to ₹200,Bailable,Non-Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+291,Continuance of nuisance after injunction to discontinue,Continuing nuisance after order to stop,"Imprisonment up to 6 months, fine, or both",Bailable,Non-Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+292,"Sale, etc., of obscene books, etc.","Sale/distribution of obscene books, etc.","Imprisonment up to 2 years, fine up to ₹2,000, or both (first conviction); up to 5 years and ₹5,000 (subsequent)",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+293,"Sale, etc., of obscene objects to young person",Sale of obscene objects to persons under 20 years,"Imprisonment up to 3 years, and fine up to ₹2,000",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+294,Obscene acts and songs,Obscene acts/songs in public,"Imprisonment up to 3 months, or fine, or both",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+294A,Keeping lottery office,Keeping lottery office,"Imprisonment up to 6 months, or fine, or both (for unauthorized lottery); up to 1 year or fine or both (for printing)",Bailable,Cognizable,"Offences Affecting the Public Health, Safety, Convenience, Decency and Morals"
+295,"Injuring or defiling place of worship, with intent to insult the religion of any class","Destroying, damaging or defiling a place of worship or sacred object to insult religion","Imprisonment up to 2 years, or fine, or both",Bailable,Cognizable,Offences Relating to Religion
+295A,"Deliberate and malicious acts, intended to outrage religious feelings of any class by insulting its religion or religious beliefs","Deliberate, malicious acts intended to outrage religious feelings by insulting religion","Imprisonment up to 3 years, or fine, or both",Non-Bailable,Cognizable,Offences Relating to Religion
+296,Disturbing religious assembly,Voluntarily causing disturbance to lawful religious assembly,"Imprisonment up to 1 year, or fine, or both",Bailable,Cognizable,Offences Relating to Religion
+297,"Trespassing on burial places, etc.","Trespassing burial places, places of worship, places for funeral rites with intent to insult religion","Imprisonment up to 1 year, or fine, or both",Bailable,Cognizable,Offences Relating to Religion
+298,"Uttering words, etc., with deliberate intent to wound the religious feelings","Uttering words, making sounds, gestures, placing objects with deliberate intent to wound religious feelings","Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Offences Relating to Religion
+299,Culpable homicide,"Causing death with intention or knowledge of causing death, but not amounting to murder","Punishment depends on severity; up to life imprisonment, or imprisonment up to 10 years, and fine",Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+300,Murder,Culpable homicide with specific aggravated intention as defined under Section 300,Death penalty or life imprisonment and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+300(1),When culpable homicide is not murder,Specifies exceptions where culpable homicide doesn't amount to murder,not specified,not specified,not specified,Offences Affecting the Human Body – Of offences affecting life
+301,Culpable homicide by causing death of person other than person whose death was intended,Death caused to unintended person during act intended to kill another,Same as for culpable homicide/murder,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+302,Punishment for murder,Punishment provision for murder,Death penalty or life imprisonment and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+303,Punishment for murder by life-convict,Life-convict committing murder (now struck down as unconstitutional by Supreme Court),Previously: Death penalty (Section unconstitutional now),not specified,not specified,Offences Affecting the Human Body – Of offences affecting life
+304,Punishment for culpable homicide not amounting to murder,Punishment for culpable homicide not amounting to murder,(i) Imprisonment for life or up to 10 years & fine (if intentional) (ii) Up to 10 years & fine (if without intent but with knowledge),Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+304A,Causing death by negligence,Causing death by rash or negligent act not amounting to culpable homicide,"Imprisonment up to 2 years, or fine, or both",Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+304B,Dowry death,Death of woman within 7 years of marriage under suspicious circumstances related to dowry demand,"Minimum 7 years, may extend to life imprisonment",Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+305,Abetment of suicide of child or insane person,"Abetment of suicide by child (below 18), insane person or intoxicated person",Death penalty or life imprisonment or imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+306,Abetment of suicide,Abetment of suicide of a person,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+307,Attempt to murder,Attempt to commit murder,Imprisonment up to 10 years and fine; life imprisonment if hurt caused,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+307(1),Attempts by life-convicts,Attempt to murder by person already undergoing life imprisonment,Life imprisonment or death penalty,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+308,Attempt to commit culpable homicide,Attempt to commit culpable homicide,Imprisonment up to 3 years and fine; up to 7 years if hurt caused,Bailable (up to 3 years); Non-Bailable (if hurt caused),Cognizable,Offences Affecting the Human Body – Of offences affecting life
+309,Attempt to commit suicide,"Attempt to commit suicide (Now largely decriminalized under Mental Healthcare Act, 2017)","Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Offences Affecting the Human Body – Of offences affecting life
+310,Thug,Habitually associated with committing robbery or child-lifting by murder,Imprisonment for life,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+311,Punishment,Punishment for being a thug,Imprisonment for life,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of offences affecting life
+312,Causing miscarriage,"Voluntarily causing miscarriage, with or without consent, unless done in good faith to save woman's life",Up to 3 years & fine (with consent); up to 7 years & fine (without consent),"Bailable (with consent), Non-Bailable (without consent)",Cognizable,Offences Affecting the Human Body – Miscarriage & Related Offences
+313,Causing miscarriage without woman's consent,Causing miscarriage without woman's consent,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Miscarriage & Related Offences
+314,Death caused by act done with intent to cause miscarriage,Act done with intent to cause miscarriage resulting in woman’s death,Up to 10 years & fine; life imprisonment if act done without woman's consent,Non-Bailable,Cognizable,Offences Affecting the Human Body – Miscarriage & Related Offences
+314(1),314(1),Aggravating factor under Section 314,Covered under Section 314 above,Non-Bailable,Cognizable,Offences Affecting the Human Body – Miscarriage & Related Offences
+315,Act done with intent to prevent child being born alive or to cause it to die after birth,Act done before birth with intent to prevent birth or cause death after birth,Up to 10 years & fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Miscarriage & Related Offences
+316,Causing death of quick unborn child by act amounting to culpable homicide,Causing death of quick unborn child by act amounting to culpable homicide,Up to 10 years & fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Miscarriage & Related Offences
+317,"Exposure and abandonment of child under twelve years, by parent or person having care of it",Abandoning or exposing child under 12 years by parent or guardian,Up to 7 years & fine,Bailable,Cognizable,Offences Affecting the Human Body – Miscarriage & Related Offences
+318,Concealment of birth by secret disposal of dead body,Secretly disposing dead body of child to conceal its birth,"Up to 2 years, or fine, or both",Bailable,Cognizable,Offences Affecting the Human Body – Miscarriage & Related Offences
+319,Hurt,"Causing bodily pain, disease or infirmity","Defined term only, no punishment",not specified,not specified,Offences Affecting the Human Body – Of Hurt
+320,Grievous hurt,"Serious injuries specified in law (e.g. emasculation, permanent loss of senses, etc.)","Defined term only, no punishment",not specified,not specified,Offences Affecting the Human Body – Of Hurt
+321,Voluntarily causing hurt,Voluntarily causing hurt as defined under Section 319,not specified,not specified,not specified,Offences Affecting the Human Body – Of Hurt
+322,Voluntarily causing grievous hurt,Voluntarily causing grievous hurt as defined under Section 320,not specified,not specified,not specified,Offences Affecting the Human Body – Of Hurt
+323,Punishment for voluntarily causing hurt,Punishment for voluntarily causing hurt,"Imprisonment up to 1 year, or fine up to ₹1,000, or both",Bailable,Non-Cognizable,Offences Affecting the Human Body – Of Hurt
+324,Voluntarily causing hurt by dangerous weapons or means,Using dangerous weapons or means to cause hurt,"Imprisonment up to 3 years, or fine, or both",Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+325,Punishment for voluntarily causing grievous hurt,Punishment for voluntarily causing grievous hurt,Imprisonment up to 7 years and fine,Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+326,Voluntarily causing grievous hurt by dangerous weapons or means,Causing grievous hurt using dangerous weapons or means,"Imprisonment up to life or 10 years, and fine",Non-Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+326A,"Voluntarily causing grievous hurt by use of acid, etc.",Causing grievous hurt by throwing acid or similar substances,"Minimum 10 years, up to life imprisonment and fine (minimum ₹10 lakh fine)",Non-Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+326B,Voluntarily throwing or attempting to throw acid,Attempting to throw acid with intent to cause harm,"Minimum 5 years, up to 7 years, and fine",Non-Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+327,"Voluntarily causing hurt to extort property, or to constrain to an illegal act",Causing hurt to extort property or force an illegal act,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+328,"Causing hurt by means of poison, etc., with intent to commit an offence",Administering poison or intoxicants with intent to commit an offence,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+329,"Voluntarily causing grievous hurt to extort property, or to constrain to an illegal act",Causing grievous hurt to extort property or force an illegal act,Imprisonment up to life or 10 years and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+330,"Voluntarily causing hurt to extort confession, or to compel restoration of property",Causing hurt to extort confession or compel restoration of property,Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+331,"Voluntarily causing grievous hurt to extort confession, or to compel restoration of property",Causing grievous hurt to extort confession or compel restoration of property,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+332,Voluntarily causing hurt to deter public servant from his duty,Causing hurt to deter a public servant from duty,"Imprisonment up to 3 years, or fine, or both",Non-Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+333,Voluntarily causing grievous hurt to deter public servant from his duty,Causing grievous hurt to deter a public servant from duty,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+334,Voluntarily causing hurt on provocation,Causing hurt on sudden provocation,"Imprisonment up to 1 month, or fine up to ₹500, or both",Bailable,Non-Cognizable,Offences Affecting the Human Body – Of Hurt
+335,Voluntarily causing grievous hurt on provocation,Causing grievous hurt on sudden provocation,"Imprisonment up to 4 years, or fine up to ₹2,000, or both",Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+336,Act endangering life or personal safety of others,Any rash/negligent act endangering human life or personal safety,"Imprisonment up to 3 months, or fine up to ₹250, or both",Bailable,Non-Cognizable,Offences Affecting the Human Body – Of Hurt
+337,Causing hurt by act endangering life or personal safety of others,Causing hurt by rash/negligent act endangering life,"Imprisonment up to 6 months, or fine up to ₹500, or both",Bailable,Non-Cognizable,Offences Affecting the Human Body – Of Hurt
+338,Causing grievous hurt by act endangering life or personal safety of others,Causing grievous hurt by rash/negligent act endangering life,"Imprisonment up to 2 years, or fine up to ₹1,000, or both",Bailable,Cognizable,Offences Affecting the Human Body – Of Hurt
+339,Wrongful restraint,Obstructing a person to prevent lawful movement,Defined only,not specified,not specified,Wrongful Restraint & Wrongful Confinement
+340,Wrongful confinement,Wrongfully restraining a person in a way that prevents them from moving beyond a certain limit,Defined only,not specified,not specified,Wrongful Restraint & Wrongful Confinement
+341,Punishment for wrongful restraint,Punishment for wrongful restraint,"Imprisonment up to 1 month, or fine up to ₹500, or both",Bailable,Non-Cognizable,Wrongful Restraint & Wrongful Confinement
+342,Punishment for wrongful confinement,Punishment for wrongful confinement,"Imprisonment up to 1 year, or fine up to ₹1,000, or both",Bailable,Cognizable,Wrongful Restraint & Wrongful Confinement
+343,Wrongful confinement for three or more days,Wrongful confinement for 3+ days,Imprisonment up to 2 years and fine,Bailable,Cognizable,Wrongful Restraint & Wrongful Confinement
+344,Wrongful confinement for ten or more days,Wrongful confinement for 10+ days,Imprisonment up to 3 years and fine,Bailable,Cognizable,Wrongful Restraint & Wrongful Confinement
+345,Wrongful confinement of person for whose liberation writ has been issued,Confining person despite writ for their release,Imprisonment up to 2 years and fine,Bailable,Cognizable,Wrongful Restraint & Wrongful Confinement
+346,Wrongful confinement in secret,Wrongful confinement in secret places,"Imprisonment up to 2 years, in addition to other punishment",Bailable,Cognizable,Wrongful Restraint & Wrongful Confinement
+347,"Wrongful confinement to extort property, or constrain to illegal act",Confining to extort property or force illegal act,Imprisonment up to 3 years and fine,Non-Bailable,Cognizable,Wrongful Restraint & Wrongful Confinement
+348,"Wrongful confinement to extort confession, or compel restoration of property",Confining to extort confession or compel property restoration,Imprisonment up to 3 years and fine,Non-Bailable,Cognizable,Wrongful Restraint & Wrongful Confinement
+349,Force,Definition of force,Defined only,not specified,not specified,Criminal Force & Assault
+350,Criminal force,"Applying force with intent to cause injury, fear or annoyance",Defined only,not specified,not specified,Criminal Force & Assault
+351,Assault,Threat or attempt to use criminal force,Defined only,not specified,not specified,Criminal Force & Assault
+352,Punishment for assault or criminal force otherwise than on grave provocation,Assault or criminal force without grave provocation,"Imprisonment up to 3 months, or fine up to ₹500, or both",Bailable,Non-Cognizable,Criminal Force & Assault
+353,Assault or criminal force to deter public servant from discharge of his duty,Assault or force to deter public servant from duty,"Imprisonment up to 2 years, or fine, or both",Non-Bailable,Cognizable,Criminal Force & Assault
+354,Assault of criminal force to woman with intent to outrage her modesty,Assault or criminal force to outrage modesty of woman,Imprisonment 1 to 5 years and fine,Non-Bailable,Cognizable,Criminal Force & Assault
+354A,Sexual harassment and punishment for sexual harassment,"Physical contact, unwelcome advances, sexual remarks, etc.","Up to 3 years, or fine, or both (varies by clause)",Bailable/Non-Bailable (depends on clause),Cognizable/Non-Cognizable (varies),Criminal Force & Assault
+354B,Assault or use of criminal force to woman with intent to disrobe,Assault or force to disrobe a woman,Imprisonment 3 to 7 years and fine,Non-Bailable,Cognizable,Criminal Force & Assault
+354C,Voyeurism,Watching or capturing images of a woman in a private act,First offence: 1 to 3 years and fine Subsequent: 3 to 7 years and fine,"Bailable (1st offence), Non-Bailable (repeat)",Cognizable,Criminal Force & Assault
+354D,Stalking,Following or contacting a woman despite clear disinterest,First offence: Up to 3 years and fine Repeat: Up to 5 years and fine,"Bailable (1st offence), Non-Bailable (repeat)",Cognizable (1st: Cognizable/Non-Cognizable varies by state),Criminal Force & Assault
+355,"Assault or criminal force with intent to dishonour person, otherwise than on grave provocation","Assault or force to dishonour someone, without grave provocation","Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,Criminal Force & Assault
+356,Assault or criminal force in attempt to commit theft of property carried by a person,Assault/force in attempting theft from a person,"Imprisonment up to 2 years, fine, or both",Bailable,Cognizable,Criminal Force & Assault
+357,Assault or criminal force in attempt wrongfully to confine a person,Assault/force in attempting wrongful confinement,"Imprisonment up to 1 year, fine up to ₹1,000, or both",Bailable,Cognizable,Criminal Force & Assault
+358,Assault or criminal force on grave provocation,Assault or force on sudden and grave provocation,"Imprisonment up to 1 month, or fine up to ₹200, or both",Bailable,Non-Cognizable,Criminal Force & Assault
+359,Kidnapping,Definition of kidnapping (from India or from lawful guardianship),Definition section only,not specified,not specified,"Kidnapping, Abduction, Slavery & Forced Labour"
+360,Kidnapping from India,Taking a person beyond India without consent or legal authority,Defined term only,not specified,not specified,"Kidnapping, Abduction, Slavery & Forced Labour"
+361,Kidnapping from lawful guardianship,Taking or enticing a minor or person of unsound mind from lawful guardian without consent,Defined term only,not specified,not specified,"Kidnapping, Abduction, Slavery & Forced Labour"
+362,Abduction,Forcibly or deceitfully taking someone from any place,Defined term only,not specified,not specified,"Kidnapping, Abduction, Slavery & Forced Labour"
+363,Punishment for kidnapping,Punishment for kidnapping under Section 360 or 361,Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+363A,Kidnapping or maiming a minor for purposes of begging,Kidnapping or maiming a minor for begging,Kidnapping: 10 years to life imprisonment & fine Maiming: life imprisonment & fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+364,Kidnapping or abducting in order to murder,Kidnapping/abducting with intent to murder,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+364A,"Kidnapping for ransom, etc.","Kidnapping/abducting for ransom, or to compel action by threats",Death penalty or life imprisonment and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+365,Kidnapping or abducting with intent secretly and wrongfully to confine person,Kidnapping/abducting to secretly & wrongfully confine,Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+366,"Kidnapping, abducting or inducing woman to compel her marriage, etc.",Kidnapping/abducting woman to compel marriage or for illicit intercourse,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+366A,Procuration of minor girl,Inducing minor girl to go with intent of illicit intercourse,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+366B,Importation of girl from foreign country,Importing girl below 21 years for illicit intercourse,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+367,"Kidnapping or abducting in order to subject person to grievous hurt, slavery, etc.","Kidnapping/abducting to subject to grievous hurt, slavery or unnatural lust",Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+368,"Wrongfully concealing or keeping in confinement, kidnapped or abducted person",Concealing/confined kidnapped/abducted person knowingly,Punishment same as for kidnapping/abduction,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+369,Kidnapping or abducting child under ten years with intent to steal from its person,Kidnapping/abducting child under 10 with intent to steal from child,Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+370,Trafficking of person,Trafficking for exploitation purposes,Rigorous imprisonment 7 years to life imprisonment and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+370A,Exploitation of a trafficked person,Exploiting a trafficked person for sexual exploitation or forced labour,5-7 years (minor); 3-5 years (adults) + fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+371,Habitual dealing in slaves,Habitual dealing in slaves,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+372,"Selling minor for purposes of prostitution, etc.","Selling minor for prostitution, illicit intercourse, etc.",Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+373,"Buying minor for purposes of prostitution, etc.","Buying minor for prostitution, illicit intercourse, etc.",Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+374,Unlawful compulsory labour,Forcing someone to work against their will,"Imprisonment up to 1 year, or fine, or both",Bailable,Cognizable,"Kidnapping, Abduction, Slavery & Forced Labour"
+375,Rape,Sexual intercourse against woman’s will or without consent under specific circumstances,Definition section only (no punishment here),not specified,not specified,Sexual Offences
+376,Punishment for rape,Punishment for rape as defined under Section 375,Minimum 10 years (extendable to life imprisonment) & fine,Non-Bailable,Cognizable,Sexual Offences
+376A,Punishment for causing death or resulting in persistent vegetative state of victim,Rape leading to death or vegetative state,Minimum 20 years (extendable to life imprisonment) or death penalty,Non-Bailable,Cognizable,Sexual Offences
+376AB,Punishment for rape on woman under twelve years of age,Rape of girl below 12 years,Minimum 20 years to life imprisonment or death & fine,Non-Bailable,Cognizable,Sexual Offences
+376B,Sexual intercourse by husband upon his wife during separation,Sexual intercourse by husband with wife during separation without her consent,Imprisonment 2 to 7 years & fine,Non-Bailable,Cognizable,Sexual Offences
+376C,Sexual intercourse by a person in authority,Sexual intercourse by person in authority abusing position,Imprisonment 5 to 10 years & fine,Non-Bailable,Cognizable,Sexual Offences
+376D,Gang rape,Gang rape of a woman,Minimum 20 years to life imprisonment & fine,Non-Bailable,Cognizable,Sexual Offences
+376DA,Punishment for gang rape on woman under sixteen years of age,Gang rape of girl under 16,Life imprisonment (remainder of natural life) & fine,Non-Bailable,Cognizable,Sexual Offences
+376DB,Punishment for gang rape on woman under twelve years of age,Gang rape of girl under 12,Life imprisonment (natural life) or death penalty & fine,Non-Bailable,Cognizable,Sexual Offences
+376E,Punishment for repeat offenders,Repeat offenders of rape or gang rape,Life imprisonment (natural life) or death penalty,Non-Bailable,Cognizable,Sexual Offences
+377,Unnatural offences,"Voluntary carnal intercourse against nature with any man, woman, or animal (Note: Partially struck down by courts; applies to bestiality now)",Life imprisonment or up to 10 years & fine (For bestiality/other cases still applicable),Non-Bailable,Cognizable,Unnatural Offences
+378,Theft,Dishonestly taking property out of possession of another without consent,Defined only,not specified,not specified,Theft
+379,Punishment for theft,Punishment for theft,"Imprisonment up to 3 years, or fine, or both",Bailable,Cognizable,Theft
+380,"Theft in dwelling house, etc.","Theft in dwelling house, place of worship, or custody",Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Theft
+381,Theft by clerk or servant of property in possession of master,Theft by clerk/servant from employer,Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Theft
+382,"Theft after preparation made for causing death, hurt or restraint","Theft involving preparation for causing death, hurt or restraint",Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Theft
+383,Extortion,Dishonestly inducing someone to deliver property under fear,Defined only,not specified,not specified,Extortion
+384,Punishment for extortion,Punishment for extortion,"Imprisonment up to 3 years, or fine, or both",Bailable,Cognizable,Extortion
+385,Putting person in fear of injury in order to commit extortion,Threatening to commit extortion,"Imprisonment up to 2 years, or fine, or both",Bailable,Cognizable,Extortion
+386,Extortion by putting a person in fear of death or grievous hurt,Extortion under fear of death or grievous hurt,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Extortion
+387,"Putting person in fear of death or grievous hurt, in order to commit extortion",Threatening for extortion under fear of death or grievous hurt,Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Extortion
+388,Extortion by threat of accusation of an offence punishable with death or life imprisonment,Extortion by threatening false criminal accusations,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Extortion
+389,"Putting person in fear of accusation of offence, in order to commit extortion",Threatening false accusation to extort,Punishment same as Section 388,Non-Bailable,Cognizable,Extortion
+390,Robbery,Theft or extortion under certain aggravated conditions,Definition only,not specified,not specified,Robbery & Dacoity
+391,Dacoity,Robbery committed by five or more persons,Definition only,not specified,not specified,Robbery & Dacoity
+392,Punishment for robbery,Punishment for robbery,Rigorous imprisonment up to 10 years and fine Up to 14 years if on highway,Non-Bailable,Cognizable,Robbery & Dacoity
+393,Attempt to commit robbery,Attempt to commit robbery,Rigorous imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Robbery & Dacoity
+394,Voluntarily causing hurt in committing robbery,Causing hurt during robbery,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Robbery & Dacoity
+395,Punishment for dacoity,Punishment for dacoity,Imprisonment for life or rigorous imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Robbery & Dacoity
+396,Dacoity with murder,Dacoity involving murder,Death penalty or life imprisonment and fine,Non-Bailable,Cognizable,Robbery & Dacoity
+397,"Robbery or dacoity, with attempt to cause death or grievous hurt",Robbery/dacoity causing or attempting grievous hurt,Imprisonment not less than 7 years,Non-Bailable,Cognizable,Robbery & Dacoity
+398,Attempt to commit robbery or dacoity when armed with deadly weapon,Armed attempt of robbery/dacoity,Imprisonment not less than 7 years,Non-Bailable,Cognizable,Robbery & Dacoity
+399,Making preparation to commit dacoity,Preparing to commit dacoity,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Robbery & Dacoity
+400,Punishment for belonging to gang of dacoits,Membership of a gang of dacoits,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Robbery & Dacoity
+401,Punishment for belonging to gang of thieves,Membership of gang of thieves,Rigorous imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Robbery & Dacoity
+402,Assembling for purpose of committing dacoity,Assembling with intent to commit dacoity,Rigorous imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Robbery & Dacoity
+403,Dishonest misappropriation of property,Dishonestly misappropriating or converting property for own use,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,Criminal Misappropriation
+404,Dishonest misappropriation of property possessed by deceased person at time of death,Misappropriating property of deceased person,Imprisonment up to 3 years and fine Up to 7 years if by legal representative,Bailable,Non-Cognizable,Criminal Misappropriation
+405,Criminal breach of trust,Dishonestly misappropriating entrusted property,Defined only,not specified,not specified,Criminal Breach of Trust
+406,Punishment for criminal breach of trust,Punishment for criminal breach of trust,"Imprisonment up to 3 years, or fine, or both",Bailable,Cognizable,Criminal Breach of Trust
+407,"Criminal breach of trust by carrier, etc.","Criminal breach of trust by carrier, warehouse keeper, etc.",Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Criminal Breach of Trust
+408,Criminal breach of trust by clerk or servant,Criminal breach of trust by clerk/servant,Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Criminal Breach of Trust
+409,"Criminal breach of trust by public servant, banker, merchant or agent",Criminal breach of trust by public servant or persons in high fiduciary capacity,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Criminal Breach of Trust
+410,Stolen property,Definition of stolen property,Defined only,not specified,not specified,Receiving Stolen Property
+411,Dishonestly receiving stolen property,Receiving stolen property dishonestly,"Imprisonment up to 3 years, or fine, or both",Bailable,Cognizable,Receiving Stolen Property
+412,Dishonestly receiving property stolen in commission of dacoity,Receiving property stolen in dacoity,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Receiving Stolen Property
+413,Habitually dealing in stolen property,Habitually receiving or dealing in stolen property,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Receiving Stolen Property
+414,Assisting in concealment of stolen property,Assisting in concealment or disposal of stolen property,"Imprisonment up to 3 years, or fine, or both",Bailable,Cognizable,Receiving Stolen Property
+415,Cheating,Dishonestly or fraudulently inducing a person to deliver property or act/omit to their detriment,Defined only,not specified,not specified,Cheating
+416,Cheating by personation,Cheating by pretending to be someone else,Defined only,not specified,not specified,Cheating
+417,Punishment for cheating,Punishment for general cheating,"Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Cheating
+418,Cheating with knowledge that wrongful loss may ensue to person whose interest offender is bound to protect,Cheating with specific knowledge of wrongful loss,"Imprisonment up to 3 years, or fine, or both",Bailable,Non-Cognizable,Cheating
+419,Punishment for cheating by personation,Cheating by pretending to be another person,"Imprisonment up to 3 years, or fine, or both",Bailable,Cognizable,Cheating
+420,Cheating and dishonestly inducing delivery of property,Cheating to dishonestly induce property delivery,Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Cheating
+421,Dishonest or fraudulent removal or concealment of property to prevent distribution among creditors,Fraudulent concealment/removal of property to defeat creditors,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,Fraudulent Deeds
+422,Dishonestly or fraudulently preventing debt being available for creditors,Dishonestly preventing debt from being available to creditors,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,Fraudulent Deeds
+423,Dishonest or fraudulent execution of deed of transfer containing false statement of consideration,Executing fraudulent deeds with false consideration,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,Fraudulent Deeds
+424,Dishonest or fraudulent removal or concealment of property,Dishonest removal/concealment of property,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,Fraudulent Deeds
+425,Mischief,Causing destruction or change of property intending wrongful loss,Definition only,not specified,not specified,Mischief
+426,Punishment for mischief,Punishment for general mischief,"Imprisonment up to 3 months, or fine, or both",Bailable,Non-Cognizable,Mischief
+427,Mischief causing damage to the amount of fifty rupees,Mischief causing ₹50+ damage,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,Mischief
+428,Mischief by killing or maiming animal worth ₹10+,Killing or maiming animals valued at ₹10+,"Imprisonment up to 2 years, or fine, or both",Bailable,Non-Cognizable,Mischief
+429,Mischief by killing or maiming cattle or animal worth ₹50+,Killing/maiming cattle or animals valued at ₹50+,"Imprisonment up to 5 years, or fine, or both",Bailable,Non-Cognizable,Mischief
+430,Mischief by injury to works of irrigation or diverting water,Injuring works of irrigation or wrongfully diverting water,"Imprisonment up to 5 years, or fine, or both",Bailable,Cognizable,Mischief
+431,"Mischief by injury to public road, bridge, river or channel",Injuring public infrastructure,"Imprisonment up to 5 years, or fine, or both",Bailable,Cognizable,Mischief
+432,Mischief by causing inundation or obstruction to drainage,Causing flood or obstructing drainage,"Imprisonment up to 5 years, or fine, or both",Bailable,Cognizable,Mischief
+433,Mischief by destroying/moving lighthouse or sea-mark,Destroying/moving lighthouse or sea-mark,"Imprisonment up to 7 years, or fine, or both",Non-Bailable,Cognizable,Mischief
+434,Mischief by destroying/moving landmark fixed by public authority,Destroying/moving official landmark,"Imprisonment up to 1 year, or fine, or both",Bailable,Non-Cognizable,Mischief
+435,Mischief by fire/explosive causing damage of ₹100+ (or ₹10 in agriculture),Mischief by fire/explosive with damage exceeding thresholds,Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Mischief
+436,"Mischief by fire/explosive to destroy house, etc.","Mischief intending to destroy dwelling, worship place, etc. via fire/explosive",Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Mischief
+437,Mischief intending to destroy/make unsafe vessel,Mischief with intent to destroy or make unsafe certain vessels,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Mischief
+438,Punishment for mischief described in Section 437 via fire/explosive,Committing Section 437 offence using fire/explosives,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Mischief
+439,Punishment for running vessel aground with theft intent,Intentionally running vessel aground to commit theft,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Mischief
+440,Mischief after preparation for causing death or hurt,Mischief committed with prior preparation to cause death/hurt,Imprisonment up to 5 years and fine,Non-Bailable,Cognizable,Mischief
+441,Criminal trespass,Entering property with intent to commit offence or annoy,Definition only,not specified,not specified,Criminal Trespass
+442,House-trespass,"Criminal trespass into house, tent, vessel used for dwelling or worship",Definition only,not specified,not specified,Criminal Trespass
+443,Lurking house-trespass,House-trespass with concealment,Definition only,not specified,not specified,Criminal Trespass
+444,Lurking house-trespass by night,Lurking house-trespass committed at night,Definition only,not specified,not specified,Criminal Trespass
+445,House-breaking,House-trespass involving breaking or unfastening parts,Definition only,not specified,not specified,Criminal Trespass
+446,House-breaking by night,House-breaking committed at night,Definition only,not specified,not specified,Criminal Trespass
+447,Punishment for criminal trespass,Punishment for general criminal trespass,"Imprisonment up to 3 months, or fine up to ₹500, or both",Bailable,Non-Cognizable,Criminal Trespass
+448,Punishment for house-trespass,Punishment for house-trespass,"Imprisonment up to 1 year, or fine up to ₹1000, or both",Bailable,Non-Cognizable,Criminal Trespass
+449,House-trespass to commit offence punishable with death,House-trespass intending to commit capital offence,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Criminal Trespass
+450,House-trespass to commit offence punishable with life imprisonment,House-trespass to commit life imprisonment offence,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Criminal Trespass
+451,House-trespass to commit offence punishable with imprisonment,House-trespass to commit imprisonable offence,Imprisonment up to 2 years and fine,Bailable,Cognizable,Criminal Trespass
+452,"House-trespass after preparation for hurt, assault, or wrongful restraint",House-trespass with preparation for violence/assault,Imprisonment up to 7 years and fine,Non-Bailable,Cognizable,Criminal Trespass
+453,Punishment for lurking house-trespass or house-breaking,Punishment for lurking house-trespass or house-breaking,Imprisonment up to 2 years and fine,Bailable,Cognizable,Criminal Trespass
+454,Lurking house-trespass or house-breaking to commit offence punishable with imprisonment,House-trespass to commit imprisonable offence,Imprisonment up to 3 years and fine,Bailable,Cognizable,Criminal Trespass
+455,"Lurking house-trespass or house-breaking after preparation for hurt, assault, or wrongful restraint",Trespass with preparation for violence or restraint,Imprisonment up to 10 years and fine,Non-Bailable,Cognizable,Criminal Trespass
+456,Punishment for lurking house-trespass or house-breaking by night,Night-time lurking house-trespass/house-breaking,Imprisonment up to 3 years and fine,Bailable,Cognizable,Criminal Trespass
+457,Lurking house-trespass or house-breaking by night to commit offence punishable with imprisonment,Night-time house-trespass to commit imprisonable offence,Imprisonment up to 5 years and fine,Non-Bailable,Cognizable,Criminal Trespass
+458,"Lurking house-trespass or house-breaking by night after preparation for hurt, assault, or wrongful restraint",Night-time trespass with preparation for violence or restraint,Imprisonment up to 14 years and fine,Non-Bailable,Cognizable,Criminal Trespass
+459,Grievous hurt caused during lurking house-trespass or house-breaking,Causing grievous hurt during house-trespass/house-breaking,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Criminal Trespass
+460,Joint liability in house-trespass/house-breaking at night with death or grievous hurt,Joint offenders liable where death/grievous hurt caused by one,Imprisonment for life or up to 10 years and fine,Non-Bailable,Cognizable,Criminal Trespass
+461,Dishonestly breaking open receptacle containing property,Breaking open locked receptacle dishonestly,"Imprisonment up to 2 years, or fine, or both",Bailable,Cognizable,Criminal Trespass
+462,Same offence by person entrusted with custody,Committing above offence by person entrusted with custody,"Imprisonment up to 3 years, or fine, or both",Bailable,Cognizable,Criminal Trespass
+463,Forgery,Making a false document with intent to cause damage or support a claim,Defined under 465,Bailable,Non-Cognizable,Offences relating to documents and property marks
+464,Making a false document,Describes what constitutes a false document or electronic record,Descriptive section (used for interpretation),not specified,not specified,Offences relating to documents and property marks
+465,Punishment for forgery,Forgery of any document not covered under specific severe forgery sections,Up to 2 years or fine or both,Bailable,Non-Cognizable,Offences relating to documents and property marks
+466,Forgery of court records or public registers,"Forging court records, public registers, certificates, etc.",Up to 7 years + fine,Non-Bailable,Cognizable,Offences relating to documents and property marks
+467,"Forgery of valuable security, will, etc.","Forging valuable securities, wills, authority to adopt, etc.",Up to 10 years or life imprisonment + fine,Non-Bailable,Cognizable,Offences relating to documents and property marks
+468,Forgery for purpose of cheating,Committing forgery specifically to cheat,Up to 7 years + fine,Non-Bailable,Cognizable,Offences relating to documents and property marks
+469,Forgery for purpose of harming reputation,Forging a document to harm someone's reputation,Up to 3 years + fine,Bailable,Cognizable,Offences relating to documents and property marks
+470,Forged document,"Defines what a ""forged document"" is",Interpretative section,not specified,not specified,Offences relating to documents and property marks
+471,Using as genuine a forged document,Using a forged document knowingly as genuine,Same as punishment for forgery under relevant section,Same as relevant section,Same as relevant section,Offences relating to documents and property marks
+472,Making/possessing counterfeit seal for forgery under 467,"For making or possessing counterfeit seal/stamp for forgery of wills, valuable securities, etc.",Up to life imprisonment or 7 years + fine,Non-Bailable,Cognizable,Offences relating to documents and property marks
+473,Making/possessing counterfeit seal for other types of forgery,Counterfeiting for general forgery (not under sec 467),Up to 7 years + fine,Non-Bailable,Cognizable,Offences relating to documents and property marks
+474,Possession of forged documents under 466 or 467,"Having forged documents like court records, public registers, valuable securities, etc.",Up to life imprisonment or 7 years + fine,Non-Bailable,Cognizable,Offences relating to documents and property marks
+475,Counterfeiting device for authenticating valuable documents (sec 467),Making/possessing device/mark to fake authentication of valuable documents,Up to life imprisonment or 7 years + fine,Non-Bailable,Cognizable,Offences relating to documents and property marks
+476,Counterfeiting device for documents other than those in sec 467,Making/possessing device to fake authentication of documents not covered in 467,Up to 7 years + fine,Non-Bailable,Cognizable,Offences relating to documents and property marks
+477,Fraudulent cancellation or destruction of valuable documents,"Destroying or hiding wills, valuable securities, etc., with intent to defraud",Up to 7 years + fine,Non-Bailable,Cognizable,Offences relating to documents and property marks
+477A,Falsification of accounts,"Willfully altering, destroying, or falsifying accounts or financial records by a clerk/servant",Up to 7 years + fine,Non-Bailable,Cognizable,Offences relating to documents and property marks
+479,Property mark,Defines what constitutes a property mark,Descriptive section,not specified,not specified,Property Mark Offence
+481,Using a false property mark,Using a false property mark to mislead,Up to 3 years or fine or both,Bailable,Non-Cognizable,Property Mark Offence
+482,Punishment for using a false property mark,Punishment provision corresponding to 481,Same as Section 481,Bailable,Non-Cognizable,Property Mark Offence
+483,Counterfeiting a property mark used by another,Making a counterfeit of someone else’s property mark,Up to 2 years + fine,Bailable,Cognizable,Property Mark Offence
+484,Counterfeiting a mark used by a public servant,Making counterfeit of a government-issued mark,Up to 3 years + fine,Bailable,Cognizable,Property Mark Offence
+485,Making or possessing instrument for counterfeiting property mark,Tools or dies used to counterfeit property marks,Up to 3 years + fine,Bailable,Cognizable,Property Mark Offence
+486,Selling goods with counterfeit property mark,Selling items with a knowingly fake property mark,Up to 3 years + fine,Bailable,Cognizable,Property Mark Offence
+487,Making a false mark on receptacle,"False mark on containers like bags, boxes, etc.",Up to 3 years + fine,Bailable,Cognizable,Property Mark Offence
+488,Using such false mark,Use of marks from Sec. 487 with intent to deceive,Up to 3 years + fine,Bailable,Cognizable,Property Mark Offence
+489,Tampering with property mark,Altering or destroying property mark to cause injury,Up to 3 years + fine,Bailable,Cognizable,Property Mark Offence
+489A,Counterfeiting currency or bank notes,Making fake currency,Life imprisonment or up to 10 years + fine,Non-Bailable,Cognizable,Currency-related Offence
+489B,"Using as genuine, forged currency notes",Circulating forged currency knowing it's fake,Life imprisonment or up to 10 years + fine,Non-Bailable,Cognizable,Currency-related Offence
+489C,Possession of forged/counterfeit currency notes,Possessing fake notes knowingly,Up to 7 years + fine,Non-Bailable,Cognizable,Currency-related Offence
+489D,Making or possessing instruments for counterfeiting,"Dies, plates, instruments used for counterfeiting",Life imprisonment or up to 10 years + fine,Non-Bailable,Cognizable,Currency-related Offence
+489E,Making or using documents resembling currency notes,"Printing/using material that looks like currency (for advertisements, etc.)",Fine up to ₹100 (or as defined by amendment),Bailable,Non-Cognizable,Currency-related Offence
+491,Breach of contract to attend and supply wants of helpless person,Failure to care for a helpless person one is legally or contractually bound to attend to,Up to 3 months or fine or both,Bailable,Non-Cognizable,Criminal Breach of Contracts of Service
+493,Cohabitation caused by deceitful belief of lawful marriage,Man deceitfully induces a woman to believe she is lawfully married to him and cohabits with her,Up to 10 years + fine,Non-Bailable,Cognizable,Offences relating to marriage
+494,Marrying again during lifetime of spouse,Bigamy – marrying again while legally married,Up to 7 years + fine,Bailable,Non-Cognizable,Offences relating to marriage
+495,Bigamy with concealment of previous marriage,Same as 494 but with concealment of prior marriage,Up to 10 years + fine,Non-Bailable,Non-Cognizable,Offences relating to marriage
+496,Fraudulent marriage ceremony,Going through a marriage ceremony fraudulently without intending to marry legally,Up to 7 years + fine,Bailable,Non-Cognizable,Offences relating to marriage
+497,Adultery (Struck down by Supreme Court in 2018),Sexual relations with a married woman without her husband's consent,[Struck down as unconstitutional],not specified,not specified,Offences relating to marriage
+498,Enticing or detaining a married woman with criminal intent,Enticing or taking away or detaining a married woman with criminal intent,Up to 2 years + fine or both,Bailable,Non-Cognizable,Offences relating to marriage
+498A,Cruelty by husband or relatives,"Husband or his relatives subjecting a woman to cruelty (mental or physical), especially for dowry",Up to 3 years + fine,Non-Bailable,Cognizable,OF CRUELTY BY HUSBAND OR RELATIVES OF HUSBAND
+499,Defamation,Makes or publishes any imputation intending to harm the reputation of a person,Defined in 500,Non-Bailable,Non-Cognizable,Defamation
+500,Punishment for defamation,"Simple imprisonment up to 2 years, or fine, or both",Up to 2 years or fine or both,Bailable,Non-Cognizable,Defamation
+501,Printing or engraving defamatory matter,Printing/engraving defamatory content knowingly,Up to 2 years or fine or both,Bailable,Non-Cognizable,Defamation
+502,Sale of printed or engraved defamatory substance,Selling/distributing defamatory printed/engraved material knowingly,Up to 2 years or fine or both,Bailable,Non-Cognizable,Defamation
+503,Criminal intimidation,"Threatening another with injury to person, reputation, or property with intent to cause alarm",Defined in 506,Bailable,Non-Cognizable,"Criminal intimidation, insult and annoyance"
+504,Intentional insult to provoke breach of peace,Intentionally insulting someone to provoke breach of public peace,Up to 2 years or fine or both,Bailable,Non-Cognizable,"Criminal intimidation, insult and annoyance"
+505,Statements conducing to public mischief,Publishing/uttering statements causing public mischief,Up to 3 years or fine or both,Non-Bailable,Cognizable (for public mischief),"Criminal intimidation, insult and annoyance"
+505(2),Sub-sec (2): Promoting enmity between groups,"Statements promoting hatred between communities, religions, castes, etc.",Up to 3 years or fine or both,Non-Bailable,Cognizable,"Criminal intimidation, insult and annoyance"
+505(3),"Sub-sec (3): Offence in places of worship, etc.",Enhanced penalty if such statements are made in religious or sensitive places,Same as above,Non-Bailable,Cognizable,"Criminal intimidation, insult and annoyance"
+506,Punishment for criminal intimidation,Simple criminal intimidation punishment,Up to 2 years or fine or both,Bailable,Non-Cognizable,"Criminal intimidation, insult and annoyance"
+506(1),If threat is to cause death or grievous hurt,Enhanced punishment for serious threats,Up to 7 years or fine or both,Non-Bailable,Cognizable,"Criminal intimidation, insult and annoyance"
+507,Intimidation by anonymous communication,"Criminal intimidation through anonymous means (letters, messages)",As per Section 506 + up to 2 years,Bailable,Non-Cognizable,"Criminal intimidation, insult and annoyance"
+508,Inducing act by threat of divine displeasure,Causing someone to act by making them believe they'll incur divine wrath,Up to 1 year or fine or both,Bailable,Non-Cognizable,"Criminal intimidation, insult and annoyance"
+509,Insulting modesty of a woman,"Using word, gesture, or act intending to insult the modesty of a woman",Up to 3 years + fine,Bailable,Cognizable,"Criminal intimidation, insult and annoyance"
+510,Misconduct in public by a drunken person,Being drunk and creating nuisance in a public place,Up to 24 hours + fine of ₹10,Bailable,Non-Cognizable,"Criminal intimidation, insult and annoyance"
+511,Attempt to commit offences,Punishment for attempting to commit an offence punishable with life imprisonment or other imprisonment,Imprisonment up to half of the intended offence or fine or both,Depends on intended offence,Depends on intended offence,Attempts to commit offences
