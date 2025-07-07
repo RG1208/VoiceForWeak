@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            ©  Voice for Weak. All rights reserved. Built with accessibility and compassion.
+            © {new Date().getFullYear()}  Voice for Weak. All rights reserved. Built with accessibility and compassion.
           </p>
         </div>
       </div>

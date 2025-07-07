@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
+
+import ProtectedLayout from './components/ProtectedLayout';
+import PublicLayout from './components/PublicLayout';
 import Home from './pages/Home';
 import VoiceAssistant from './pages/VoiceAssistant';
 import SchemeRecommender from './pages/SchemeRecommender';
@@ -13,16 +15,17 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* ✅ Single Layout for All Pages */}
-        <Route path="/" element={<Layout />}>
-          {/* Public Routes */}
+        {/* ✅ Public Layout Routes */}
+        <Route path="/" element={<PublicLayout />}>
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="contact" element={<Contact />} />
+        </Route>
 
-          {/* ✅ Protected Routes (Nested Inside PrivateRoute) */}
-          <Route element={<PrivateRoute />}>
+        {/* ✅ Protected Layout Routes */}
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<ProtectedLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="voice-assistant" element={<VoiceAssistant />} />
             <Route path="scheme-recommender" element={<SchemeRecommender />} />
