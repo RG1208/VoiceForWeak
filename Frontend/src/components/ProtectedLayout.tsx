@@ -6,7 +6,7 @@ export default function ProtectedLayout() {
   const location = useLocation();
 
   // Define routes where header should be shown
-  const showHeaderRoutes = ["/dashboard", "/scheme-recommendor"];
+  const showHeaderRoutes = ["/dashboard", "/scheme-recommender"];
   const shouldShowHeader = showHeaderRoutes.includes(location.pathname);
 
   return (
