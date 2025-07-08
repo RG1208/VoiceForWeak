@@ -1,10 +1,11 @@
 import os
+import uuid
 import pandas as pd
-import whisper # type: ignore
-import torch # type: ignore
-from sentence_transformers import SentenceTransformer, util # type: ignore
-from indictrans2 import IndicTranslator # type: ignore
-from gtts import gTTS # type: ignore
+import whisper  # type: ignore
+import torch  # type: ignore
+from sentence_transformers import SentenceTransformer, util  # type: ignore
+from indictrans2 import IndicTranslator  # type: ignore
+from gtts import gTTS  # type: ignore
 
 # Load Models Globally (For Faster Reuse)
 whisper_model = whisper.load_model("medium")
@@ -12,16 +13,15 @@ text_model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-
 translator = IndicTranslator()
 
 # Load CSV Files Once
-queries_path = os.path.join(os.path.dirname(__file__), "VoiceForWeak_Queries.csv")
-sections_path = os.path.join(os.path.dirname(__file__), "VoiceForWeak_IPC_Sections.csv")
+BASE_DIR = os.path.dirname(__file__)
+queries_path = os.path.join(BASE_DIR, "VoiceForWeak_Queries.csv")
+sections_path = os.path.join(BASE_DIR, "VoiceForWeak_IPC_Sections.csv")
 
 df_queries = pd.read_csv(queries_path)
 df_sections = pd.read_csv(sections_path)
 
 # Prepare Queries
-query_columns = ['Query1', 'Query2', 'Query3', 'Query4', 'Query5',
-                 'Query6', 'Query7', 'Query8', 'Query9', 'Query10']
-
+query_columns = [f'Query{i}' for i in range(1, 11)]
 all_queries = []
 ipc_mapping = []
 
@@ -67,16 +67,17 @@ def process_audio(audio_path, output_dir="static"):
         except Exception as e:
             translated_sections.append(f"Translation failed for section {section}: {e}")
 
-    # Step 4: Text-to-Speech
+    # Step 4: Text-to-Speech (Unique filename)
     combined_text = "\n\n".join(translated_sections)
-    tts = gTTS(text=combined_text, lang=original_lang)
-    output_path = os.path.join(output_dir, "ipc_output.mp3")
     os.makedirs(output_dir, exist_ok=True)
+    unique_filename = f"{uuid.uuid4()}.mp3"
+    output_path = os.path.join(output_dir, unique_filename)
+    tts = gTTS(text=combined_text, lang=original_lang)
     tts.save(output_path)
 
     return {
         "matched_sections": matched_sections,
         "translated_texts": translated_sections,
-        "audio_file_path": output_path
+        "audio_file_path": output_path,
+        "audio_file_name": unique_filename
     }
-
