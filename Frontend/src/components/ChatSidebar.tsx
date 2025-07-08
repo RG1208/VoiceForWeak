@@ -1,0 +1,108 @@
+import React from 'react';
+import {
+    Plus, MessageSquare, MoreHorizontal, Moon, Sun, Settings, Trash2
+} from 'lucide-react';
+import { ChatSession } from '../types';
+
+interface ChatSidebarProps {
+    sidebarOpen: boolean;
+    darkMode: boolean;
+    chatSessions: ChatSession[];
+    currentSessionId: string | null;
+    onNewChat: () => void;
+    onSelectSession: (sessionId: string) => void;
+    onDeleteSession: (sessionId: string) => void;
+    onToggleDarkMode: () => void;
+    formatTime: (date: Date) => string;
+}
+
+const ChatSidebar: React.FC<ChatSidebarProps> = ({
+    sidebarOpen,
+    darkMode,
+    chatSessions,
+    currentSessionId,
+    onNewChat,
+    onSelectSession,
+    onDeleteSession,
+    onToggleDarkMode,
+    formatTime
+}) => {
+    return (
+        <div className={`${sidebarOpen ? 'w-64' : 'w-0'} transition-all duration-300 bg-gray-900 text-white flex flex-col overflow-hidden`}>
+            {/* New Chat Button */}
+            <div className="p-4 border-b border-gray-700">
+                <button
+                    onClick={onNewChat}
+                    className="w-full flex items-center space-x-2 p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
+                >
+                    <Plus className="h-5 w-5" />
+                    <span>New Chat</span>
+                </button>
+            </div>
+
+            {/* Chat List */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-2">
+                <div className="text-xs text-gray-400 uppercase tracking-wide mb-3 px-2">
+                    Recent Chats
+                </div>
+                {chatSessions.length === 0 ? (
+                    <div className="text-center text-gray-500 py-8">
+                        <MessageSquare className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                        <p className="text-sm">No chat history yet</p>
+                    </div>
+                ) : (
+                    chatSessions.map((session) => (
+                        <div
+                            key={session.id}
+                            onClick={() => onSelectSession(session.id)}
+                            className={`group flex items-center space-x-2 p-3 rounded-lg cursor-pointer transition-colors relative ${currentSessionId === session.id
+                                    ? 'bg-gray-700 border border-gray-600'
+                                    : 'hover:bg-gray-800'
+                                }`}
+                        >
+                            <MessageSquare className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium truncate">{session.title}</p>
+                                <p className="text-xs text-gray-400">{formatTime(session.lastMessage)}</p>
+                            </div>
+
+                            {/* Delete Button */}
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        if (window.confirm('Are you sure you want to delete this chat?')) {
+                                            onDeleteSession(session.id);
+                                        }
+                                    }}
+                                    className="p-1 rounded hover:bg-gray-600 transition-colors"
+                                    title="Delete chat"
+                                >
+                                    <Trash2 className="h-3 w-3 text-gray-400 hover:text-red-400" />
+                                </button>
+                                <MoreHorizontal className="h-4 w-4 text-gray-400" />
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
+
+            {/* Bottom Controls */}
+            <div className="p-4 border-t border-gray-700 space-y-2">
+                <button
+                    onClick={onToggleDarkMode}
+                    className="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                    {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                    <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                </button>
+                <button className="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-800 transition-colors">
+                    <Settings className="h-5 w-5" />
+                    <span>Settings</span>
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default ChatSidebar;

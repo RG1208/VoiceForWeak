@@ -1,197 +1,63 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  Mic, Send, Plus, MessageSquare, Settings, User, Bot, Copy,
-  MoreHorizontal, Moon, Sun, Sidebar, X, Play, Pause, Volume2,
-  FileText, Hash, Languages, Clock, Download
+  Mic, Send, Plus, User, Bot, Copy,
+  Sidebar, X,
+  FileText, Hash, Languages, Clock,
+  LayoutDashboard,
 } from 'lucide-react';
-
-interface Message {
-  id: number;
-  sender: 'user' | 'bot';
-  type: 'text' | 'audio' | 'audio-response';
-  content: string;
-  timestamp: Date;
-  // Additional fields for audio responses
-  matchedSections?: string[];
-  translatedTexts?: string[];
-}
-
-interface ChatSession {
-  id: string;
-  title: string;
-  lastMessage: Date;
-}
-
-interface AudioPlayerProps {
-  audioUrl: string;
-  onTimeUpdate?: (currentTime: number) => void;
-}
-
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onTimeUpdate }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(1);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const handleTimeUpdate = () => {
-      setCurrentTime(audio.currentTime);
-      onTimeUpdate?.(audio.currentTime);
-    };
-
-    const handleLoadedMetadata = () => {
-      setDuration(audio.duration);
-    };
-
-    const handleEnded = () => {
-      setIsPlaying(false);
-    };
-
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-    audio.addEventListener('ended', handleEnded);
-
-    return () => {
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      audio.removeEventListener('ended', handleEnded);
-    };
-  }, [onTimeUpdate]);
-
-  const togglePlayPause = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const rect = e.currentTarget.getBoundingClientRect();
-    const percent = (e.clientX - rect.left) / rect.width;
-    const newTime = percent * duration;
-    audio.currentTime = newTime;
-    setCurrentTime(newTime);
-  };
-
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseFloat(e.target.value);
-    setVolume(newVolume);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
-    }
-  };
-
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
-
-  const downloadAudio = () => {
-    const a = document.createElement('a');
-    a.href = audioUrl;
-    a.download = 'audio.mp3';
-    a.click();
-  };
-
-  return (
-    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 p-4 rounded-lg border border-blue-200 dark:border-gray-600">
-      <audio ref={audioRef} src={audioUrl} preload="metadata" />
-
-      <div className="flex items-center space-x-4">
-        <button
-          onClick={togglePlayPause}
-          className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg"
-        >
-          {isPlaying ? (
-            <Pause className="h-5 w-5 text-white" />
-          ) : (
-            <Play className="h-5 w-5 text-white ml-0.5" />
-          )}
-        </button>
-
-        <div className="flex-1">
-          <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300 mb-1">
-            <span>{formatTime(currentTime)}</span>
-            <span>{formatTime(duration)}</span>
-          </div>
-
-          <div
-            className="h-2 bg-gray-200 dark:bg-gray-500 rounded-full cursor-pointer"
-            onClick={handleSeek}
-          >
-            <div
-              className="h-full bg-blue-600 rounded-full transition-all duration-150"
-              style={{ width: `${(currentTime / duration) * 100}%` }}
-            />
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <Volume2 className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={volume}
-            onChange={handleVolumeChange}
-            className="w-16 h-1 bg-gray-200 dark:bg-gray-500 rounded-lg appearance-none cursor-pointer"
-          />
-          <button
-            onClick={downloadAudio}
-            className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-          >
-            <Download className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+import { Message, ChatSession } from '../types';
+import { storageUtils } from '../utils/storage';
+import AudioPlayer from '../components/AudioPlayer';
+import ChatSidebar from '../components/ChatSidebar';
 
 const ChatGPTInterface: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      sender: 'bot',
-      type: 'text',
-      content: 'Hello! I\'m your AI assistant. How can I help you today?',
-      timestamp: new Date()
-    }
-  ]);
+  const [currentSession, setCurrentSession] = useState<ChatSession | null>(null);
+  const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
   const [textInput, setTextInput] = useState('');
   const [recording, setRecording] = useState(false);
   const [typing, setTyping] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('darkMode');
+    return saved ? JSON.parse(saved) : false;
+  });
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [chatSessions] = useState<ChatSession[]>([
-    { id: '1', title: 'General Conversation', lastMessage: new Date() },
-    { id: '2', title: 'JavaScript Help', lastMessage: new Date(Date.now() - 3600000) },
-    { id: '3', title: 'React Components', lastMessage: new Date(Date.now() - 7200000) },
-  ]);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // Initialize app with stored data
+  useEffect(() => {
+    const sessions = storageUtils.getAllSessions();
+    setChatSessions(sessions);
+
+    const currentSessionId = storageUtils.getCurrentSessionId();
+    if (currentSessionId) {
+      const session = storageUtils.getSession(currentSessionId);
+      if (session) {
+        setCurrentSession(session);
+      } else {
+        // If stored session doesn't exist, create new one
+        createNewChat();
+      }
+    } else {
+      // No current session, create new one
+      createNewChat();
+    }
+  }, []);
+
+  // Save dark mode preference
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+  }, [darkMode]);
+
+  // Auto-scroll to bottom when messages change
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [currentSession?.messages]);
 
+  // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -199,9 +65,62 @@ const ChatGPTInterface: React.FC = () => {
     }
   }, [textInput]);
 
+  const createNewChat = () => {
+    const newSession = storageUtils.createNewSession();
+    setCurrentSession(newSession);
+    storageUtils.saveSession(newSession);
+    storageUtils.setCurrentSessionId(newSession.id);
+
+    // Update sessions list
+    const updatedSessions = storageUtils.getAllSessions();
+    setChatSessions(updatedSessions);
+  };
+
+  const selectSession = (sessionId: string) => {
+    const session = storageUtils.getSession(sessionId);
+    if (session) {
+      setCurrentSession(session);
+      storageUtils.setCurrentSessionId(sessionId);
+    }
+  };
+
+  const deleteSession = (sessionId: string) => {
+    storageUtils.deleteSession(sessionId);
+    const updatedSessions = storageUtils.getAllSessions();
+    setChatSessions(updatedSessions);
+
+    // If we deleted the current session, create a new one
+    if (currentSession?.id === sessionId) {
+      createNewChat();
+    }
+  };
+
+  const updateCurrentSession = (updatedSession: ChatSession) => {
+    setCurrentSession(updatedSession);
+    storageUtils.saveSession(updatedSession);
+
+    // Update sessions list
+    const updatedSessions = storageUtils.getAllSessions();
+    setChatSessions(updatedSessions);
+  };
+
+  const addMessage = (message: Message) => {
+    if (!currentSession) return;
+
+    const updatedMessages = [...currentSession.messages, message];
+    const updatedSession: ChatSession = {
+      ...currentSession,
+      messages: updatedMessages,
+      lastMessage: message.timestamp,
+      title: updatedMessages.length === 2 ? storageUtils.generateSessionTitle(updatedMessages) : currentSession.title
+    };
+
+    updateCurrentSession(updatedSession);
+  };
+
   const handleTextSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!textInput.trim()) return;
+    if (!textInput.trim() || !currentSession) return;
 
     const newMessage: Message = {
       id: Date.now(),
@@ -210,7 +129,8 @@ const ChatGPTInterface: React.FC = () => {
       content: textInput,
       timestamp: new Date()
     };
-    setMessages((prev) => [...prev, newMessage]);
+
+    addMessage(newMessage);
     setTextInput('');
     setTyping(true);
 
@@ -222,7 +142,7 @@ const ChatGPTInterface: React.FC = () => {
         content: `I understand you're asking about "${newMessage.content}". Let me help you with that.`,
         timestamp: new Date()
       };
-      setMessages((prev) => [...prev, botResponse]);
+      addMessage(botResponse);
       setTyping(false);
     }, 1500);
   };
@@ -270,38 +190,20 @@ const ChatGPTInterface: React.FC = () => {
       await sendAudioToBackend(file);
     }
   };
-  useEffect(() => {
-    const storedMessages = localStorage.getItem('chat_messages');
-    if (storedMessages) {
-      const parsedMessages = JSON.parse(storedMessages);
-      // Restore Date objects from string
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const messagesWithDates = parsedMessages.map((msg: any) => ({
-        ...msg,
-        timestamp: new Date(msg.timestamp),
-      }));
-      setMessages(messagesWithDates);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('chat_messages', JSON.stringify(messages));
-  }, [messages]);
 
   const sendAudioToBackend = async (audioFile: Blob) => {
-    const audioUrl = URL.createObjectURL(audioFile);
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        sender: 'user',
-        type: 'audio',
-        content: audioUrl,
-        timestamp: new Date()
-      }
-    ]);
+    if (!currentSession) return;
 
+    const audioUrl = URL.createObjectURL(audioFile);
+    const userMessage: Message = {
+      id: Date.now(),
+      sender: 'user',
+      type: 'audio',
+      content: audioUrl,
+      timestamp: new Date()
+    };
+
+    addMessage(userMessage);
     setTyping(true);
 
     try {
@@ -323,30 +225,27 @@ const ChatGPTInterface: React.FC = () => {
       const data = await response.json();
       const backendAudioUrl = `http://localhost:5000${data.audio_url}`;
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 1,
-          sender: 'bot',
-          type: 'audio-response',
-          content: backendAudioUrl,
-          timestamp: new Date(),
-          matchedSections: data.matched_sections || [],
-          translatedTexts: data.translated_texts || []
-        }
-      ]);
+      const botResponse: Message = {
+        id: Date.now() + 1,
+        sender: 'bot',
+        type: 'audio-response',
+        content: backendAudioUrl,
+        timestamp: new Date(),
+        matchedSections: data.matched_sections || [],
+        translatedTexts: data.translated_texts || []
+      };
+
+      addMessage(botResponse);
     } catch (error) {
       console.error('Backend error:', error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 2,
-          sender: 'bot',
-          type: 'text',
-          content: 'Sorry, there was an error processing your audio.',
-          timestamp: new Date()
-        }
-      ]);
+      const errorMessage: Message = {
+        id: Date.now() + 2,
+        sender: 'bot',
+        type: 'text',
+        content: 'Sorry, there was an error processing your audio.',
+        timestamp: new Date()
+      };
+      addMessage(errorMessage);
     } finally {
       setTyping(false);
     }
@@ -403,7 +302,7 @@ const ChatGPTInterface: React.FC = () => {
                 <div className="flex items-center space-x-2 mb-3">
                   <Languages className="h-4 w-4 text-green-600 dark:text-green-400" />
                   <span className="text-sm font-medium text-green-800 dark:text-green-200">
-                    IPC Sections and their Punishments
+                    Translated Content
                   </span>
                 </div>
                 <div className="space-y-3">
@@ -444,47 +343,31 @@ const ChatGPTInterface: React.FC = () => {
     }
   };
 
+  if (!currentSession) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading chat...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`min-h-screen flex ${darkMode ? 'dark' : ''}`}>
       {/* Sidebar */}
-      <div className={`${sidebarOpen ? 'w-64' : 'w-0'} transition-all duration-300 bg-gray-900 text-white flex flex-col overflow-hidden`}>
-        <div className="p-4 border-b border-gray-700">
-          <button
-            onClick={() => { }}
-            className="w-full flex items-center space-x-2 p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
-          >
-            <Plus className="h-5 w-5" />
-            <span>New Chat</span>
-          </button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto p-4 space-y-2">
-          {chatSessions.map((session) => (
-            <div key={session.id} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-800 cursor-pointer transition-colors">
-              <MessageSquare className="h-4 w-4 text-gray-400" />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">{session.title}</p>
-                <p className="text-xs text-gray-400">{formatTime(session.lastMessage)}</p>
-              </div>
-              <MoreHorizontal className="h-4 w-4 text-gray-400" />
-            </div>
-          ))}
-        </div>
-
-        <div className="p-4 border-t border-gray-700 space-y-2">
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-800 transition-colors"
-          >
-            {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
-          </button>
-          <button className="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-800 transition-colors">
-            <Settings className="h-5 w-5" />
-            <span>Settings</span>
-          </button>
-        </div>
-      </div>
+      <ChatSidebar
+        sidebarOpen={sidebarOpen}
+        darkMode={darkMode}
+        chatSessions={chatSessions}
+        currentSessionId={currentSession.id}
+        onNewChat={createNewChat}
+        onSelectSession={selectSession}
+        onDeleteSession={deleteSession}
+        onToggleDarkMode={() => setDarkMode(!darkMode)}
+        formatTime={formatTime}
+      />
 
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col bg-white dark:bg-gray-800">
@@ -498,10 +381,17 @@ const ChatGPTInterface: React.FC = () => {
               {sidebarOpen ? <X className="h-5 w-5" /> : <Sidebar className="h-5 w-5" />}
             </button>
             <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-              Legal AI Assistant
+              {currentSession.title}
             </h1>
           </div>
           <div className="flex items-center space-x-2">
+            <button
+              onClick={() => window.location.href = '/dashboard'}
+              className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            >
+              <LayoutDashboard className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+              <span className="text-sm text-gray-600 dark:text-gray-300">Dashboard</span>
+            </button>
             <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
               <User className="h-5 w-5 text-white" />
             </div>
@@ -511,7 +401,7 @@ const ChatGPTInterface: React.FC = () => {
         {/* Messages */}
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-4xl mx-auto p-4 space-y-6">
-            {messages.map((msg) => (
+            {currentSession.messages.map((msg) => (
               <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`flex max-w-[85%] ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'} items-start space-x-3`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.sender === 'user' ? 'bg-blue-600 ml-3' : 'bg-gray-600 mr-3'}`}>
