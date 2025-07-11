@@ -52,14 +52,17 @@ const SchemeRecommender: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Age */}
           <div>
-            <label className="block mb-2 font-medium">Age Group</label>
-            <select name="age" value={formData.age} onChange={handleChange} className="w-full border rounded px-3 py-2">
-              <option value="">Select Age</option>
-              <option value="below-18">Below 18</option>
-              <option value="18-70">18–70</option>
-              <option value="above-70">Above 70</option>
-            </select>
+            <label className="block mb-2 font-medium">Age</label>
+            <input
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              placeholder="Enter your age"
+              className="w-full border rounded px-3 py-2"
+            />
           </div>
+
 
           {/* Gender */}
           <div>

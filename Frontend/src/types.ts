@@ -1,13 +1,27 @@
-export interface Message {
+export type Message = {
     id: number;
     sender: 'user' | 'bot';
-    type: 'text' | 'audio' | 'audio-response';
+    type: 'text' | 'audio' | 'combined' | 'audio-response';
     content: string;
+    audioUrl?: string;
     timestamp: Date;
-    // Additional fields for audio responses
     matchedSections?: string[];
     translatedTexts?: string[];
-}
+    ipcSections?: Array<{
+        "Bailable/Non-Bailable": string;
+        "Category": string;
+        "Cognizable/Non-Cognizable": string;
+        "Description": string;
+        "IPC Section": string;
+        "Name": string;
+        "Punishment": string;
+    }>;
+    language?: string;
+    pdfEnglishUrl?: string;
+    pdfRegionalUrl?: string;
+    transcribedText?: string;
+};
+
 
 export interface ChatSession {
     id: string;

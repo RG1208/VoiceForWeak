@@ -1,19 +1,36 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Mic, Send, Plus, User, Bot, Copy,
   Sidebar, X,
   FileText, Hash, Languages, Clock,
-  LayoutDashboard,
+  LayoutDashboard, Volume2, Trash2,
 } from 'lucide-react';
-import { Message, ChatSession } from '../types';
-import { storageUtils } from '../utils/storage';
 import AudioPlayer from '../components/AudioPlayer';
 import ChatSidebar from '../components/ChatSidebar';
+import { storageUtils } from '../utils/storage';
+import type { Message } from '../types';
+
+interface AttachedAudio {
+  file: Blob;
+  url: string;
+  name: string;
+  duration?: number;
+}
+
+interface ChatSession {
+  id: string;
+  title: string;
+  messages: Message[];
+  createdAt: Date;
+  lastMessage: Date;
+}
 
 const ChatGPTInterface: React.FC = () => {
   const [currentSession, setCurrentSession] = useState<ChatSession | null>(null);
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
   const [textInput, setTextInput] = useState('');
+  const [attachedAudio, setAttachedAudio] = useState<AttachedAudio | null>(null);
   const [recording, setRecording] = useState(false);
   const [typing, setTyping] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
@@ -107,6 +124,10 @@ const ChatGPTInterface: React.FC = () => {
   const addMessage = (message: Message) => {
     if (!currentSession) return;
 
+    // Check if message already exists to prevent duplicates
+    const messageExists = currentSession.messages.some(m => m.id === message.id);
+    if (messageExists) return;
+
     const updatedMessages = [...currentSession.messages, message];
     const updatedSession: ChatSession = {
       ...currentSession,
@@ -120,31 +141,153 @@ const ChatGPTInterface: React.FC = () => {
 
   const handleTextSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!textInput.trim() || !currentSession) return;
+    if ((!textInput.trim() && !attachedAudio) || !currentSession) return;
 
-    const newMessage: Message = {
+    // Store current input values
+    const currentText = textInput.trim();
+    const currentAudio = attachedAudio;
+
+    // Clear inputs immediately
+    setTextInput('');
+    setAttachedAudio(null);
+
+    // Send the message
+    if (currentAudio && currentText) {
+      await sendCombinedMessage(currentText, currentAudio);
+    } else if (currentAudio) {
+      await sendAudioMessage(currentAudio);
+    } else {
+      await sendTextMessage(currentText);
+    }
+  };
+
+  const sendTextMessage = async (text: string) => {
+    if (!currentSession) return;
+
+    const userMessage: Message = {
       id: Date.now(),
       sender: 'user',
       type: 'text',
-      content: textInput,
+      content: text,
       timestamp: new Date()
     };
 
-    addMessage(newMessage);
-    setTextInput('');
+    addMessage(userMessage);
     setTyping(true);
 
+    // Create bot response with an ID that comes after the user message
+    const botResponse: Message = {
+      id: userMessage.id + 1, // Ensure it comes right after user message
+      sender: 'bot',
+      type: 'text',
+      content: `I understand you're asking about "${text}". Let me help you with that.`,
+      timestamp: new Date()
+    };
+
     setTimeout(() => {
-      const botResponse: Message = {
-        id: Date.now() + 1,
-        sender: 'bot',
-        type: 'text',
-        content: `I understand you're asking about "${newMessage.content}". Let me help you with that.`,
-        timestamp: new Date()
-      };
       addMessage(botResponse);
       setTyping(false);
     }, 1500);
+  };
+
+  const sendAudioMessage = async (audio: AttachedAudio) => {
+    if (!currentSession) return;
+
+    const userMessage: Message = {
+      id: Date.now(),
+      sender: 'user',
+      type: 'audio',
+      content: audio.url,
+      timestamp: new Date()
+    };
+
+    addMessage(userMessage);
+    await processAudioWithBackend(audio.file);
+  };
+
+  const sendCombinedMessage = async (text: string, audio: AttachedAudio) => {
+    if (!currentSession) return;
+
+    const userMessage: Message = {
+      id: Date.now(),
+      sender: 'user',
+      type: 'combined',
+      content: text,
+      audioUrl: audio.url,
+      timestamp: new Date()
+    };
+
+    addMessage(userMessage);
+    await processAudioWithBackend(audio.file, text);
+  };
+
+  const processAudioWithBackend = async (audioFile: Blob, additionalText?: string) => {
+    setTyping(true);
+    try {
+      const formData = new FormData();
+      const audioFileObj = new File([audioFile], 'audio_message.mp3', {
+        type: 'audio/mpeg'
+      });
+      formData.append('audio', audioFileObj);
+
+      if (additionalText) {
+        const textData = additionalText.split('\n').reduce((acc, line) => {
+          const [key, value] = line.split(':').map(s => s.trim());
+          if (key && value) acc[key.toLowerCase()] = value;
+          return acc;
+        }, {} as Record<string, string>);
+        Object.entries(textData).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
+      }
+
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:5000/api/voice-chat', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Server responded with ${response.status}`);
+      }
+
+      const data = await response.json();
+      const backendAudioUrl = `http://localhost:5000${data.audio_url}`;
+
+      // Get the last user message ID to ensure proper sequencing
+      const lastUserMessageId = currentSession?.messages[currentSession.messages.length - 1]?.id || Date.now();
+
+      const botResponse: Message = {
+        id: lastUserMessageId + 1, // Ensure it comes right after user message
+        sender: 'bot',
+        type: 'audio-response',
+        content: backendAudioUrl,
+        timestamp: new Date(),
+        matchedSections: data.matched_sections || [],
+        translatedTexts: data.translated_texts || [],
+        ipcSections: data.ipc_sections || [],
+        language: data.language || '',
+        pdfEnglishUrl: data.pdf_english_url || '',
+        pdfRegionalUrl: data.pdf_regional_url || '',
+        transcribedText: data.transcribed_text || ''
+      };
+
+      addMessage(botResponse);
+    } catch (error) {
+      console.error('Upload error:', error);
+      const errorMessage: Message = {
+        id: Date.now() + 1,
+        sender: 'bot',
+        type: 'text',
+        content: `Error: ${error instanceof Error ? error.message : 'Failed to process audio'}`,
+        timestamp: new Date()
+      };
+      addMessage(errorMessage);
+    } finally {
+      setTyping(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -180,74 +323,32 @@ const ChatGPTInterface: React.FC = () => {
 
     mediaRecorderRef.current!.onstop = async () => {
       const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-      await sendAudioToBackend(audioBlob);
+      attachAudioToInput(audioBlob, 'Recorded Audio');
     };
   };
 
   const handleAudioUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      await sendAudioToBackend(file);
+      attachAudioToInput(file, file.name);
     }
+    // Clear the input so the same file can be selected again
+    e.target.value = '';
   };
 
-  const sendAudioToBackend = async (audioFile: Blob) => {
-    if (!currentSession) return;
-
+  const attachAudioToInput = (audioFile: Blob, fileName: string) => {
     const audioUrl = URL.createObjectURL(audioFile);
-    const userMessage: Message = {
-      id: Date.now(),
-      sender: 'user',
-      type: 'audio',
-      content: audioUrl,
-      timestamp: new Date()
-    };
+    setAttachedAudio({
+      file: audioFile,
+      url: audioUrl,
+      name: fileName
+    });
+  };
 
-    addMessage(userMessage);
-    setTyping(true);
-
-    try {
-      const formData = new FormData();
-      formData.append('audio', audioFile, 'audio.wav');
-
-      const token = localStorage.getItem('token');
-
-      const response = await fetch('http://localhost:5000/api/voice-chat', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error('Failed to fetch audio reply');
-
-      const data = await response.json();
-      const backendAudioUrl = `http://localhost:5000${data.audio_url}`;
-
-      const botResponse: Message = {
-        id: Date.now() + 1,
-        sender: 'bot',
-        type: 'audio-response',
-        content: backendAudioUrl,
-        timestamp: new Date(),
-        matchedSections: data.matched_sections || [],
-        translatedTexts: data.translated_texts || []
-      };
-
-      addMessage(botResponse);
-    } catch (error) {
-      console.error('Backend error:', error);
-      const errorMessage: Message = {
-        id: Date.now() + 2,
-        sender: 'bot',
-        type: 'text',
-        content: 'Sorry, there was an error processing your audio.',
-        timestamp: new Date()
-      };
-      addMessage(errorMessage);
-    } finally {
-      setTyping(false);
+  const removeAttachedAudio = () => {
+    if (attachedAudio) {
+      URL.revokeObjectURL(attachedAudio.url);
+      setAttachedAudio(null);
     }
   };
 
@@ -258,6 +359,14 @@ const ChatGPTInterface: React.FC = () => {
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
+
+  // const formatFileSize = (bytes: number) => {
+  //   if (bytes === 0) return '0 Bytes';
+  //   const k = 1024;
+  //   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  //   const i = Math.floor(Math.log(bytes) / Math.log(k));
+  //   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  // };
 
   const renderMessage = (msg: Message) => {
     switch (msg.type) {
@@ -270,6 +379,20 @@ const ChatGPTInterface: React.FC = () => {
 
       case 'audio':
         return <AudioPlayer audioUrl={msg.content} />;
+
+      case 'combined':
+        return (
+          <div className="space-y-3">
+            <div className="prose prose-sm max-w-none">
+              <p className="mb-0 whitespace-pre-wrap">{msg.content}</p>
+            </div>
+            {msg.audioUrl && (
+              <div className="border-t border-blue-200 pt-3">
+                <AudioPlayer audioUrl={msg.audioUrl} />
+              </div>
+            )}
+          </div>
+        );
 
       case 'audio-response':
         return (
@@ -332,6 +455,53 @@ const ChatGPTInterface: React.FC = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+            )}
+
+            {msg.transcribedText && (
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-300 dark:border-yellow-700">
+                <h3 className="font-semibold text-yellow-700 dark:text-yellow-300 mb-2">Transcribed Text:</h3>
+                <p className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap">{msg.transcribedText}</p>
+              </div>
+            )}
+
+            {msg.ipcSections && msg.ipcSections.length > 0 && (
+              <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-300 dark:border-purple-700 mt-4">
+                <h3 className="font-semibold text-purple-700 dark:text-purple-300 mb-3">Matched IPC Sections:</h3>
+                <div className="space-y-4">
+                  {msg.ipcSections.map((section, index) => (
+                    <div key={index} className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-purple-200 dark:border-purple-600">
+                      <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">
+                        IPC Section {section["IPC Section"]}: {section["Name"]}
+                      </p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Category:</strong> {section["Category"]}</p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Description:</strong> {section["Description"]}</p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Punishment:</strong> {section["Punishment"]}</p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Cognizable/Non-Cognizable:</strong> {section["Cognizable/Non-Cognizable"]}</p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Bailable/Non-Bailable:</strong> {section["Bailable/Non-Bailable"]}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {(msg.pdfEnglishUrl || msg.pdfRegionalUrl) && (
+              <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-300 dark:border-green-700 mt-4">
+                <h3 className="font-semibold text-green-700 dark:text-green-300 mb-3">Download Reports:</h3>
+                <div className="flex flex-col space-y-2">
+                  {msg.pdfEnglishUrl && (
+                    <a href={`http://localhost:5000${msg.pdfEnglishUrl}`} target="_blank" rel="noopener noreferrer"
+                      className="text-blue-600 dark:text-blue-400 underline">
+                      📄 English PDF
+                    </a>
+                  )}
+                  {msg.pdfRegionalUrl && (
+                    <a href={`http://localhost:5000${msg.pdfRegionalUrl}`} target="_blank" rel="noopener noreferrer"
+                      className="text-blue-600 dark:text-blue-400 underline">
+                      📄 Regional Language PDF
+                    </a>
+                  )}
                 </div>
               </div>
             )}
@@ -461,6 +631,33 @@ const ChatGPTInterface: React.FC = () => {
         {/* Input Area */}
         <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
           <div className="max-w-4xl mx-auto">
+            {/* Attached Audio Preview */}
+            {attachedAudio && (
+              <div className="mb-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-full">
+                      <Volume2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                        {attachedAudio.name}
+                      </p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400">
+                        Audio file attached
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={removeAttachedAudio}
+                    className="p-1 rounded hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors"
+                  >
+                    <Trash2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  </button>
+                </div>
+              </div>
+            )}
+
             <form onSubmit={handleTextSubmit} className="flex items-end space-x-3">
               <button
                 type="button"
@@ -491,14 +688,18 @@ const ChatGPTInterface: React.FC = () => {
                   onChange={(e) => setTextInput(e.target.value)}
                   onKeyPress={handleKeyPress}
                   className="w-full px-4 py-3 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none min-h-[48px] max-h-32"
-                  placeholder="Type your message or upload audio..."
+                  placeholder={
+                    attachedAudio
+                      ? "Add context text (name, email, etc.) for your audio..."
+                      : "Type your message or upload audio..."
+                  }
                   rows={1}
                 />
               </div>
 
               <button
                 type="submit"
-                disabled={!textInput.trim()}
+                disabled={!textInput.trim() && !attachedAudio}
                 className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 dark:disabled:bg-gray-600 transition-colors"
               >
                 <Send className="h-5 w-5 text-white" />
