@@ -1,38 +1,51 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify # type: ignore
 from flask_jwt_extended import jwt_required  # type: ignore
-from mlModel.voice_assistant import process_audio  # Import your ML pipeline
+from mlModel.voice_assistant import process_audio_pipeline  # Import your ML pipeline
 import os
 import uuid
 
+# Initialize Blueprint
 voice_bp = Blueprint('voice', __name__)
 
-
 @voice_bp.route('/voice-chat', methods=['POST'])
-@jwt_required()  # Authentication required
+@jwt_required()  # Requires JWT Authentication
 def voice_chat():
+    """Handles audio upload, processes it via ML pipeline, and returns results"""
+    
+    # Validate audio file
     if 'audio' not in request.files:
         return jsonify({'error': 'No audio file provided'}), 400
 
+    # Validate required user details
+    required_fields = ['name', 'location', 'age', 'gender', 'phone', 'id_number', 'email']
+    user_details = {}
+    for field in required_fields:
+        user_details[field] = request.form.get(field, '')
+        if not user_details[field]:
+            return jsonify({'error': f'Missing user detail: {field}'}), 400
+
+    # Save uploaded audio with unique filename
     audio_file = request.files['audio']
-    
-    # Save uploaded file temporarily with unique filename
     unique_filename = f"{uuid.uuid4()}_{audio_file.filename}"
     save_path = os.path.join('uploads', unique_filename)
     os.makedirs('uploads', exist_ok=True)
     audio_file.save(save_path)
 
     try:
-        result = process_audio(save_path)  # Process with your ML pipeline
-        
-        # Optionally delete uploaded file after processing:
+        # Process audio with ML pipeline
+        result = process_audio_pipeline(save_path, user_details)
+
+        # Clean up uploaded file
         os.remove(save_path)
 
-        # Build full URL (optional but better)
-        audio_url = f"/static/{result['audio_file_name']}"
+        # Return results with URLs (assuming /static is served publicly)
         return jsonify({
-            "matched_sections": result['matched_sections'],
-            "translated_texts": result['translated_texts'],
-            "audio_url": audio_url  # <-- This is the key your frontend must use
+            "ipc_sections": result['ipc_sections'],
+            "transcribed_text": result['transcribed_text'],
+            "language": result['language'],
+            "audio_url": f"/static/{os.path.basename(result['audio_file'])}",
+            "pdf_english_url": f"/static/{os.path.basename(result['pdf_english'])}",
+            "pdf_regional_url": f"/static/{os.path.basename(result['pdf_regional'])}"
         })
 
     except Exception as e:

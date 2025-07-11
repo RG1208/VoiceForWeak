@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+<style>
+  body {
+    font-family: "DejaVu Sans", "Noto Sans Tamil", sans-serif;
+    margin: 2cm;
+    line-height: 1.6;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+  }
+  .section {
+    margin-top: 20px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .box {
+    border: 1px solid #333;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+</style>
+
+</head>
+<body>
+  <div class="header">
+    <h2>கிராமீண சட்ட உதவி மையம்</h2>
+    <p><strong>பலவீனரின் குரல்</strong></p>
+    <p>மாவட்ட சட்ட சேவை ஆணையம்</p>
+  </div>
+
+  <p><strong>தேதி:</strong> {{Current_Date}}</p>
+  <p><strong>யாருக்கு,</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <p><strong>பொருள்:</strong> IPC பிரிவு {{IPC_Section_Number}} – {{IPC_Section_Name}} கீழ் புகார்</p>
+
+  <p><strong>மாண்புமிகு ஐயா/அம்மை,</strong></p>
+  <p>நான், {{Full_Name}}, வயது {{Age}}, {{Full_Address}} என்ற முகவரியில் வசிப்பவன்/வசிப்பவள், கீழ்காணும் சம்பவத்திற்காக புகார் அளிக்க விரும்புகிறேன்:</p>
+
+  <div class="section">
+    <strong>சம்பவ சுருக்கம்:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <div class="section">
+    <strong>முக்கிய IPC பிரிவு:</strong>
+    <div class="box">
+      <p><strong>{{IPC_Section_Number}} – {{IPC_Section_Name}}</strong></p>
+      <p>{{IPC_Section_Description}}</p>
+      <ul>
+        <li>தண்டனை: {{Punishment}}</li>
+        <li>கொணரத்தக்கது: {{Cognizability}}</li>
+        <li>ஜாமீனானது: {{Bailability}}</li>
+        <li>வகை: {{Offence_Category}}</li>
+      </ul>
+    </div>
+  </div>
+
+  {% if Other_IPC_Sections %}
+  <div class="section">
+    <strong>மற்ற தொடர்புடைய பிரிவுகள்:</strong>
+    {% for sec in Other_IPC_Sections %}
+    <div class="box">
+      <p><strong>{{sec.IPC_Section}} – {{sec.Name}}</strong></p>
+      <p>{{sec.Description}}</p>
+      <ul>
+        <li>தண்டனை: {{sec.Punishment}}</li>
+        <li>கொணரத்தக்கது: {{sec.Cognizability}}</li>
+        <li>ஜாமீனானது: {{sec.Bailability}}</li>
+        <li>வகை: {{sec.Category}}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="section">
+    <strong>புகார் அளித்தவரின் விவரம்:</strong>
+    <ul>
+      <li>பெயர்: {{Full_Name}}</li>
+      <li>லிங்கம்: {{Gender}}</li>
+      <li>வயது: {{Age}}</li>
+      <li>தொலைபேசி: {{Phone_Number}}</li>
+      <li>ID எண்: {{ID_Number}}</li>
+      <li>மின்னஞ்சல்: {{Email}}</li>
+    </ul>
+  </div>
+
+  <p>மிகுந்த மரியாதையுடன்,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

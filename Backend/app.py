@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory #type:ignore
 from config import Config
 from flask_cors import CORS  # type: ignore
 from models.extensions import db   # type: ignore

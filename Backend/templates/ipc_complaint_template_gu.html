@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+<style>
+  body {
+    font-family: "DejaVu Sans", "Noto Sans Gujarati", sans-serif;
+    margin: 2cm;
+    line-height: 1.6;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+  }
+  .section {
+    margin-top: 20px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .box {
+    border: 1px solid #333;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+</style>
+
+</head>
+<body>
+  <div class="header">
+    <h2>ગ્રામીણ કાનૂની સહાયતા કેન્દ્ર</h2>
+    <p><strong>નબળાઓ માટેનો અવાજ</strong></p>
+    <p>જિલ્લા કાનૂની સેવાઓ અધિકાર</p>
+  </div>
+
+  <p><strong>તારીખ:</strong> {{Current_Date}}</p>
+  <p><strong>પ્રતિ,</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <p><strong>વિષય:</strong> IPC કલમ {{IPC_Section_Number}} – {{IPC_Section_Name}} હેઠળ ફરિયાદ</p>
+
+  <p><strong>માનનીય સર/મેડમ,</strong></p>
+  <p>હું, {{Full_Name}}, ઉંમર {{Age}}, {{Full_Address}} નો રહેવાસી છું, નીચે વર્ણવેલ ઘટનાની ફરિયાદ દાખલ કરવા માંગુ છું:</p>
+
+  <div class="section">
+    <strong>ઘટનાનો સાર:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <div class="section">
+    <strong>મુખ્ય IPC કલમ:</strong>
+    <div class="box">
+      <p><strong>{{IPC_Section_Number}} – {{IPC_Section_Name}}</strong></p>
+      <p>{{IPC_Section_Description}}</p>
+      <ul>
+        <li>સજા: {{Punishment}}</li>
+        <li>ગુનાહિત: {{Cognizability}}</li>
+        <li>જામીનયોગ્ય: {{Bailability}}</li>
+        <li>વર્ગ: {{Offence_Category}}</li>
+      </ul>
+    </div>
+  </div>
+
+  {% if Other_IPC_Sections %}
+  <div class="section">
+    <strong>અન્ય સંબંધિત કલમો:</strong>
+    {% for sec in Other_IPC_Sections %}
+    <div class="box">
+      <p><strong>{{sec.IPC_Section}} – {{sec.Name}}</strong></p>
+      <p>{{sec.Description}}</p>
+      <ul>
+        <li>સજા: {{sec.Punishment}}</li>
+        <li>ગુનાહિત: {{sec.Cognizability}}</li>
+        <li>જામીનયોગ્ય: {{sec.Bailability}}</li>
+        <li>વર્ગ: {{sec.Category}}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="section">
+    <strong>ફરિયાદકર્તાનું વિગતવાર:</strong>
+    <ul>
+      <li>નામ: {{Full_Name}}</li>
+      <li>લિંગ: {{Gender}}</li>
+      <li>ઉંમર: {{Age}}</li>
+      <li>ફોન: {{Phone_Number}}</li>
+      <li>ID નંબર: {{ID_Number}}</li>
+      <li>ઈમેલ: {{Email}}</li>
+    </ul>
+  </div>
+
+  <p>વિનમ્ર,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

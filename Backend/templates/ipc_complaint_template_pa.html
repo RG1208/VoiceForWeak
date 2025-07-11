@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+  <meta charset="UTF-8">
+  <style>
+  body {
+    font-family: "DejaVu Sans", "Noto Sans Punjabi", sans-serif;
+    margin: 2cm;
+    line-height: 1.6;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+  }
+  .section {
+    margin-top: 20px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .box {
+    border: 1px solid #333;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+</style>
+
+</head>
+<body>
+  <div class="header">
+    <h2>ਪਿੰਡ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਕੇਂਦਰ</h2>
+    <p><strong>ਕਮਜ਼ੋਰਾਂ ਦੀ ਆਵਾਜ਼</strong></p>
+    <p>ਜ਼ਿਲ੍ਹਾ ਕਾਨੂੰਨੀ ਸੇਵਾਵਾਂ ਅਥਾਰਟੀ</p>
+  </div>
+
+  <p><strong>ਤਾਰੀਖ:</strong> {{Current_Date}}</p>
+  <p><strong>ਵਾਲ:</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <p><strong>ਵਿਸ਼ਾ:</strong> IPC ਧਾਰਾ {{IPC_Section_Number}} – {{IPC_Section_Name}} ਅਧੀਨ ਸ਼ਿਕਾਇਤ</p>
+
+  <p><strong>ਮਾਣਯੋਗ ਸਰ/ਮੈਡਮ,</strong></p>
+  <p>ਮੈਂ, {{Full_Name}}, ਉਮਰ {{Age}}, {{Full_Address}} ਦਾ ਨਿਵਾਸੀ ਹਾਂ, ਹੇਠ ਦਿੱਤੇ ਘਟਨਾ ਬਾਰੇ ਸ਼ਿਕਾਇਤ ਦਰਜ ਕਰਵਾਉਣਾ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ:</p>
+
+  <div class="section">
+    <strong>ਘਟਨਾ ਦਾ ਸਾਰ:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <div class="section">
+    <strong>ਮੁੱਖ IPC ਧਾਰਾ:</strong>
+    <div class="box">
+      <p><strong>{{IPC_Section_Number}} – {{IPC_Section_Name}}</strong></p>
+      <p>{{IPC_Section_Description}}</p>
+      <ul>
+        <li>ਸਜ਼ਾ: {{Punishment}}</li>
+        <li>ਦਫ਼ਾ: {{Cognizability}}</li>
+        <li>ਜ਼ਮਾਨਤੀ: {{Bailability}}</li>
+        <li>ਸ਼੍ਰੇਣੀ: {{Offence_Category}}</li>
+      </ul>
+    </div>
+  </div>
+
+  {% if Other_IPC_Sections %}
+  <div class="section">
+    <strong>ਹੋਰ ਸੰਬੰਧਿਤ ਧਾਰਾਵਾਂ:</strong>
+    {% for sec in Other_IPC_Sections %}
+    <div class="box">
+      <p><strong>{{sec.IPC_Section}} – {{sec.Name}}</strong></p>
+      <p>{{sec.Description}}</p>
+      <ul>
+        <li>ਸਜ਼ਾ: {{sec.Punishment}}</li>
+        <li>ਦਫ਼ਾ: {{sec.Cognizability}}</li>
+        <li>ਜ਼ਮਾਨਤੀ: {{sec.Bailability}}</li>
+        <li>ਸ਼੍ਰੇਣੀ: {{sec.Category}}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="section">
+    <strong>ਸ਼ਿਕਾਇਤਕਰਤਾ ਦਾ ਵੇਰਵਾ:</strong>
+    <ul>
+      <li>ਨਾਂ: {{Full_Name}}</li>
+      <li>ਲਿੰਗ: {{Gender}}</li>
+      <li>ਉਮਰ: {{Age}}</li>
+      <li>ਫੋਨ: {{Phone_Number}}</li>
+      <li>ID ਨੰਬਰ: {{ID_Number}}</li>
+      <li>ਈਮੇਲ: {{Email}}</li>
+    </ul>
+  </div>
+
+  <p>ਆਦਰ ਨਾਲ,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

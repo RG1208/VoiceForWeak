@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <style>
+  body {
+    font-family: "DejaVu Sans", "Noto Sans Hindi", sans-serif;
+    margin: 2cm;
+    line-height: 1.6;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+  }
+  .section {
+    margin-top: 20px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .box {
+    border: 1px solid #333;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+</style>
+
+</head>
+<body>
+  <div class="header">
+    <h2>ग्रामीण विधिक सहायता केंद्र</h2>
+    <p><strong>कमजोरों की आवाज़</strong></p>
+    <p>जिला विधिक सेवा प्राधिकरण</p>
+  </div>
+
+  <p><strong>तारीख:</strong> {{Current_Date}}</p>
+  <p><strong>सेवा में,</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <p><strong>विषय:</strong> IPC धारा {{IPC_Section_Number}} – {{IPC_Section_Name}} के अंतर्गत शिकायत</p>
+
+  <p><strong>मान्यवर,</strong></p>
+  <p>मैं, {{Full_Name}}, आयु {{Age}}, {{Full_Address}} का निवासी, नीचे वर्णित घटना के संबंध में शिकायत दर्ज कराना चाहता/चाहती हूँ:</p>
+
+  <div class="section">
+    <strong>घटना का सार:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <div class="section">
+    <strong>प्रमुख IPC धारा:</strong>
+    <div class="box">
+      <p><strong>{{IPC_Section_Number}} – {{IPC_Section_Name}}</strong></p>
+      <p>{{IPC_Section_Description}}</p>
+      <ul>
+        <li>सजा: {{Punishment}}</li>
+        <li>संज्ञेय: {{Cognizability}}</li>
+        <li>जमानतीय: {{Bailability}}</li>
+        <li>श्रेणी: {{Offence_Category}}</li>
+      </ul>
+    </div>
+  </div>
+
+  {% if Other_IPC_Sections %}
+  <div class="section">
+    <strong>अन्य संबंधित धाराएँ:</strong>
+    {% for sec in Other_IPC_Sections %}
+    <div class="box">
+      <p><strong>{{sec.IPC_Section}} – {{sec.Name}}</strong></p>
+      <p>{{sec.Description}}</p>
+      <ul>
+        <li>सजा: {{sec.Punishment}}</li>
+        <li>संज्ञेय: {{sec.Cognizability}}</li>
+        <li>जमानतीय: {{sec.Bailability}}</li>
+        <li>श्रेणी: {{sec.Category}}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="section">
+    <strong>शिकायतकर्ता का विवरण:</strong>
+    <ul>
+      <li>नाम: {{Full_Name}}</li>
+      <li>लिंग: {{Gender}}</li>
+      <li>आयु: {{Age}}</li>
+      <li>फ़ोन: {{Phone_Number}}</li>
+      <li>ID नंबर: {{ID_Number}}</li>
+      <li>ईमेल: {{Email}}</li>
+    </ul>
+  </div>
+
+  <p>सादर,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

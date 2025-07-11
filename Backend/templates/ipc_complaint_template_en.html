@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: "DejaVu Sans", sans-serif;
+      margin: 2cm;
+      line-height: 1.6;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-top: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .box {
+      border: 1px solid #333;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Grameen Legal Aid Center</h2>
+    <p><strong>Voice for the Vulnerable</strong></p>
+    <p>District Legal Services Authority</p>
+  </div>
+
+  <p><strong>Date:</strong> {{Current_Date}}</p>
+  <p><strong>To,</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <p><strong>Subject:</strong> Complaint under IPC Section {{IPC_Section_Number}} – {{IPC_Section_Name}}</p>
+
+  <p><strong>Respected Sir/Madam,</strong></p>
+  <p>I, {{Full_Name}}, aged {{Age}}, residing at {{Full_Address}}, wish to lodge a complaint regarding the incident described below:</p>
+
+  <div class="section">
+    <strong>Incident Summary:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <div class="section">
+    <strong>Main IPC Section:</strong>
+    <div class="box">
+      <p><strong>{{IPC_Section_Number}} – {{IPC_Section_Name}}</strong></p>
+      <p>{{IPC_Section_Description}}</p>
+      <ul>
+        <li>Punishment: {{Punishment}}</li>
+        <li>Cognizable: {{Cognizability}}</li>
+        <li>Bailable: {{Bailability}}</li>
+        <li>Category: {{Offence_Category}}</li>
+      </ul>
+    </div>
+  </div>
+
+  {% if Other_IPC_Sections %}
+  <div class="section">
+    <strong>Other Relevant Sections:</strong>
+    {% for sec in Other_IPC_Sections %}
+    <div class="box">
+      <p><strong>{{sec.IPC_Section}} – {{sec.Name}}</strong></p>
+      <p>{{sec.Description}}</p>
+      <ul>
+        <li>Punishment: {{sec.Punishment}}</li>
+        <li>Cognizable: {{sec.Cognizability}}</li>
+        <li>Bailable: {{sec.Bailability}}</li>
+        <li>Category: {{sec.Category}}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="section">
+    <strong>Complainant Details:</strong>
+    <ul>
+      <li>Name: {{Full_Name}}</li>
+      <li>Gender: {{Gender}}</li>
+      <li>Age: {{Age}}</li>
+      <li>Phone: {{Phone_Number}}</li>
+      <li>ID Number: {{ID_Number}}</li>
+      <li>Email: {{Email}}</li>
+    </ul>
+  </div>
+
+  <p>Sincerely,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

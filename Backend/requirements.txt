@@ -1,9 +1,12 @@
+# Flask & Backend Essentials
 Flask==2.0.1
 Flask-SQLAlchemy==2.5.1
 Flask-JWT-Extended==4.3.1
 Flask-Cors==3.0.10
 Werkzeug==2.0.1
 SQLAlchemy==1.4.49
+
+# ML Models & Utilities
 openai-whisper
 langdetect
 sentence-transformers
@@ -12,3 +15,7 @@ torch
 ffmpeg-python
 gTTS
 indictrans2-ai4bharat
+weasyprint
+Jinja2
+deep-translator
+secure-smtplib
