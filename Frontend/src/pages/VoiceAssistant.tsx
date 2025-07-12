@@ -82,16 +82,6 @@ const ChatGPTInterface: React.FC = () => {
     }
   }, [textInput]);
 
-  // Cleanup blob URLs when component unmounts or attached audio changes
-  useEffect(() => {
-    return () => {
-      // Clean up any existing blob URL when component unmounts
-      if (attachedAudio?.url) {
-        URL.revokeObjectURL(attachedAudio.url);
-      }
-    };
-  }, [attachedAudio?.url]);
-
   const createNewChat = () => {
     const newSession = storageUtils.createNewSession();
     setCurrentSession(newSession);
@@ -119,6 +109,23 @@ const ChatGPTInterface: React.FC = () => {
     // If we deleted the current session, create a new one
     if (currentSession?.id === sessionId) {
       createNewChat();
+    }
+  };
+
+  const renameSession = (sessionId: string, newTitle: string) => {
+    const session = storageUtils.getSession(sessionId);
+    if (session) {
+      const updatedSession = { ...session, title: newTitle };
+      storageUtils.saveSession(updatedSession);
+      
+      // Update sessions list
+      const updatedSessions = storageUtils.getAllSessions();
+      setChatSessions(updatedSessions);
+      
+      // Update current session if it's the one being renamed
+      if (currentSession?.id === sessionId) {
+        setCurrentSession(updatedSession);
+      }
     }
   };
 
@@ -210,46 +217,32 @@ const ChatGPTInterface: React.FC = () => {
   const sendAudioMessage = async (audio: AttachedAudio) => {
     if (!currentSession) return;
 
-    // Store the audio file data as base64 for persistence
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const base64Data = reader.result as string;
-
-      const userMessage: Message = {
-        id: Date.now(),
-        sender: 'user',
-        type: 'audio',
-        content: base64Data, // Store base64 data instead of blob URL
-        timestamp: new Date()
-      };
-
-      addMessage(userMessage);
-      await processAudioWithBackend(audio.file);
+    const userMessage: Message = {
+      id: Date.now(),
+      sender: 'user',
+      type: 'audio',
+      content: audio.url || '', // Use the blob URL for playback
+      timestamp: new Date()
     };
-    reader.readAsDataURL(audio.file);
+
+    addMessage(userMessage);
+    await processAudioWithBackend(audio.file);
   };
 
   const sendCombinedMessage = async (text: string, audio: AttachedAudio) => {
     if (!currentSession) return;
 
-    // Store the audio file data as base64 for persistence
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const base64Data = reader.result as string;
-
-      const userMessage: Message = {
-        id: Date.now(),
-        sender: 'user',
-        type: 'combined',
-        content: text,
-        audioUrl: base64Data, // Store base64 data instead of blob URL
-        timestamp: new Date()
-      };
-
-      addMessage(userMessage);
-      await processAudioWithBackend(audio.file, text);
+    const userMessage: Message = {
+      id: Date.now(),
+      sender: 'user',
+      type: 'combined',
+      content: text,
+      audioUrl: audio.url,
+      timestamp: new Date()
     };
-    reader.readAsDataURL(audio.file);
+
+    addMessage(userMessage);
+    await processAudioWithBackend(audio.file, text);
   };
 
   const processAudioWithBackend = async (audioFile: Blob, additionalText?: string) => {
@@ -378,11 +371,11 @@ const ChatGPTInterface: React.FC = () => {
   };
 
   const attachAudioToInput = (audioFile: Blob, fileName: string) => {
-    // Create a temporary blob URL for preview (will be cleaned up)
+    // Create a blob URL for the user's audio file so it can be played
     const blobUrl = URL.createObjectURL(audioFile);
     setAttachedAudio({
       file: audioFile,
-      url: blobUrl, // Temporary URL for preview
+      url: blobUrl,
       name: fileName
     });
   };
@@ -578,7 +571,7 @@ const ChatGPTInterface: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen flex ${darkMode ? 'dark' : ''}`}>
+    <div className={`h-screen flex ${darkMode ? 'dark' : ''}`}>
       {/* Sidebar */}
       <ChatSidebar
         sidebarOpen={sidebarOpen}
@@ -588,14 +581,15 @@ const ChatGPTInterface: React.FC = () => {
         onNewChat={createNewChat}
         onSelectSession={selectSession}
         onDeleteSession={deleteSession}
+        onRenameSession={renameSession}
         onToggleDarkMode={() => setDarkMode(!darkMode)}
         formatTime={formatTime}
       />
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col bg-white dark:bg-gray-800">
+      <div className="flex-1 flex flex-col bg-white dark:bg-gray-800 h-screen">
         {/* Header */}
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between bg-white dark:bg-gray-800">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between bg-white dark:bg-gray-800 flex-shrink-0">
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -682,7 +676,7 @@ const ChatGPTInterface: React.FC = () => {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex-shrink-0">
           <div className="max-w-4xl mx-auto">
             {/* Attached Audio Preview */}
             {attachedAudio && (

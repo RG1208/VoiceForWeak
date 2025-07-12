@@ -66,12 +66,12 @@ def classify_ipc(text, top_k=3):
         section = ipc_mapping[idx]
         info = df_sections[df_sections['IPC Section'] == section].iloc[0].to_dict()
         top_sections.append({
-            "IPC_Section": section,
+            "IPC Section": section,
             "Name": info['Name'],
             "Description": info['Description'],
             "Punishment": info['Punishment'],
-            "Cognizability": info['Cognizable/Non-Cognizable'],
-            "Bailability": info['Bailable/Non-Bailable'],
+            "Cognizable/Non-Cognizable": info['Cognizable/Non-Cognizable'],
+            "Bailable/Non-Bailable": info['Bailable/Non-Bailable'],
             "Category": info['Category']
         })
     return top_sections
@@ -195,12 +195,12 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
         # Create detailed regional language explanation with prominent section numbers
         regional_explanation = {
             "section_number": i,
-            "ipc_section": section['IPC_Section'],
+            "ipc_section": section['IPC Section'],
             "name": translator.translate(section['Name']),
             "description": translator.translate(section['Description']),
             "punishment": translator.translate(section['Punishment']),
-            "bailability": translator.translate(section['Bailability']),
-            "cognizable": translator.translate(section['Cognizability']),
+            "bailability": translator.translate(section['Bailable/Non-Bailable']),
+            "cognizable": translator.translate(section['Cognizable/Non-Cognizable']),
             "category": translator.translate(section['Category']),
             "what_to_do": [
                 translator.translate('File complaint under this section'),
@@ -212,15 +212,15 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
         
         # Create formatted text for frontend display
         formatted_section = f"""
-🔢 {translator.translate('Matched IPC Section')} {i}: {section['IPC_Section']} - {translator.translate(section['Name'])}
+🔢 {translator.translate('Matched IPC Section')} {i}: {section['IPC Section']} - {translator.translate(section['Name'])}
 
 📝 {translator.translate('Description')}: {translator.translate(section['Description'])}
 
 ⚖️ {translator.translate('Punishment')}: {translator.translate(section['Punishment'])}
 
-🧷 {translator.translate('Bailability')}: {translator.translate(section['Bailability'])}
+🧷 {translator.translate('Bailability')}: {translator.translate(section['Bailable/Non-Bailable'])}
 
-🚓 {translator.translate('Cognizable')}: {translator.translate(section['Cognizability'])}
+🚓 {translator.translate('Cognizable')}: {translator.translate(section['Cognizable/Non-Cognizable'])}
 
 📂 {translator.translate('Category')}: {translator.translate(section['Category'])}
 

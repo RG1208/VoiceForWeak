@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-    Plus, MessageSquare, MoreHorizontal, Moon, Sun, Settings, Trash2
+    Plus, MessageSquare, MoreHorizontal, Moon, Sun, Settings, Trash2, Edit2
 } from 'lucide-react';
 import { ChatSession } from '../types';
 
@@ -12,6 +12,7 @@ interface ChatSidebarProps {
     onNewChat: () => void;
     onSelectSession: (sessionId: string) => void;
     onDeleteSession: (sessionId: string) => void;
+    onRenameSession: (sessionId: string, newTitle: string) => void;
     onToggleDarkMode: () => void;
     formatTime: (date: Date) => string;
 }
@@ -24,13 +25,43 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
     onNewChat,
     onSelectSession,
     onDeleteSession,
+    onRenameSession,
     onToggleDarkMode,
     formatTime
 }) => {
+    const [editingSessionId, setEditingSessionId] = useState<string | null>(null);
+    const [editTitle, setEditTitle] = useState('');
+
+    const handleRenameClick = (e: React.MouseEvent, session: ChatSession) => {
+        e.stopPropagation();
+        setEditingSessionId(session.id);
+        setEditTitle(session.title);
+    };
+
+    const handleRenameSave = (sessionId: string) => {
+        if (editTitle.trim()) {
+            onRenameSession(sessionId, editTitle.trim());
+        }
+        setEditingSessionId(null);
+        setEditTitle('');
+    };
+
+    const handleRenameCancel = () => {
+        setEditingSessionId(null);
+        setEditTitle('');
+    };
+
+    const handleRenameKeyPress = (e: React.KeyboardEvent, sessionId: string) => {
+        if (e.key === 'Enter') {
+            handleRenameSave(sessionId);
+        } else if (e.key === 'Escape') {
+            handleRenameCancel();
+        }
+    };
     return (
-        <div className={`${sidebarOpen ? 'w-64' : 'w-0'} transition-all duration-300 bg-gray-900 text-white flex flex-col overflow-hidden`}>
+        <div className={`${sidebarOpen ? 'w-64' : 'w-0'} h-screen transition-all duration-300 bg-gray-900 text-white flex flex-col overflow-hidden`}>
             {/* New Chat Button */}
-            <div className="p-4 border-b border-gray-700">
+            <div className="p-4 border-b border-gray-700 flex-shrink-0">
                 <button
                     onClick={onNewChat}
                     className="w-full flex items-center space-x-2 p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
@@ -41,7 +72,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
             </div>
 
             {/* Chat List */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-2">
+            <div className="flex-1 overflow-y-auto p-4 space-y-2 min-h-0">
                 <div className="text-xs text-gray-400 uppercase tracking-wide mb-3 px-2">
                     Recent Chats
                 </div>
@@ -62,12 +93,37 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
                         >
                             <MessageSquare className="h-4 w-4 text-gray-400 flex-shrink-0" />
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium truncate">{session.title}</p>
+                                {editingSessionId === session.id ? (
+                                    <input
+                                        type="text"
+                                        value={editTitle}
+                                        onChange={(e) => setEditTitle(e.target.value)}
+                                        onKeyDown={(e) => handleRenameKeyPress(e, session.id)}
+                                        onBlur={() => handleRenameSave(session.id)}
+                                        className="w-full bg-transparent text-sm font-medium border-none outline-none text-white"
+                                        autoFocus
+                                    />
+                                ) : (
+                                    <p 
+                                        className="text-sm font-medium truncate cursor-pointer hover:text-blue-300"
+                                        onClick={(e) => handleRenameClick(e, session)}
+                                        title="Click to rename"
+                                    >
+                                        {session.title}
+                                    </p>
+                                )}
                                 <p className="text-xs text-gray-400">{formatTime(session.lastMessage)}</p>
                             </div>
 
-                            {/* Delete Button */}
+                            {/* Action Buttons */}
                             <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1">
+                                <button
+                                    onClick={(e) => handleRenameClick(e, session)}
+                                    className="p-1 rounded hover:bg-gray-600 transition-colors"
+                                    title="Rename chat"
+                                >
+                                    <Edit2 className="h-3 w-3 text-gray-400 hover:text-blue-400" />
+                                </button>
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -88,7 +144,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
             </div>
 
             {/* Bottom Controls */}
-            <div className="p-4 border-t border-gray-700 space-y-2">
+            <div className="p-4 border-t border-gray-700 space-y-2 flex-shrink-0">
                 <button
                     onClick={onToggleDarkMode}
                     className="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-800 transition-colors"
