@@ -82,6 +82,16 @@ const ChatGPTInterface: React.FC = () => {
     }
   }, [textInput]);
 
+  // Cleanup blob URLs when component unmounts or attached audio changes
+  useEffect(() => {
+    return () => {
+      // Clean up any existing blob URL when component unmounts
+      if (attachedAudio?.url) {
+        URL.revokeObjectURL(attachedAudio.url);
+      }
+    };
+  }, [attachedAudio?.url]);
+
   const createNewChat = () => {
     const newSession = storageUtils.createNewSession();
     setCurrentSession(newSession);
@@ -124,10 +134,10 @@ const ChatGPTInterface: React.FC = () => {
   const addMessage = (message: Message) => {
     setCurrentSession(prevSession => {
       if (!prevSession) return null;
-      
+
       // Prevent duplicates
       if (prevSession.messages.some(m => m.id === message.id)) return prevSession;
-      
+
       // Always append the new message
       const updatedMessages = [...prevSession.messages, message];
       const updatedSession: ChatSession = {
@@ -136,11 +146,11 @@ const ChatGPTInterface: React.FC = () => {
         lastMessage: message.timestamp,
         title: updatedMessages.length === 2 ? storageUtils.generateSessionTitle(updatedMessages) : prevSession.title
       };
-      
+
       // Save to storage
       storageUtils.saveSession(updatedSession);
       setChatSessions(storageUtils.getAllSessions());
-      
+
       console.log(`Added message: ${message.sender} - ${message.type} - Total messages: ${updatedMessages.length}`);
       return updatedSession;
     });
@@ -200,32 +210,46 @@ const ChatGPTInterface: React.FC = () => {
   const sendAudioMessage = async (audio: AttachedAudio) => {
     if (!currentSession) return;
 
-    const userMessage: Message = {
-      id: Date.now(),
-      sender: 'user',
-      type: 'audio',
-      content: audio.url,
-      timestamp: new Date()
-    };
+    // Store the audio file data as base64 for persistence
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64Data = reader.result as string;
 
-    addMessage(userMessage);
-    await processAudioWithBackend(audio.file);
+      const userMessage: Message = {
+        id: Date.now(),
+        sender: 'user',
+        type: 'audio',
+        content: base64Data, // Store base64 data instead of blob URL
+        timestamp: new Date()
+      };
+
+      addMessage(userMessage);
+      await processAudioWithBackend(audio.file);
+    };
+    reader.readAsDataURL(audio.file);
   };
 
   const sendCombinedMessage = async (text: string, audio: AttachedAudio) => {
     if (!currentSession) return;
 
-    const userMessage: Message = {
-      id: Date.now(),
-      sender: 'user',
-      type: 'combined',
-      content: text,
-      audioUrl: audio.url,
-      timestamp: new Date()
-    };
+    // Store the audio file data as base64 for persistence
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64Data = reader.result as string;
 
-    addMessage(userMessage);
-    await processAudioWithBackend(audio.file, text);
+      const userMessage: Message = {
+        id: Date.now(),
+        sender: 'user',
+        type: 'combined',
+        content: text,
+        audioUrl: base64Data, // Store base64 data instead of blob URL
+        timestamp: new Date()
+      };
+
+      addMessage(userMessage);
+      await processAudioWithBackend(audio.file, text);
+    };
+    reader.readAsDataURL(audio.file);
   };
 
   const processAudioWithBackend = async (audioFile: Blob, additionalText?: string) => {
@@ -233,7 +257,7 @@ const ChatGPTInterface: React.FC = () => {
     try {
       console.log('Processing audio with backend...');
       console.log('Current session messages before processing:', currentSession?.messages.length);
-      
+
       const formData = new FormData();
       const audioFileObj = new File([audioFile], 'audio_message.mp3', {
         type: 'audio/mpeg'
@@ -265,7 +289,7 @@ const ChatGPTInterface: React.FC = () => {
 
       const data = await response.json();
       console.log('Backend response received:', data);
-      
+
       // Use backend URL directly instead of creating blob URL
       const backendAudioUrl = data.audio_url ? `http://localhost:5000${data.audio_url}` : null;
       console.log('Backend audio URL:', backendAudioUrl);
@@ -354,14 +378,20 @@ const ChatGPTInterface: React.FC = () => {
   };
 
   const attachAudioToInput = (audioFile: Blob, fileName: string) => {
+    // Create a temporary blob URL for preview (will be cleaned up)
+    const blobUrl = URL.createObjectURL(audioFile);
     setAttachedAudio({
       file: audioFile,
-      url: '', // Don't create blob URL
+      url: blobUrl, // Temporary URL for preview
       name: fileName
     });
   };
 
   const removeAttachedAudio = () => {
+    // Clean up the blob URL to prevent memory leaks
+    if (attachedAudio?.url) {
+      URL.revokeObjectURL(attachedAudio.url);
+    }
     setAttachedAudio(null);
   };
 
@@ -392,20 +422,10 @@ const ChatGPTInterface: React.FC = () => {
 
       case 'audio':
         return (
-          <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-            <div className="flex items-center space-x-2">
-              <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-full">
-                <Volume2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                  Audio Message
-                </p>
-                <p className="text-xs text-blue-600 dark:text-blue-400">
-                  Audio file uploaded successfully
-                </p>
-              </div>
-            </div>
+          <div>
+            {msg.content && msg.content.trim() !== '' && (
+              <AudioPlayer audioUrl={msg.content} />
+            )}
           </div>
         );
 
@@ -415,23 +435,11 @@ const ChatGPTInterface: React.FC = () => {
             <div className="prose prose-sm max-w-none">
               <p className="mb-0 whitespace-pre-wrap">{msg.content}</p>
             </div>
-            <div className="border-t border-blue-200 pt-3">
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <div className="flex items-center space-x-2">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-full">
-                    <Volume2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                      Audio Message
-                    </p>
-                    <p className="text-xs text-blue-600 dark:text-blue-400">
-                      Audio file uploaded successfully
-                    </p>
-                  </div>
-                </div>
+            {msg.audioUrl && msg.audioUrl.trim() !== '' && (
+              <div className="border-t border-blue-200 pt-3">
+                <AudioPlayer audioUrl={msg.audioUrl} />
               </div>
-            </div>
+            )}
           </div>
         );
 
