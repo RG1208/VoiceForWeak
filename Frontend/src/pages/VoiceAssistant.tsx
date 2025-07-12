@@ -509,21 +509,7 @@ const ChatGPTInterface: React.FC = () => {
               </div>
             )}
 
-            {msg.formattedOutput && (
-              <div className="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-lg border border-indigo-300 dark:border-indigo-700 mt-4">
-                <div className="flex items-center space-x-2 mb-3">
-                  <FileText className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
-                  <span className="text-sm font-medium text-indigo-800 dark:text-indigo-200">
-                    Complete Analysis Report
-                  </span>
-                </div>
-                <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border border-indigo-200 dark:border-indigo-600">
-                  <pre className="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono leading-relaxed">
-                    {msg.formattedOutput}
-                  </pre>
-                </div>
-              </div>
-            )}
+
 
             {msg.ipcSections && msg.ipcSections.length > 0 && (
               <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-300 dark:border-purple-700 mt-4">
