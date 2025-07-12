@@ -20,6 +20,7 @@ export type Message = {
     pdfEnglishUrl?: string;
     pdfRegionalUrl?: string;
     transcribedText?: string;
+    formattedOutput?: string;
 };
 
 

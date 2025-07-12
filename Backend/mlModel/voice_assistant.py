@@ -12,6 +12,8 @@ from deep_translator import GoogleTranslator   # type: ignore
 import datetime
 from langdetect import detect  # type: ignore
 import subprocess
+import smtplib
+from email.message import EmailMessage
 
 # ✅ Auto-install fonts for regional language PDF support
 def install_fonts():
@@ -36,8 +38,9 @@ translator_indic = IndicTranslator()
 
 # Load CSVs
 BASE_DIR = os.path.dirname(__file__)
-df_queries = pd.read_csv(os.path.join(BASE_DIR, "VoiceForWeak_Queries.csv"))
-df_sections = pd.read_csv(os.path.join(BASE_DIR, "VoiceForWeak_IPC_Sections.csv"))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+df_queries = pd.read_csv(os.path.join(DATA_DIR, "VoiceForWeak_Queries.csv"))
+df_sections = pd.read_csv(os.path.join(DATA_DIR, "VoiceForWeak_IPC_Sections.csv"))
 
 query_columns = [f"Query{i}" for i in range(1, 11)]
 all_queries, ipc_mapping = [], []
@@ -62,7 +65,15 @@ def classify_ipc(text, top_k=3):
     for idx in top_indices:
         section = ipc_mapping[idx]
         info = df_sections[df_sections['IPC Section'] == section].iloc[0].to_dict()
-        top_sections.append(info)
+        top_sections.append({
+            "IPC_Section": section,
+            "Name": info['Name'],
+            "Description": info['Description'],
+            "Punishment": info['Punishment'],
+            "Cognizability": info['Cognizable/Non-Cognizable'],
+            "Bailability": info['Bailable/Non-Bailable'],
+            "Category": info['Category']
+        })
     return top_sections
 
 def speak_text(text, original_lang, filename="ipc_output.mp3"):
@@ -71,9 +82,12 @@ def speak_text(text, original_lang, filename="ipc_output.mp3"):
         "ta": "ta", "bn": "bn", "pa": "pa"
     }
     lang_code = gtts_lang_map.get(original_lang, "en")
-    tts = gTTS(text=text, lang=lang_code)
-    tts.save(filename)
-    return filename
+    try:
+        tts = gTTS(text=text, lang=lang_code)
+        tts.save(filename)
+        return filename
+    except Exception as e:
+        return None
 
 def create_letter_pdf(user_name, user_location, details, section_data, other_sections=None,
                       gender="Male", age="30", phone="NA", id_number="NA", email="NA",
@@ -85,12 +99,12 @@ def create_letter_pdf(user_name, user_location, details, section_data, other_sec
         Current_Date=datetime.date.today().strftime("%d-%m-%Y"),
         Police_Station_or_Department_Name="Concerned Police Station",
         District_City=user_location,
-        IPC_Section_Number=section_data['IPC Section'],
+        IPC_Section_Number=section_data['IPC_Section'],
         IPC_Section_Name=section_data['Name'],
         IPC_Section_Description=section_data['Description'],
         Punishment=section_data['Punishment'],
-        Cognizability=section_data['Cognizable/Non-Cognizable'],
-        Bailability=section_data['Bailable/Non-Bailable'],
+        Cognizability=section_data['Cognizability'],
+        Bailability=section_data['Bailability'],
         Offence_Category=section_data['Category'],
         Full_Name=user_name,
         Age=age,
@@ -135,6 +149,26 @@ def conditional_translate(text, target_lang):
     except:
         return text
 
+def send_email_with_attachments(recipient, subject, body, attachments):
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['From'] = "youremail@gmail.com"  # replace
+    msg['To'] = recipient
+    msg.set_content(body)
+
+    for file_path in attachments:
+        with open(file_path, "rb") as f:
+            file_data = f.read()
+            msg.add_attachment(file_data, maintype="application", subtype="pdf", filename=os.path.basename(file_path))
+
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login("youremail@gmail.com", "your_app_password")  # ⚠️ Use App Password
+            smtp.send_message(msg)
+        return True
+    except Exception as e:
+        return False
+
 def process_audio_pipeline(audio_path, user_details, output_dir="static"):
     # ✅ Install fonts before PDF generation
     install_fonts()
@@ -146,21 +180,89 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
     other_sections = ipc_sections[1:] if len(ipc_sections) > 1 else []
 
     translator = GoogleTranslator(source='auto', target=original_lang)
+    
+    # ✅ Enhanced IPC Section Information in Regional Language
     translated_sections = []
-    for section in ipc_sections:
-        block = (f"IPC Section: {section['IPC Section']} - {section['Name']}. "
-                 f"Description: {section['Description']}. "
-                 f"Punishment: {section['Punishment']}. "
-                 f"Bailable: {section['Bailable/Non-Bailable']}. "
-                 f"Cognizable: {section['Cognizable/Non-Cognizable']}. "
-                 f"Category: {section['Category']}.")
-        translated_sections.append(translator.translate(block))
+    detailed_ipc_info = []
+    formatted_output = []
+    
+    # Add header
+    formatted_output.append("=" * 80)
+    formatted_output.append(f"🌐 {translator.translate('Your complaint matches the following IPC sections')} ({original_lang.upper()})")
+    formatted_output.append("=" * 80)
+    
+    for i, section in enumerate(ipc_sections, 1):
+        # Create detailed regional language explanation with prominent section numbers
+        regional_explanation = {
+            "section_number": i,
+            "ipc_section": section['IPC_Section'],
+            "name": translator.translate(section['Name']),
+            "description": translator.translate(section['Description']),
+            "punishment": translator.translate(section['Punishment']),
+            "bailability": translator.translate(section['Bailability']),
+            "cognizable": translator.translate(section['Cognizability']),
+            "category": translator.translate(section['Category']),
+            "what_to_do": [
+                translator.translate('File complaint under this section'),
+                translator.translate('Register FIR at police station'),
+                translator.translate('Keep all evidence safe'),
+                translator.translate('Consult a lawyer')
+            ]
+        }
+        
+        # Create formatted text for frontend display
+        formatted_section = f"""
+🔢 {translator.translate('Matched IPC Section')} {i}: {section['IPC_Section']} - {translator.translate(section['Name'])}
 
-    combined_text = "\n\n".join(translated_sections)
+📝 {translator.translate('Description')}: {translator.translate(section['Description'])}
+
+⚖️ {translator.translate('Punishment')}: {translator.translate(section['Punishment'])}
+
+🧷 {translator.translate('Bailability')}: {translator.translate(section['Bailability'])}
+
+🚓 {translator.translate('Cognizable')}: {translator.translate(section['Cognizability'])}
+
+📂 {translator.translate('Category')}: {translator.translate(section['Category'])}
+
+🔍 {translator.translate('What to do')}:
+- {translator.translate('File complaint under this section')}
+- {translator.translate('Register FIR at police station')}
+- {translator.translate('Keep all evidence safe')}
+- {translator.translate('Consult a lawyer')}
+"""
+        formatted_output.append(formatted_section)
+        formatted_output.append("-" * 80)
+        
+        # Create audio block for TTS
+        audio_block = (f"IPC Section: {section['IPC_Section']} - {section['Name']}. "
+                      f"Description: {section['Description']}. "
+                      f"Punishment: {section['Punishment']}. "
+                      f"Bailable: {section['Bailability']}. "
+                      f"Cognizable: {section['Cognizability']}. "
+                      f"Category: {section['Category']}.")
+        
+        translated_audio_block = translator.translate(audio_block)
+        translated_sections.append(translated_audio_block)
+        detailed_ipc_info.append(regional_explanation)
+
+    # ✅ Generate comprehensive audio with all IPC details in regional language
+    comprehensive_audio_text = f"""
+{translator.translate('According to your complaint, the following IPC sections apply:')}
+
+{chr(10).join(translated_sections)}
+
+{translator.translate('Please take the following steps:')}
+1. {translator.translate('File complaint at nearest police station')}
+2. {translator.translate('Keep all evidence safe')}
+3. {translator.translate('Get legal advice from a lawyer')}
+4. {translator.translate('Ensure your safety')}
+5. {translator.translate('Keep copy of FIR')}
+"""
+    
     os.makedirs(output_dir, exist_ok=True)
-    audio_file = speak_text(combined_text, original_lang, os.path.join(output_dir, "ipc_output.mp3"))
+    audio_file = speak_text(comprehensive_audio_text, original_lang, os.path.join(output_dir, "ipc_output.mp3"))
 
-    # Generate PDFs
+    # ✅ Generate detailed PDFs with enhanced information
     pdf_en = create_letter_pdf(
         conditional_translate(user_details['name'], 'en'),
         conditional_translate(user_details['location'], 'en'),
@@ -181,11 +283,107 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
         original_lang=original_lang, output_file=os.path.join(output_dir, "ipc_letter_regional.pdf")
     )
 
+    # ✅ Create detailed IPC summary in regional language
+    ipc_summary = {
+        "total_sections_found": len(ipc_sections),
+        "main_section": {
+            "section_number": main_section['IPC_Section'],
+            "name": translator.translate(main_section['Name']),
+            "description": translator.translate(main_section['Description']),
+            "punishment": translator.translate(main_section['Punishment']),
+            "bailability": translator.translate(main_section['Bailability']),
+            "cognizable": translator.translate(main_section['Cognizability']),
+            "category": translator.translate(main_section['Category'])
+        },
+        "other_sections": [
+            {
+                "section_number": sec['IPC_Section'],
+                "name": translator.translate(sec['Name']),
+                "description": translator.translate(sec['Description']),
+                "punishment": translator.translate(sec['Punishment']),
+                "bailability": translator.translate(sec['Bailability']),
+                "cognizable": translator.translate(sec['Cognizability']),
+                "category": translator.translate(sec['Category'])
+            }
+            for sec in other_sections
+        ],
+        "recommended_actions": [
+            translator.translate("File complaint at nearest police station"),
+            translator.translate("Keep all evidence safe"),
+            translator.translate("Get legal advice from a lawyer"),
+            translator.translate("Ensure your safety"),
+            translator.translate("Keep copy of FIR")
+        ]
+    }
+
+    # Add summary section to formatted output
+    formatted_output.append("\n" + "=" * 80)
+    formatted_output.append(f"✅ {translator.translate('Processing completed successfully!')}")
+    formatted_output.append("=" * 80)
+    
+    formatted_output.append(f"\n📁 {translator.translate('Generated Files')}:")
+    formatted_output.append(f"🎵 {translator.translate('Audio file')}: {audio_file}")
+    formatted_output.append(f"📄 {translator.translate('English PDF')}: {pdf_en}")
+    formatted_output.append(f"📄 {translator.translate('Regional PDF')}: {pdf_regional}")
+    
+    formatted_output.append(f"\n🌐 {translator.translate('Language Information')}:")
+    formatted_output.append(f"{translator.translate('Detected Language')}: {original_lang}")
+    formatted_output.append(f"{translator.translate('Regional Language')}: {original_lang}")
+    
+    formatted_output.append(f"\n📝 {translator.translate('Transcribed Text')}:")
+    formatted_output.append(f"{text}")
+    
+    formatted_output.append(f"\n📊 {translator.translate('IPC Summary')}:")
+    formatted_output.append(f"{translator.translate('Total IPC Sections Found')}: {len(ipc_sections)}")
+    formatted_output.append(f"{translator.translate('Main Section')}: {ipc_sections[0]['IPC_Section']} - {translator.translate(ipc_sections[0]['Name'])}")
+    
+    if len(ipc_sections) > 1:
+        formatted_output.append(f"{translator.translate('Other Sections')}: {len(ipc_sections) - 1} {translator.translate('additional sections found')}")
+    
+    formatted_output.append(f"\n🔍 {translator.translate('Recommended Actions')}:")
+    for i, action in enumerate(ipc_summary['recommended_actions'], 1):
+        formatted_output.append(f"{i}. {action}")
+    
+    # Join all formatted output
+    complete_formatted_output = "\n".join(formatted_output)
+    
     return {
-        "audio_file": audio_file,
-        "pdf_english": pdf_en,
-        "pdf_regional": pdf_regional,
+        "success": True,
+        "audio_url": audio_file.replace("static/", "/static/") if audio_file else None,
+        "pdf_english_url": pdf_en.replace("static/", "/static/") if pdf_en else None,
+        "pdf_regional_url": pdf_regional.replace("static/", "/static/") if pdf_regional else None,
+        "matched_sections": [section['IPC_Section'] for section in ipc_sections],
+        "translated_texts": translated_sections,
         "ipc_sections": ipc_sections,
         "language": original_lang,
-        "transcribed_text": text
+        "transcribed_text": text,
+        "formatted_output": complete_formatted_output,
+        "detailed_ipc_info": detailed_ipc_info,
+        "ipc_summary": ipc_summary
     }
+
+# Main execution function for testing
+def main():
+    # ✅ Install fonts
+    install_fonts()
+    
+    # Example usage
+    audio_path = "test_audio.mp3"  # Replace with actual audio file
+    user_details = {
+        'name': 'John Doe',
+        'location': 'Mumbai, Maharashtra',
+        'gender': 'Male',
+        'age': '30',
+        'phone': '1234567890',
+        'id_number': 'A123456789',
+        'email': 'john.doe@example.com'
+    }
+    
+    try:
+        result = process_audio_pipeline(audio_path, user_details)
+        return result
+    except Exception as e:
+        return {"error": str(e)}
+
+if __name__ == "__main__":
+    main()

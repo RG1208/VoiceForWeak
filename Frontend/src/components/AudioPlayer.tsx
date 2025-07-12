@@ -7,6 +7,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onTimeUpdate }) => 
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [volume, setVolume] = useState(1);
+    const [error, setError] = useState<string | null>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
@@ -20,20 +21,28 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onTimeUpdate }) => 
 
         const handleLoadedMetadata = () => {
             setDuration(audio.duration);
+            setError(null);
         };
 
         const handleEnded = () => {
             setIsPlaying(false);
         };
 
+        const handleError = () => {
+            setError('Failed to load audio file');
+            setIsPlaying(false);
+        };
+
         audio.addEventListener('timeupdate', handleTimeUpdate);
         audio.addEventListener('loadedmetadata', handleLoadedMetadata);
         audio.addEventListener('ended', handleEnded);
+        audio.addEventListener('error', handleError);
 
         return () => {
             audio.removeEventListener('timeupdate', handleTimeUpdate);
             audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
             audio.removeEventListener('ended', handleEnded);
+            audio.removeEventListener('error', handleError);
         };
     }, [onTimeUpdate]);
 
@@ -80,6 +89,47 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onTimeUpdate }) => 
         a.download = 'audio.mp3';
         a.click();
     };
+
+    // Handle empty or invalid audio URLs
+    if (!audioUrl || audioUrl.trim() === '') {
+        return (
+            <div className="bg-gray-50 dark:bg-gray-900/20 p-4 rounded-xl border border-gray-200 dark:border-gray-800">
+                <div className="flex items-center space-x-2">
+                    <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full">
+                        <Volume2 className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                    </div>
+                    <div>
+                        <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                            Audio processing in progress...
+                        </p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">
+                            Please wait while we generate the audio response
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-xl border border-red-200 dark:border-red-800">
+                <div className="flex items-center space-x-2">
+                    <div className="p-2 bg-red-100 dark:bg-red-800 rounded-full">
+                        <Volume2 className="h-4 w-4 text-red-600 dark:text-red-400" />
+                    </div>
+                    <div>
+                        <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                            Audio file not available
+                        </p>
+                        <p className="text-xs text-red-600 dark:text-red-400">
+                            {error}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 p-4 rounded-xl border border-blue-200 dark:border-gray-600 shadow-sm">
