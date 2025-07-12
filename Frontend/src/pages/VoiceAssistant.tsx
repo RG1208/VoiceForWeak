@@ -112,31 +112,38 @@ const ChatGPTInterface: React.FC = () => {
     }
   };
 
-  const updateCurrentSession = (updatedSession: ChatSession) => {
-    setCurrentSession(updatedSession);
-    storageUtils.saveSession(updatedSession);
+  // const updateCurrentSession = (updatedSession: ChatSession) => {
+  //   setCurrentSession(updatedSession);
+  //   storageUtils.saveSession(updatedSession);
 
-    // Update sessions list
-    const updatedSessions = storageUtils.getAllSessions();
-    setChatSessions(updatedSessions);
-  };
+  //   // Update sessions list
+  //   const updatedSessions = storageUtils.getAllSessions();
+  //   setChatSessions(updatedSessions);
+  // };
 
   const addMessage = (message: Message) => {
-    if (!currentSession) return;
-
-    // Check if message already exists to prevent duplicates
-    const messageExists = currentSession.messages.some(m => m.id === message.id);
-    if (messageExists) return;
-
-    const updatedMessages = [...currentSession.messages, message];
-    const updatedSession: ChatSession = {
-      ...currentSession,
-      messages: updatedMessages,
-      lastMessage: message.timestamp,
-      title: updatedMessages.length === 2 ? storageUtils.generateSessionTitle(updatedMessages) : currentSession.title
-    };
-
-    updateCurrentSession(updatedSession);
+    setCurrentSession(prevSession => {
+      if (!prevSession) return null;
+      
+      // Prevent duplicates
+      if (prevSession.messages.some(m => m.id === message.id)) return prevSession;
+      
+      // Always append the new message
+      const updatedMessages = [...prevSession.messages, message];
+      const updatedSession: ChatSession = {
+        ...prevSession,
+        messages: updatedMessages,
+        lastMessage: message.timestamp,
+        title: updatedMessages.length === 2 ? storageUtils.generateSessionTitle(updatedMessages) : prevSession.title
+      };
+      
+      // Save to storage
+      storageUtils.saveSession(updatedSession);
+      setChatSessions(storageUtils.getAllSessions());
+      
+      console.log(`Added message: ${message.sender} - ${message.type} - Total messages: ${updatedMessages.length}`);
+      return updatedSession;
+    });
   };
 
   const handleTextSubmit = async (e: React.FormEvent) => {
@@ -151,7 +158,7 @@ const ChatGPTInterface: React.FC = () => {
     setTextInput('');
     setAttachedAudio(null);
 
-    // Send the message
+    // Send the message and wait for it to be added before processing
     if (currentAudio && currentText) {
       await sendCombinedMessage(currentText, currentAudio);
     } else if (currentAudio) {
@@ -224,6 +231,9 @@ const ChatGPTInterface: React.FC = () => {
   const processAudioWithBackend = async (audioFile: Blob, additionalText?: string) => {
     setTyping(true);
     try {
+      console.log('Processing audio with backend...');
+      console.log('Current session messages before processing:', currentSession?.messages.length);
+      
       const formData = new FormData();
       const audioFileObj = new File([audioFile], 'audio_message.mp3', {
         type: 'audio/mpeg'
@@ -254,7 +264,11 @@ const ChatGPTInterface: React.FC = () => {
       }
 
       const data = await response.json();
-      const backendAudioUrl = `http://localhost:5000${data.audio_url}`;
+      console.log('Backend response received:', data);
+      
+      // Use backend URL directly instead of creating blob URL
+      const backendAudioUrl = data.audio_url ? `http://localhost:5000${data.audio_url}` : null;
+      console.log('Backend audio URL:', backendAudioUrl);
 
       // Get the last user message ID to ensure proper sequencing
       const lastUserMessageId = currentSession?.messages[currentSession.messages.length - 1]?.id || Date.now();
@@ -263,7 +277,7 @@ const ChatGPTInterface: React.FC = () => {
         id: lastUserMessageId + 1, // Ensure it comes right after user message
         sender: 'bot',
         type: 'audio-response',
-        content: backendAudioUrl,
+        content: backendAudioUrl || '', // Use backend URL or empty string
         timestamp: new Date(),
         matchedSections: data.matched_sections || [],
         translatedTexts: data.translated_texts || [],
@@ -271,10 +285,13 @@ const ChatGPTInterface: React.FC = () => {
         language: data.language || '',
         pdfEnglishUrl: data.pdf_english_url || '',
         pdfRegionalUrl: data.pdf_regional_url || '',
-        transcribedText: data.transcribed_text || ''
+        transcribedText: data.transcribed_text || '',
+        formattedOutput: data.formatted_output || ''
       };
 
+      console.log('Adding bot response to session...');
       addMessage(botResponse);
+      console.log('Bot response added. Session messages after:', currentSession?.messages.length);
     } catch (error) {
       console.error('Upload error:', error);
       const errorMessage: Message = {
@@ -337,19 +354,15 @@ const ChatGPTInterface: React.FC = () => {
   };
 
   const attachAudioToInput = (audioFile: Blob, fileName: string) => {
-    const audioUrl = URL.createObjectURL(audioFile);
     setAttachedAudio({
       file: audioFile,
-      url: audioUrl,
+      url: '', // Don't create blob URL
       name: fileName
     });
   };
 
   const removeAttachedAudio = () => {
-    if (attachedAudio) {
-      URL.revokeObjectURL(attachedAudio.url);
-      setAttachedAudio(null);
-    }
+    setAttachedAudio(null);
   };
 
   const copyMessage = (content: string) => {
@@ -378,7 +391,23 @@ const ChatGPTInterface: React.FC = () => {
         );
 
       case 'audio':
-        return <AudioPlayer audioUrl={msg.content} />;
+        return (
+          <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="flex items-center space-x-2">
+              <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-full">
+                <Volume2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                  Audio Message
+                </p>
+                <p className="text-xs text-blue-600 dark:text-blue-400">
+                  Audio file uploaded successfully
+                </p>
+              </div>
+            </div>
+          </div>
+        );
 
       case 'combined':
         return (
@@ -386,18 +415,32 @@ const ChatGPTInterface: React.FC = () => {
             <div className="prose prose-sm max-w-none">
               <p className="mb-0 whitespace-pre-wrap">{msg.content}</p>
             </div>
-            {msg.audioUrl && (
-              <div className="border-t border-blue-200 pt-3">
-                <AudioPlayer audioUrl={msg.audioUrl} />
+            <div className="border-t border-blue-200 pt-3">
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                <div className="flex items-center space-x-2">
+                  <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-full">
+                    <Volume2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                      Audio Message
+                    </p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400">
+                      Audio file uploaded successfully
+                    </p>
+                  </div>
+                </div>
               </div>
-            )}
+            </div>
           </div>
         );
 
       case 'audio-response':
         return (
           <div className="space-y-4">
-            <AudioPlayer audioUrl={msg.content} />
+            {msg.content && msg.content.trim() !== '' && (
+              <AudioPlayer audioUrl={msg.content} />
+            )}
 
             {msg.matchedSections && msg.matchedSections.length > 0 && (
               <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
@@ -463,6 +506,22 @@ const ChatGPTInterface: React.FC = () => {
               <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-300 dark:border-yellow-700">
                 <h3 className="font-semibold text-yellow-700 dark:text-yellow-300 mb-2">Transcribed Text:</h3>
                 <p className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap">{msg.transcribedText}</p>
+              </div>
+            )}
+
+            {msg.formattedOutput && (
+              <div className="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-lg border border-indigo-300 dark:border-indigo-700 mt-4">
+                <div className="flex items-center space-x-2 mb-3">
+                  <FileText className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                  <span className="text-sm font-medium text-indigo-800 dark:text-indigo-200">
+                    Complete Analysis Report
+                  </span>
+                </div>
+                <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border border-indigo-200 dark:border-indigo-600">
+                  <pre className="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono leading-relaxed">
+                    {msg.formattedOutput}
+                  </pre>
+                </div>
               </div>
             )}
 
