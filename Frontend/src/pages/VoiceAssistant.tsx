@@ -3,10 +3,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Mic, Send, Plus, User, Bot, Copy,
-  Sidebar, X,
+  RotateCcw, X,
   FileText, Hash, Languages, Clock,
   LayoutDashboard, Volume2, Trash2,
   ChevronDown, LogOut,
+  Sidebar,
 } from 'lucide-react';
 import AudioPlayer from '../components/AudioPlayer';
 import ChatSidebar from '../components/ChatSidebar';
@@ -40,6 +41,9 @@ const ChatGPTInterface: React.FC = () => {
     return saved ? JSON.parse(saved) : false;
   });
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [editingMessageId, setEditingMessageId] = useState<number | null>(null);
+  const [editText, setEditText] = useState('');
+  const [editAudioFile, setEditAudioFile] = useState<AttachedAudio | null>(null);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -168,11 +172,11 @@ const ChatGPTInterface: React.FC = () => {
   // };
 
   const addMessage = (message: Message) => {
-    setCurrentSession(prevSession => {
+    setCurrentSession((prevSession: ChatSession | null) => {
       if (!prevSession) return null;
 
       // Prevent duplicates
-      if (prevSession.messages.some(m => m.id === message.id)) return prevSession;
+      if (prevSession.messages.some((m: Message) => m.id === message.id)) return prevSession;
 
       // Always append the new message
       const updatedMessages = [...prevSession.messages, message];
@@ -578,6 +582,62 @@ const ChatGPTInterface: React.FC = () => {
     }
   };
 
+  // Handler to start editing
+  const handleEdit = (msg: Message) => {
+    setEditingMessageId(msg.id);
+    setEditText(msg.content);
+    if (msg.type === 'audio') {
+      setEditAudioFile({ file: new Blob(), url: msg.content, name: 'Audio' });
+    } else if (msg.type === 'combined') {
+      setEditAudioFile(msg.audioUrl ? { file: new Blob(), url: msg.audioUrl, name: 'Audio' } : null);
+    } else {
+      setEditAudioFile(null);
+    }
+  };
+
+  // Handler to save edited message
+  const handleSaveEdit = async (msg: Message) => {
+    if (!currentSession) return;
+    const updatedMessages = currentSession.messages.map((m: Message) => {
+      if (m.id === msg.id) {
+        if (msg.type === 'audio') {
+          return { ...m, content: editAudioFile?.url || '' };
+        } else if (msg.type === 'combined') {
+          return { ...m, content: editText, audioUrl: editAudioFile?.url || '' };
+        } else {
+          return { ...m, content: editText };
+        }
+      }
+      return m;
+    });
+    const updatedSession = { ...currentSession, messages: updatedMessages };
+    setCurrentSession(updatedSession);
+    storageUtils.saveSession(updatedSession);
+    setEditingMessageId(null);
+    setEditText('');
+    setEditAudioFile(null);
+  };
+
+  // Handler to cancel editing
+  const handleCancelEdit = () => {
+    setEditingMessageId(null);
+    setEditText('');
+    setEditAudioFile(null);
+  };
+
+  // Handler to reload/resend a message
+  const handleReload = async (msg: Message) => {
+    if (msg.type === 'text') {
+      await sendTextMessage(msg.content);
+    } else if (msg.type === 'audio' && msg.content) {
+      // For audio, we can't resend the blob, so show a warning or handle accordingly
+      alert('Reload for audio messages is not supported.');
+    } else if (msg.type === 'combined') {
+      // For combined, we can't resend the audio, so only resend text
+      await sendTextMessage(msg.content);
+    }
+  };
+
   if (!currentSession) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
@@ -671,23 +731,93 @@ const ChatGPTInterface: React.FC = () => {
                     <div className={`${msg.type === 'text' ? 'p-4 rounded-2xl' : 'p-3 rounded-xl'} ${msg.sender === 'user'
                       ? 'bg-blue-600 text-white'
                       : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'}`}>
-                      {renderMessage(msg)}
+                      {/* Edit mode for user messages */}
+                      {msg.sender === 'user' && editingMessageId === msg.id ? (
+                        <div>
+                          {/* Textarea for text or combined messages */}
+                          {(msg.type === 'text' || msg.type === 'combined') && (
+                            <textarea
+                              className="w-full p-2 rounded border border-gray-300 text-black"
+                              value={editText}
+                              onChange={e => setEditText(e.target.value)}
+                              rows={2}
+                            />
+                          )}
+                          {/* Audio upload for audio or combined messages */}
+                          {(msg.type === 'audio' || msg.type === 'combined') && (
+                            <div className="mt-2">
+                              <input
+                                type="file"
+                                accept="audio/*"
+                                onChange={handleAudioUpload}
+                              />
+                              {editAudioFile?.url && (
+                                <div className="mt-2">
+                                  <AudioPlayer audioUrl={editAudioFile.url} />
+                                  <span className="text-xs text-gray-500">{editAudioFile.name}</span>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          <div className="flex space-x-2 mt-2">
+                            <button
+                              className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                              onClick={() => handleSaveEdit(msg)}
+                            >Save</button>
+                            <button
+                              className="px-3 py-1 bg-gray-400 text-white rounded hover:bg-gray-500"
+                              onClick={handleCancelEdit}
+                            >Cancel</button>
+                          </div>
+                        </div>
+                      ) : (
+                        renderMessage(msg)
+                      )}
                     </div>
 
-                    <div className="flex items-center justify-between mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="flex items-center space-x-2">
-                        <Clock className="h-3 w-3 text-gray-500 dark:text-gray-400" />
-                        <span className="text-xs text-gray-500 dark:text-gray-400">{formatTime(msg.timestamp)}</span>
-                      </div>
-                      {msg.type === 'text' && (
+                    {/* Action buttons for user messages */}
+                    {msg.sender === 'user' && (
+                      <div className="flex items-center space-x-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button
                           onClick={() => copyMessage(msg.content)}
                           className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                          title="Copy"
                         >
-                          <Copy className="h-3 w-3 text-gray-500 dark:text-gray-400" />
+                          <Copy className="h-4 w-4 text-gray-500 dark:text-gray-400" />
                         </button>
-                      )}
-                    </div>
+                        <button
+                          onClick={() => handleReload(msg)}
+                          className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                          title="Reload"
+                        >
+                          <RotateCcw className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                        </button>
+                        <button
+                          onClick={() => handleEdit(msg)}
+                          className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                          title="Edit"
+                        >
+                          <FileText className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                        </button>
+                      </div>
+                    )}
+                    {/* Existing timestamp and copy for bot messages */}
+                    {msg.sender !== 'user' && (
+                      <div className="flex items-center justify-between mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex items-center space-x-2">
+                          <Clock className="h-3 w-3 text-gray-500 dark:text-gray-400" />
+                          <span className="text-xs text-gray-500 dark:text-gray-400">{formatTime(msg.timestamp)}</span>
+                        </div>
+                        {msg.type === 'text' && (
+                          <button
+                            onClick={() => copyMessage(msg.content)}
+                            className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                          >
+                            <Copy className="h-3 w-3 text-gray-500 dark:text-gray-400" />
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

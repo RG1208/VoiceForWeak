@@ -21,6 +21,7 @@ export type Message = {
     pdfRegionalUrl?: string;
     transcribedText?: string;
     formattedOutput?: string;
+    audioFile?: Blob;
 };
 
 
