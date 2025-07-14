@@ -22,6 +22,7 @@ export type Message = {
     transcribedText?: string;
     formattedOutput?: string;
     audioFile?: Blob;
+    audioBase64?: string; // base64 string for persistent audio
 };
 
 
