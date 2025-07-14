@@ -99,12 +99,12 @@ def create_letter_pdf(user_name, user_location, details, section_data, other_sec
         Current_Date=datetime.date.today().strftime("%d-%m-%Y"),
         Police_Station_or_Department_Name="Concerned Police Station",
         District_City=user_location,
-        IPC_Section_Number=section_data['IPC_Section'],
+        IPC_Section_Number=section_data['IPC Section'],
         IPC_Section_Name=section_data['Name'],
         IPC_Section_Description=section_data['Description'],
         Punishment=section_data['Punishment'],
-        Cognizability=section_data['Cognizability'],
-        Bailability=section_data['Bailability'],
+        Cognizability=section_data['Cognizable/Non-Cognizable'],
+        Bailability=section_data['Bailable/Non-Bailable'],
         Offence_Category=section_data['Category'],
         Full_Name=user_name,
         Age=age,
@@ -234,11 +234,11 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
         formatted_output.append("-" * 80)
         
         # Create audio block for TTS
-        audio_block = (f"IPC Section: {section['IPC_Section']} - {section['Name']}. "
+        audio_block = (f"IPC Section: {section['IPC Section']} - {section['Name']}. "
                       f"Description: {section['Description']}. "
                       f"Punishment: {section['Punishment']}. "
-                      f"Bailable: {section['Bailability']}. "
-                      f"Cognizable: {section['Cognizability']}. "
+                      f"Bailable: {section['Bailable/Non-Bailable']}. "
+                      f"Cognizable: {section['Cognizable/Non-Cognizable']}. "
                       f"Category: {section['Category']}.")
         
         translated_audio_block = translator.translate(audio_block)
@@ -287,22 +287,22 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
     ipc_summary = {
         "total_sections_found": len(ipc_sections),
         "main_section": {
-            "section_number": main_section['IPC_Section'],
+            "section_number": main_section['IPC Section'],
             "name": translator.translate(main_section['Name']),
             "description": translator.translate(main_section['Description']),
             "punishment": translator.translate(main_section['Punishment']),
-            "bailability": translator.translate(main_section['Bailability']),
-            "cognizable": translator.translate(main_section['Cognizability']),
+            "bailability": translator.translate(main_section['Bailable/Non-Bailable']),
+            "cognizable": translator.translate(main_section['Cognizable/Non-Cognizable']),
             "category": translator.translate(main_section['Category'])
         },
         "other_sections": [
             {
-                "section_number": sec['IPC_Section'],
+                "section_number": sec['IPC Section'],
                 "name": translator.translate(sec['Name']),
                 "description": translator.translate(sec['Description']),
                 "punishment": translator.translate(sec['Punishment']),
-                "bailability": translator.translate(sec['Bailability']),
-                "cognizable": translator.translate(sec['Cognizability']),
+                "bailability": translator.translate(sec['Bailable/Non-Bailable']),
+                "cognizable": translator.translate(sec['Cognizable/Non-Cognizable']),
                 "category": translator.translate(sec['Category'])
             }
             for sec in other_sections
@@ -335,7 +335,7 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
     
     formatted_output.append(f"\n📊 {translator.translate('IPC Summary')}:")
     formatted_output.append(f"{translator.translate('Total IPC Sections Found')}: {len(ipc_sections)}")
-    formatted_output.append(f"{translator.translate('Main Section')}: {ipc_sections[0]['IPC_Section']} - {translator.translate(ipc_sections[0]['Name'])}")
+    formatted_output.append(f"{translator.translate('Main Section')}: {ipc_sections[0]['IPC Section']} - {translator.translate(ipc_sections[0]['Name'])}")
     
     if len(ipc_sections) > 1:
         formatted_output.append(f"{translator.translate('Other Sections')}: {len(ipc_sections) - 1} {translator.translate('additional sections found')}")
@@ -352,7 +352,7 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
         "audio_url": audio_file.replace("static/", "/static/") if audio_file else None,
         "pdf_english_url": pdf_en.replace("static/", "/static/") if pdf_en else None,
         "pdf_regional_url": pdf_regional.replace("static/", "/static/") if pdf_regional else None,
-        "matched_sections": [section['IPC_Section'] for section in ipc_sections],
+        "matched_sections": [section['IPC Section'] for section in ipc_sections],
         "translated_texts": translated_sections,
         "ipc_sections": ipc_sections,
         "language": original_lang,

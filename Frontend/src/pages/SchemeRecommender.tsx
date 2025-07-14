@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
+import axios from 'axios';
 
 interface FormData {
   age: string;
@@ -31,15 +33,61 @@ const SchemeRecommender: React.FC = () => {
     forOrphans: '',
   });
 
+  const [recommendations, setRecommendations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const mapIncomeRange = (range: string): number => {
+    switch (range) {
+      case 'below-27000':
+        return 25000;
+      case '27000-1lakh':
+        return 80000;
+      case 'above-1lakh':
+        return 200000;
+      default:
+        return 99999999; // For "null" or blank
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // TODO: Integrate with AI Recommendation API
+    setLoading(true);
+    setError(null);
+    setRecommendations([]);
+
+    const payload = {
+      age: parseInt(formData.age),
+      gender: formData.gender,
+      caste: [formData.caste],
+      income: mapIncomeRange(formData.income),
+      occupation: formData.occupation
+        .split(',')
+        .map(word => word.trim().toLowerCase())
+        .filter(Boolean),
+      disability_required: formData.disability,
+      marital_status: formData.maritalStatus,
+      religion: formData.religion,
+      state: formData.state,
+      education_required: formData.education,
+      minority_status: formData.minorityStatus,
+      for_orphans: formData.forOrphans,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/schemes/recommend', payload);
+      setRecommendations(response.data.recommendations || []);
+    } catch (err: any) {
+      setError('Failed to fetch recommendations. Please try again.');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,6 +98,10 @@ const SchemeRecommender: React.FC = () => {
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* --- All your input fields --- */}
+          {/* Paste all the input fields from your current form here (unchanged) */}
+          {/* --- Paste until the Submit button --- */}
+
           {/* Age */}
           <div>
             <label className="block mb-2 font-medium">Age</label>
@@ -62,7 +114,6 @@ const SchemeRecommender: React.FC = () => {
               className="w-full border rounded px-3 py-2"
             />
           </div>
-
 
           {/* Gender */}
           <div>
@@ -199,11 +250,39 @@ const SchemeRecommender: React.FC = () => {
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition"
+              disabled={loading}
             >
-              Get Scheme Recommendations
+              {loading ? 'Loading...' : 'Get Scheme Recommendations'}
             </button>
           </div>
         </form>
+
+        {/* Result section */}
+        {error && <p className="text-red-600 mt-4">{error}</p>}
+
+        {recommendations.length > 0 && (
+          <div className="mt-10">
+            <h2 className="text-2xl font-semibold mb-4">Recommended Schemes:</h2>
+            <ul className="space-y-4">
+              {recommendations.map((scheme, index) => (
+                <li key={index} className="bg-gray-100 rounded-lg p-4 shadow">
+                  <h3 className="text-xl font-bold">{scheme['Scheme Name']}</h3>
+                  <p className="text-gray-700 mt-2">{scheme['Description']}</p>
+                  {scheme['Apply Link'] && (
+                    <a
+                      href={scheme['Apply Link']}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline mt-2 block"
+                    >
+                      Apply Here
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

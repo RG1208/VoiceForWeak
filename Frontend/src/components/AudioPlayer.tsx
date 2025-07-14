@@ -29,7 +29,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onTimeUpdate }) => 
         };
 
         const handleError = () => {
-            setError('Failed to load audio file');
+            setError('Audio file not available or has expired');
             setIsPlaying(false);
         };
 
@@ -44,7 +44,28 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onTimeUpdate }) => 
             audio.removeEventListener('ended', handleEnded);
             audio.removeEventListener('error', handleError);
         };
-    }, [onTimeUpdate]);
+    }, [onTimeUpdate, audioUrl]);
+
+    // Check if URL is valid when component mounts or URL changes
+    useEffect(() => {
+        if (!audioUrl || audioUrl.trim() === '') {
+            setError('No audio URL provided');
+            return;
+        }
+
+        // Check if it's a blob URL and might be invalid
+        if (audioUrl.startsWith('blob:')) {
+            // Test if the blob URL is still valid
+            const testAudio = new Audio();
+            testAudio.onerror = () => {
+                setError('Audio file has expired or is not available');
+            };
+            testAudio.onload = () => {
+                setError(null);
+            };
+            testAudio.src = audioUrl;
+        }
+    }, [audioUrl]);
 
     const togglePlayPause = () => {
         const audio = audioRef.current;
@@ -100,10 +121,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl, onTimeUpdate }) => 
                     </div>
                     <div>
                         <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                            Audio processing in progress...
+                            No audio available
                         </p>
                         <p className="text-xs text-gray-600 dark:text-gray-400">
-                            Please wait while we generate the audio response
+                            Audio file is not available or has expired
                         </p>
                     </div>
                 </div>

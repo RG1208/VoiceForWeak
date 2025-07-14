@@ -6,7 +6,6 @@ from flask_jwt_extended import JWTManager  # type: ignore
 from utils.auth import login_bp, register_bp
 from routes.voice_routes import voice_bp
 import os
-
 app = Flask(__name__)
 app.config.from_object(Config)
 

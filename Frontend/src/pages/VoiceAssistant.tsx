@@ -1,10 +1,12 @@
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Mic, Send, Plus, User, Bot, Copy,
   Sidebar, X,
   FileText, Hash, Languages, Clock,
   LayoutDashboard, Volume2, Trash2,
+  ChevronDown, LogOut,
 } from 'lucide-react';
 import AudioPlayer from '../components/AudioPlayer';
 import ChatSidebar from '../components/ChatSidebar';
@@ -44,6 +46,22 @@ const ChatGPTInterface: React.FC = () => {
   const chatEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  const navigate = useNavigate();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [username, setUsername] = useState('User');
+
+  useEffect(() => {
+    const storedName = localStorage.getItem('name');
+    if (storedName) setUsername(storedName);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('name');
+    navigate('/login');
+  };
+
   // Initialize app with stored data
   useEffect(() => {
     const sessions = storageUtils.getAllSessions();
@@ -64,9 +82,16 @@ const ChatGPTInterface: React.FC = () => {
     }
   }, []);
 
-  // Save dark mode preference
+  // Save dark mode preference and apply to document
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
+
+    // Apply dark mode to the document element
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }, [darkMode]);
 
   // Auto-scroll to bottom when messages change
@@ -81,6 +106,10 @@ const ChatGPTInterface: React.FC = () => {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [textInput]);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev: any) => !prev);
+  };
 
   const createNewChat = () => {
     const newSession = storageUtils.createNewSession();
@@ -117,11 +146,11 @@ const ChatGPTInterface: React.FC = () => {
     if (session) {
       const updatedSession = { ...session, title: newTitle };
       storageUtils.saveSession(updatedSession);
-      
+
       // Update sessions list
       const updatedSessions = storageUtils.getAllSessions();
       setChatSessions(updatedSessions);
-      
+
       // Update current session if it's the one being renamed
       if (currentSession?.id === sessionId) {
         setCurrentSession(updatedSession);
@@ -396,14 +425,6 @@ const ChatGPTInterface: React.FC = () => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
-  // const formatFileSize = (bytes: number) => {
-  //   if (bytes === 0) return '0 Bytes';
-  //   const k = 1024;
-  //   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-  //   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  //   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  // };
-
   const renderMessage = (msg: Message) => {
     switch (msg.type) {
       case 'text':
@@ -510,8 +531,6 @@ const ChatGPTInterface: React.FC = () => {
               </div>
             )}
 
-
-
             {msg.ipcSections && msg.ipcSections.length > 0 && (
               <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-300 dark:border-purple-700 mt-4">
                 <h3 className="font-semibold text-purple-700 dark:text-purple-300 mb-3">Matched IPC Sections:</h3>
@@ -571,7 +590,7 @@ const ChatGPTInterface: React.FC = () => {
   }
 
   return (
-    <div className={`h-screen flex ${darkMode ? 'dark' : ''}`}>
+    <div className="h-screen flex bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* Sidebar */}
       <ChatSidebar
         sidebarOpen={sidebarOpen}
@@ -582,26 +601,27 @@ const ChatGPTInterface: React.FC = () => {
         onSelectSession={selectSession}
         onDeleteSession={deleteSession}
         onRenameSession={renameSession}
-        onToggleDarkMode={() => setDarkMode(!darkMode)}
+        onToggleDarkMode={toggleDarkMode}
         formatTime={formatTime}
       />
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col bg-white dark:bg-gray-800 h-screen">
+      <div className="flex-1 flex flex-col bg-white dark:bg-gray-800 h-screen transition-colors duration-300">
         {/* Header */}
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between bg-white dark:bg-gray-800 flex-shrink-0">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between bg-white dark:bg-gray-800 flex-shrink-0 relative">
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
-              {sidebarOpen ? <X className="h-5 w-5" /> : <Sidebar className="h-5 w-5" />}
+              {sidebarOpen ? <X className="h-5 w-5 text-gray-600 dark:text-gray-300" /> : <Sidebar className="h-5 w-5 text-gray-600 dark:text-gray-300" />}
             </button>
             <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-              {currentSession.title}
+              Voice For The Weak
             </h1>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 relative">
+            {/* Dark/Light Mode Toggle */}
             <button
               onClick={() => window.location.href = '/dashboard'}
               className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
@@ -609,19 +629,38 @@ const ChatGPTInterface: React.FC = () => {
               <LayoutDashboard className="h-4 w-4 text-gray-600 dark:text-gray-300" />
               <span className="text-sm text-gray-600 dark:text-gray-300">Dashboard</span>
             </button>
-            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
-              <User className="h-5 w-5 text-white" />
+            {/* User Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setUserMenuOpen((v) => !v)}
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition-colors focus:outline-none"
+              >
+                <User className="h-5 w-5 text-white" />
+                <span className="text-white text-sm font-medium">{username}</span>
+                <ChevronDown className="h-4 w-4 text-white" />
+              </button>
+              {userMenuOpen && (
+                <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+                  <div className="px-4 py-2 text-gray-700 dark:text-gray-200 border-b border-gray-100 dark:border-gray-700">{username}</div>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-b-lg"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" /> Logout
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
           <div className="max-w-4xl mx-auto p-4 space-y-6">
             {currentSession.messages.map((msg) => (
               <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`flex max-w-[85%] ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'} items-start space-x-3`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.sender === 'user' ? 'bg-blue-600 ml-3' : 'bg-gray-600 mr-3'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.sender === 'user' ? 'bg-blue-600 ml-3' : 'bg-gray-600 dark:bg-gray-500 mr-3'}`}>
                     {msg.sender === 'user' ?
                       <User className="h-5 w-5 text-white" /> :
                       <Bot className="h-5 w-5 text-white" />
@@ -631,21 +670,21 @@ const ChatGPTInterface: React.FC = () => {
                   <div className={`group relative ${msg.sender === 'user' ? 'mr-3' : 'ml-3'}`}>
                     <div className={`${msg.type === 'text' ? 'p-4 rounded-2xl' : 'p-3 rounded-xl'} ${msg.sender === 'user'
                       ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'}`}>
+                      : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'}`}>
                       {renderMessage(msg)}
                     </div>
 
                     <div className="flex items-center justify-between mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <div className="flex items-center space-x-2">
-                        <Clock className="h-3 w-3 text-gray-500" />
-                        <span className="text-xs text-gray-500">{formatTime(msg.timestamp)}</span>
+                        <Clock className="h-3 w-3 text-gray-500 dark:text-gray-400" />
+                        <span className="text-xs text-gray-500 dark:text-gray-400">{formatTime(msg.timestamp)}</span>
                       </div>
                       {msg.type === 'text' && (
                         <button
                           onClick={() => copyMessage(msg.content)}
                           className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                         >
-                          <Copy className="h-3 w-3 text-gray-500" />
+                          <Copy className="h-3 w-3 text-gray-500 dark:text-gray-400" />
                         </button>
                       )}
                     </div>
@@ -657,14 +696,14 @@ const ChatGPTInterface: React.FC = () => {
             {typing && (
               <div className="flex justify-start">
                 <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-gray-600 dark:bg-gray-500 flex items-center justify-center flex-shrink-0">
                     <Bot className="h-5 w-5 text-white" />
                   </div>
-                  <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-2xl">
+                  <div className="bg-white dark:bg-gray-700 p-4 rounded-2xl shadow-sm">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -705,7 +744,7 @@ const ChatGPTInterface: React.FC = () => {
               </div>
             )}
 
-            <form onSubmit={handleTextSubmit} className="flex items-end space-x-3">
+            <form onSubmit={handleTextSubmit} className="flex items-center space-x-3">
               <button
                 type="button"
                 onClick={recording ? stopRecording : startRecording}
@@ -734,7 +773,7 @@ const ChatGPTInterface: React.FC = () => {
                   value={textInput}
                   onChange={(e) => setTextInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  className="w-full px-4 py-3 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none min-h-[48px] max-h-32"
+                  className="w-full px-4 py-3 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none min-h-[48px] max-h-32 placeholder-gray-400 dark:placeholder-gray-500"
                   placeholder={
                     attachedAudio
                       ? "Add context text (name, email, etc.) for your audio..."
