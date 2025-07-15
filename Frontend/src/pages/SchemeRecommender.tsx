@@ -61,26 +61,36 @@ const SchemeRecommender: React.FC = () => {
     setError(null);
     setRecommendations([]);
 
-    const payload = {
+    // Compose user_profile as expected by backend
+    const user_profile = {
       age: parseInt(formData.age),
       gender: formData.gender,
-      caste: [formData.caste],
+      caste: formData.caste,
       income: mapIncomeRange(formData.income),
       occupation: formData.occupation
         .split(',')
         .map(word => word.trim().toLowerCase())
         .filter(Boolean),
-      disability_required: formData.disability,
+      disability: formData.disability,
       marital_status: formData.maritalStatus,
       religion: formData.religion,
       state: formData.state,
-      education_required: formData.education,
+      education: formData.education,
       minority_status: formData.minorityStatus,
       for_orphans: formData.forOrphans,
     };
 
+    // Compose user_query (can be a summary or keywords from the form)
+    const user_query = `I am a ${formData.age} year old ${formData.gender}, caste: ${formData.caste}, occupation: ${formData.occupation}, income: ${formData.income}, state: ${formData.state}`;
+
+    const payload = {
+      user_query,
+      user_profile,
+      top_k: 5,
+    };
+
     try {
-      const response = await axios.post('http://localhost:5000/api/schemes/recommend', payload);
+      const response = await axios.post('http://localhost:5000/api/recommend-schemes', payload);
       setRecommendations(response.data.recommendations || []);
     } catch (err: any) {
       setError('Failed to fetch recommendations. Please try again.');
@@ -98,9 +108,6 @@ const SchemeRecommender: React.FC = () => {
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* --- All your input fields --- */}
-          {/* Paste all the input fields from your current form here (unchanged) */}
-          {/* --- Paste until the Submit button --- */}
 
           {/* Age */}
           <div>
@@ -203,14 +210,19 @@ const SchemeRecommender: React.FC = () => {
           {/* State */}
           <div>
             <label className="block mb-2 font-medium">State/UT</label>
-            <input
-              type="text"
+            <select
               name="state"
               value={formData.state}
               onChange={handleChange}
-              placeholder="Enter State/UT"
               className="w-full border rounded px-3 py-2"
-            />
+            >
+              <option value="">Select State/UT</option>
+              <option value="delhi">Delhi</option>
+              <option value="tamil nadu">Tamil Nadu</option>
+              <option value="west bengal">West Bengal</option>
+              <option value="gujarat">Gujarat</option>
+              <option value="punjab">Punjab</option>
+            </select>
           </div>
 
           {/* Education */}
@@ -267,6 +279,12 @@ const SchemeRecommender: React.FC = () => {
               {recommendations.map((scheme, index) => (
                 <li key={index} className="bg-gray-100 rounded-lg p-4 shadow">
                   <h3 className="text-xl font-bold">{scheme['Scheme Name']}</h3>
+                  {/* Show percentage match if available */}
+                  {scheme['Similarity Score'] !== undefined && (
+                    <div className="text-green-700 font-semibold mb-2">
+                      Match: {Math.round(scheme['Similarity Score'] * 100)}%
+                    </div>
+                  )}
                   <p className="text-gray-700 mt-2">{scheme['Description']}</p>
                   {scheme['Apply Link'] && (
                     <a
