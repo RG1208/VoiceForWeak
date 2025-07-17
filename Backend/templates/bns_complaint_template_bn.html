@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: "DejaVu Sans", "Noto Sans Bengali", sans-serif;
+      margin: 2cm;
+      line-height: 1.6;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-top: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .box {
+      border: 1px solid #333;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>আইনি সহায়তা কেন্দ্র</h2>
+    <p><strong>Voice For The Weak</strong></p>
+    <p>জেলা আইন পরিষেবা কর্তৃপক্ষ</p>
+  </div>
+
+  <p><strong>তারিখ:</strong> {{Current_Date}}</p>
+  <p><strong>প্রাপক:</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <p><strong>বিষয়:</strong> BNS ধারা {{BNS_Section_Number}} – {{BNS_Section_Name}} এর অধীনে অভিযোগ</p>
+
+  <p><strong>মাননীয় স্যার/ম্যাডাম,</strong></p>
+  <p>আমি, {{Full_Name}}, বয়স {{Age}}, {{Full_Address}} এর বাসিন্দা, নিচে উল্লিখিত ঘটনার বিষয়ে একটি অভিযোগ দায়ের করতে চাই:</p>
+
+  <div class="section">
+    <strong>ঘটনার সারসংক্ষেপ:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <div class="section">
+    <strong>প্রধান BNS ধারা:</strong>
+    <div class="box">
+      <p><strong>{{BNS_Section_Number}} – {{BNS_Section_Name}}</strong></p>
+      <p>{{BNS_Section_Description}}</p>
+      <ul>
+        <li>শাস্তি: {{Punishment}}</li>
+        <li>ধারা: {{Cognizability}}</li>
+        <li>জামিনযোগ্যতা: {{Bailability}}</li>
+        <li>বিভাগ: {{Offence_Category}}</li>
+      </ul>
+    </div>
+  </div>
+
+  {% if Other_BNS_Sections %}
+  <div class="section">
+    <strong>অন্যান্য প্রাসঙ্গিক ধারাসমূহ:</strong>
+    {% for sec in Other_BNS_Sections %}
+    <div class="box">
+      <p><strong>{{sec.BNS_Section}} – {{sec.Name}}</strong></p>
+      <p>{{sec.Description}}</p>
+      <ul>
+        <li>শাস্তি: {{sec.Punishment}}</li>
+        <li>ধারা: {{sec.Cognizability}}</li>
+        <li>জামিনযোগ্যতা: {{sec.Bailability}}</li>
+        <li>বিভাগ: {{sec.Category}}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="section">
+    <strong>অভিযোগকারীর বিবরণ:</strong>
+    <ul>
+      <li>নাম: {{Full_Name}}</li>
+      <li>লিঙ্গ: {{Gender}}</li>
+      <li>বয়স: {{Age}}</li>
+      <li>ফোন: {{Phone_Number}}</li>
+      <li>ID নম্বর: {{ID_Number}}</li>
+      <li>ইমেইল: {{Email}}</li>
+    </ul>
+  </div>
+
+  <p>সৌজন্যে,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

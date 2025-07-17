@@ -30,7 +30,7 @@ interface ChatSession {
   lastMessage: Date;
 }
 
-const ChatGPTInterface: React.FC = () => {
+const IPCSections: React.FC = () => {
   const [currentSession, setCurrentSession] = useState<ChatSession | null>(null);
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
   const [textInput, setTextInput] = useState('');
@@ -982,4 +982,4 @@ const ChatGPTInterface: React.FC = () => {
   );
 };
 
-export default ChatGPTInterface;
+export default IPCSections;

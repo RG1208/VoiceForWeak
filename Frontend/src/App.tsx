@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProtectedLayout from './components/ProtectedLayout';
 import PublicLayout from './components/PublicLayout';
 import Home from './pages/Home';
-import ChatGPTInterface from './pages/VoiceAssistant';
+import IPCSections from './pages/VoiceAssistant';
 import SchemeRecommender from './pages/SchemeRecommender';
+import BSNSections from './pages/bns';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -27,7 +28,8 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<ProtectedLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="voice-assistant" element={<ChatGPTInterface />} />
+            <Route path="ipc-assistant" element={<IPCSections />} />
+            <Route path="bns-assistant" element={<BSNSections />} />
             <Route path="scheme-recommender" element={<SchemeRecommender />} />
           </Route>
         </Route>

@@ -140,10 +140,17 @@ function Dashboard() {
 
                         <div className="space-y-4">
                             <button
-                                onClick={() => navigate('/voice-assistant')}
+                                onClick={() => navigate('/ipc-assistant')}
                                 className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm">
                                 <Mic className="h-5 w-5" />
-                                <span>Start Voice Analysis</span>
+                                <span>IPC Analysis</span>
+                            </button>
+
+                            <button
+                                onClick={() => navigate('/bns-assistant')}
+                                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm">
+                                <Mic className="h-5 w-5" />
+                                <span>BNS Analysis</span>
                             </button>
 
                             <button

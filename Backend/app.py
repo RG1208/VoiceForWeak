@@ -6,6 +6,7 @@ from flask_jwt_extended import JWTManager  # type: ignore
 from utils.auth import login_bp, register_bp
 from routes.voice_routes import voice_bp
 from routes.schemes_routes import schemes_bp
+from routes.bns_routes import bns_bp
 import os
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -14,10 +15,15 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_cred
 
 STATIC_DIR = os.path.join(os.path.dirname(__file__), 'static')
 
+@app.route('/')
+def home():
+    return "Welcome to the API!"
+
 app.register_blueprint(login_bp, url_prefix='/api')
 app.register_blueprint(register_bp, url_prefix='/api')
 app.register_blueprint(voice_bp, url_prefix='/api')
 app.register_blueprint(schemes_bp, url_prefix='/api')
+app.register_blueprint(bns_bp, url_prefix='/api')
 
 
 @app.route('/static/<filename>')
