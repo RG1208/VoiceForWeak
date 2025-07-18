@@ -282,7 +282,8 @@ const BSNSections: React.FC = () => {
             sender: 'user',
             type: 'text',
             content: text,
-            timestamp: new Date()
+            timestamp: new Date(),
+            bns_sections: undefined
         };
 
         addMessage(userMessage);
@@ -294,7 +295,8 @@ const BSNSections: React.FC = () => {
             sender: 'bot',
             type: 'text',
             content: `I understand you're asking about "${text}". Let me help you with that.`,
-            timestamp: new Date()
+            timestamp: new Date(),
+            bns_sections: undefined
         };
 
         setTimeout(() => {
@@ -311,7 +313,8 @@ const BSNSections: React.FC = () => {
             sender: 'user',
             type: 'audio',
             content: audio.url || '', // Use the blob URL for playback
-            timestamp: new Date()
+            timestamp: new Date(),
+            bns_sections: undefined
         };
 
         addMessage(userMessage);
@@ -327,7 +330,8 @@ const BSNSections: React.FC = () => {
             type: 'combined',
             content: text,
             audioUrl: audio.url,
-            timestamp: new Date()
+            timestamp: new Date(),
+            bns_sections: undefined
         };
 
         addMessage(userMessage);
@@ -392,7 +396,8 @@ const BSNSections: React.FC = () => {
                 pdfEnglishUrl: data.pdf_english_url || '',
                 pdfRegionalUrl: data.pdf_regional_url || '',
                 transcribedText: data.transcribed_text || '',
-                formattedOutput: data.formatted_output || ''
+                formattedOutput: data.formatted_output || '',
+                bns_sections: data.bns_sections || [] // Add bns_sections to the message
             };
 
             console.log('Adding bot response to session...');
@@ -405,7 +410,8 @@ const BSNSections: React.FC = () => {
                 sender: 'bot',
                 type: 'text',
                 content: `Error: ${error instanceof Error ? error.message : 'Failed to process audio'}`,
-                timestamp: new Date()
+                timestamp: new Date(),
+                bns_sections: undefined
             };
             addMessage(errorMessage);
         } finally {
@@ -601,6 +607,27 @@ const BSNSections: React.FC = () => {
                                         <div key={index} className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-purple-200 dark:border-purple-600">
                                             <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">
                                                 IPC Section {section["IPC Section"]}: {section["Name"]}
+                                            </p>
+                                            <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Category:</strong> {section["Category"]}</p>
+                                            <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Description:</strong> {section["Description"]}</p>
+                                            <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Punishment:</strong> {section["Punishment"]}</p>
+                                            <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Cognizable/Non-Cognizable:</strong> {section["Cognizable/Non-Cognizable"]}</p>
+                                            <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Bailable/Non-Bailable:</strong> {section["Bailable/Non-Bailable"]}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Matched BNS Sections block */}
+                        {msg.bns_sections && msg.bns_sections.length > 0 && (
+                            <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-300 dark:border-purple-700 mt-4">
+                                <h3 className="font-semibold text-purple-700 dark:text-purple-300 mb-3">Matched BNS Sections:</h3>
+                                <div className="space-y-4">
+                                    {msg.bns_sections.map((section: { [x: string]: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
+                                        <div key={index} className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-purple-200 dark:border-purple-600">
+                                            <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">
+                                                BNS Section {section["bns Section"]}: {section["Name"] || section["Description"]}
                                             </p>
                                             <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Category:</strong> {section["Category"]}</p>
                                             <p className="text-sm text-gray-700 dark:text-gray-300"><strong>Description:</strong> {section["Description"]}</p>

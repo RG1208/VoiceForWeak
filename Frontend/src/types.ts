@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Message = {
+    bns_sections: any;
     id: number;
     sender: 'user' | 'bot';
     type: 'text' | 'audio' | 'combined' | 'audio-response';
