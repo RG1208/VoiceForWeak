@@ -112,6 +112,27 @@ const BSNSections: React.FC = () => {
         );
     }, []);
 
+    useEffect(() => {
+        if (!currentSession) return;
+        // Reconstruct blob URLs for user audio messages
+        const updatedMessages = currentSession.messages.map((msg: Message) => {
+            if (
+                msg.sender === 'user' &&
+                (msg.type === 'audio' || msg.type === 'combined') &&
+                msg.audioBase64 &&
+                !msg.audioUrl
+            ) {
+                const blob = base64ToBlob(msg.audioBase64);
+                const url = URL.createObjectURL(blob);
+                return { ...msg, audioUrl: url };
+            }
+            return msg;
+        });
+        if (updatedMessages.some((m, i) => m !== currentSession.messages[i])) {
+            setCurrentSession({ ...currentSession, messages: updatedMessages });
+        }
+    }, [currentSession]);
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user_id');
