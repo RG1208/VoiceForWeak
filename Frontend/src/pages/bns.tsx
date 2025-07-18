@@ -283,7 +283,8 @@ const BSNSections: React.FC = () => {
             type: 'text',
             content: text,
             timestamp: new Date(),
-            bns_sections: undefined
+            bns_sections: undefined,
+            isBotAudio: undefined
         };
 
         addMessage(userMessage);
@@ -296,7 +297,8 @@ const BSNSections: React.FC = () => {
             type: 'text',
             content: `I understand you're asking about "${text}". Let me help you with that.`,
             timestamp: new Date(),
-            bns_sections: undefined
+            bns_sections: undefined,
+            isBotAudio: undefined
         };
 
         setTimeout(() => {
@@ -314,7 +316,8 @@ const BSNSections: React.FC = () => {
             type: 'audio',
             content: audio.url || '', // Use the blob URL for playback
             timestamp: new Date(),
-            bns_sections: undefined
+            bns_sections: undefined,
+            isBotAudio: undefined
         };
 
         addMessage(userMessage);
@@ -331,7 +334,8 @@ const BSNSections: React.FC = () => {
             content: text,
             audioUrl: audio.url,
             timestamp: new Date(),
-            bns_sections: undefined
+            bns_sections: undefined,
+            isBotAudio: undefined
         };
 
         addMessage(userMessage);
@@ -398,6 +402,8 @@ const BSNSections: React.FC = () => {
                 transcribedText: data.transcribed_text || '',
                 formattedOutput: data.formatted_output || '',
                 bns_sections: data.bns_sections || [] // Add bns_sections to the message
+                ,
+                isBotAudio: undefined
             };
 
             console.log('Adding bot response to session...');
@@ -411,7 +417,8 @@ const BSNSections: React.FC = () => {
                 type: 'text',
                 content: `Error: ${error instanceof Error ? error.message : 'Failed to process audio'}`,
                 timestamp: new Date(),
-                bns_sections: undefined
+                bns_sections: undefined,
+                isBotAudio: undefined
             };
             addMessage(errorMessage);
         } finally {

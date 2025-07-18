@@ -83,7 +83,8 @@ export const bnsStorageUtils = {
                 sender: 'bot',
                 type: 'text',
                 content: 'Hello! I\'m your BNS Legal AI assistant. How can I help you today?',
-                timestamp: now
+                timestamp: now,
+                bns_sections: undefined
             }]
         };
     }

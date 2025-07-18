@@ -107,7 +107,8 @@ export const storageUtils = {
                 sender: 'bot',
                 type: 'text',
                 content: 'Hello! I\'m your Legal AI assistant. How can I help you today?',
-                timestamp: now
+                timestamp: now,
+                bns_sections: undefined
             }]
         };
     }

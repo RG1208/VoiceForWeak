@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -282,7 +283,9 @@ const IPCSections: React.FC = () => {
       sender: 'user',
       type: 'text',
       content: text,
-      timestamp: new Date()
+      timestamp: new Date(),
+      bns_sections: undefined,
+      isBotAudio: undefined
     };
 
     addMessage(userMessage);
@@ -294,7 +297,9 @@ const IPCSections: React.FC = () => {
       sender: 'bot',
       type: 'text',
       content: `I understand you're asking about "${text}". Let me help you with that.`,
-      timestamp: new Date()
+      timestamp: new Date(),
+      bns_sections: undefined,
+      isBotAudio: undefined
     };
 
     setTimeout(() => {
@@ -311,7 +316,9 @@ const IPCSections: React.FC = () => {
       sender: 'user',
       type: 'audio',
       content: audio.url || '', // Use the blob URL for playback
-      timestamp: new Date()
+      timestamp: new Date(),
+      bns_sections: undefined,
+      isBotAudio: undefined
     };
 
     addMessage(userMessage);
@@ -327,7 +334,9 @@ const IPCSections: React.FC = () => {
       type: 'combined',
       content: text,
       audioUrl: audio.url,
-      timestamp: new Date()
+      timestamp: new Date(),
+      bns_sections: undefined,
+      isBotAudio: undefined
     };
 
     addMessage(userMessage);
@@ -392,7 +401,9 @@ const IPCSections: React.FC = () => {
         pdfEnglishUrl: data.pdf_english_url || '',
         pdfRegionalUrl: data.pdf_regional_url || '',
         transcribedText: data.transcribed_text || '',
-        formattedOutput: data.formatted_output || ''
+        formattedOutput: data.formatted_output || '',
+        bns_sections: undefined,
+        isBotAudio: undefined
       };
 
       console.log('Adding bot response to session...');
@@ -405,7 +416,9 @@ const IPCSections: React.FC = () => {
         sender: 'bot',
         type: 'text',
         content: `Error: ${error instanceof Error ? error.message : 'Failed to process audio'}`,
-        timestamp: new Date()
+        timestamp: new Date(),
+        bns_sections: undefined,
+        isBotAudio: undefined
       };
       addMessage(errorMessage);
     } finally {
