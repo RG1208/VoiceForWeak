@@ -704,6 +704,15 @@ const BSNSections: React.FC = () => {
         setEditAudio(null);
     };
 
+    const defaultUserTemplate = `name:\ngender:\nage:\nlocation:\nphone:\nid_number:\nemail:`;
+
+    const handleFillDefaultFields = () => {
+        if (textInput.trim() !== '') {
+            if (!window.confirm('This will overwrite your current input. Continue?')) return;
+        }
+        setTextInput(defaultUserTemplate);
+    };
+
     if (!currentSession) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
@@ -927,6 +936,16 @@ const BSNSections: React.FC = () => {
                                 </div>
                             </div>
                         )}
+
+                        <div className="mb-2 flex justify-end">
+                            <button
+                                type="button"
+                                onClick={handleFillDefaultFields}
+                                className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded hover:bg-gray-300 dark:hover:bg-gray-600 text-sm"
+                            >
+                                Fill User Details Template
+                            </button>
+                        </div>
 
                         <form onSubmit={handleTextSubmit} className="flex items-center space-x-3">
                             <button
