@@ -49,36 +49,20 @@
   </div>
 
   <div class="section">
-    <strong>முக்கிய BNS பிரிவு:</strong>
+    <strong>அனைத்து BNS பிரிவுகள்:</strong>
+    {% for section in Sections %}
     <div class="box">
-      <p><strong>{{BNS_Section_Number}} – {{BNS_Section_Name}}</strong></p>
-      <p>{{BNS_Section_Description}}</p>
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
       <ul>
-        <li>தண்டனை: {{Punishment}}</li>
-        <li>கொணரத்தக்கது: {{Cognizability}}</li>
-        <li>ஜாமீனானது: {{Bailability}}</li>
-        <li>வகை: {{Offence_Category}}</li>
-      </ul>
-    </div>
-  </div>
-
-  {% if Other_BNS_Sections %}
-  <div class="section">
-    <strong>மற்ற தொடர்புடைய பிரிவுகள்:</strong>
-    {% for sec in Other_BNS_Sections %}
-    <div class="box">
-      <p><strong>{{sec.BNS_Section}} – {{sec.Name}}</strong></p>
-      <p>{{sec.Description}}</p>
-      <ul>
-        <li>தண்டனை: {{sec.Punishment}}</li>
-        <li>கொணரத்தக்கது: {{sec.Cognizability}}</li>
-        <li>ஜாமீனானது: {{sec.Bailability}}</li>
-        <li>வகை: {{sec.Category}}</li>
+        <li>தண்டனை: {{ section.Punishment }}</li>
+        <li>குற்றமாகும்: {{ section.Cognizability }}</li>
+        <li>ஜாமீனுக்குரியது: {{ section.Bailability }}</li>
+        <li>வகை: {{ section.Offence_Category }}</li>
       </ul>
     </div>
     {% endfor %}
   </div>
-  {% endif %}
 
   <div class="section">
     <strong>புகார் அளித்தவரின் விவரம்:</strong>

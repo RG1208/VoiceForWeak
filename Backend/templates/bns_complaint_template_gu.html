@@ -49,36 +49,20 @@
   </div>
 
   <div class="section">
-    <strong>મુખ્ય BNS કલમ:</strong>
+    <strong>બધા BNS કલમો:</strong>
+    {% for section in Sections %}
     <div class="box">
-      <p><strong>{{BNS_Section_Number}} – {{BNS_Section_Name}}</strong></p>
-      <p>{{BNS_Section_Description}}</p>
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
       <ul>
-        <li>સજા: {{Punishment}}</li>
-        <li>ગુનાહિત: {{Cognizability}}</li>
-        <li>જામીનયોગ્ય: {{Bailability}}</li>
-        <li>વર્ગ: {{Offence_Category}}</li>
-      </ul>
-    </div>
-  </div>
-
-  {% if Other_BNS_Sections %}
-  <div class="section">
-    <strong>અન્ય સંબંધિત કલમો:</strong>
-    {% for sec in Other_BNS_Sections %}
-    <div class="box">
-      <p><strong>{{sec.BNS_Section}} – {{sec.Name}}</strong></p>
-      <p>{{sec.Description}}</p>
-      <ul>
-        <li>સજા: {{sec.Punishment}}</li>
-        <li>ગુનાહિત: {{sec.Cognizability}}</li>
-        <li>જામીનયોગ્ય: {{sec.Bailability}}</li>
-        <li>વર્ગ: {{sec.Category}}</li>
+        <li>સજા: {{ section.Punishment }}</li>
+        <li>ગુનાહિત: {{ section.Cognizability }}</li>
+        <li>જામીનયોગ્ય: {{ section.Bailability }}</li>
+        <li>વર્ગ: {{ section.Offence_Category }}</li>
       </ul>
     </div>
     {% endfor %}
   </div>
-  {% endif %}
 
   <div class="section">
     <strong>ફરિયાદકર્તાનું વિગતવાર:</strong>

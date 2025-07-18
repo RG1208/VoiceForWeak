@@ -148,7 +148,7 @@ function Dashboard() {
 
                             <button
                                 onClick={() => navigate('/bns-assistant')}
-                                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm">
+                                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm">
                                 <Mic className="h-5 w-5" />
                                 <span>BNS Analysis</span>
                             </button>
@@ -192,12 +192,16 @@ function Dashboard() {
                         </p>
                         <div className="flex items-center justify-center space-x-8 mt-8">
                             <div className="text-center">
-                                <div className="text-3xl font-bold">5+</div>
+                                <div className="text-3xl font-bold">6</div>
                                 <div className="text-sm opacity-80">Languages</div>
                             </div>
                             <div className="text-center">
                                 <div className="text-3xl font-bold">500+</div>
                                 <div className="text-sm opacity-80">IPC Sections</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-bold">350+</div>
+                                <div className="text-sm opacity-80">BNS Sections</div>
                             </div>
                             <div className="text-center">
                                 <div className="text-3xl font-bold">1300+</div>

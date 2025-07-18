@@ -49,36 +49,20 @@
   </div>
 
   <div class="section">
-    <strong>প্রধান BNS ধারা:</strong>
+    <strong>সমস্ত BNS ধারা:</strong>
+    {% for section in Sections %}
     <div class="box">
-      <p><strong>{{BNS_Section_Number}} – {{BNS_Section_Name}}</strong></p>
-      <p>{{BNS_Section_Description}}</p>
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
       <ul>
-        <li>শাস্তি: {{Punishment}}</li>
-        <li>ধারা: {{Cognizability}}</li>
-        <li>জামিনযোগ্যতা: {{Bailability}}</li>
-        <li>বিভাগ: {{Offence_Category}}</li>
-      </ul>
-    </div>
-  </div>
-
-  {% if Other_BNS_Sections %}
-  <div class="section">
-    <strong>অন্যান্য প্রাসঙ্গিক ধারাসমূহ:</strong>
-    {% for sec in Other_BNS_Sections %}
-    <div class="box">
-      <p><strong>{{sec.BNS_Section}} – {{sec.Name}}</strong></p>
-      <p>{{sec.Description}}</p>
-      <ul>
-        <li>শাস্তি: {{sec.Punishment}}</li>
-        <li>ধারা: {{sec.Cognizability}}</li>
-        <li>জামিনযোগ্যতা: {{sec.Bailability}}</li>
-        <li>বিভাগ: {{sec.Category}}</li>
+        <li>শাস্তি: {{ section.Punishment }}</li>
+        <li>ধার্য: {{ section.Cognizability }}</li>
+        <li>জামিনযোগ্যতা: {{ section.Bailability }}</li>
+        <li>বিভাগ: {{ section.Offence_Category }}</li>
       </ul>
     </div>
     {% endfor %}
   </div>
-  {% endif %}
 
   <div class="section">
     <strong>অভিযোগকারীর বিবরণ:</strong>

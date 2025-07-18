@@ -14,6 +14,7 @@ from langdetect import detect  # type: ignore
 import subprocess
 import smtplib
 from email.message import EmailMessage
+from flask import send_from_directory
 
 # ✅ Auto-install fonts for regional language PDF support
 def install_fonts():
@@ -97,27 +98,32 @@ def speak_text(text, original_lang, filename="bns_output.mp3"):
         print(f"Error speaking text: {e}")
         return None
 
-def create_letter_pdf(user_name, user_location, details, section_data, other_sections=None,
+def create_letter_pdf(user_name, user_location, details, sections,  # <-- sections: list of dicts
                       gender="Male", age="30", phone="NA", id_number="NA", email="NA",
                       original_lang="en", output_file="bns_letter.pdf"):
     template_file = get_template_for_lang(original_lang)
-    env = Environment(loader=FileSystemLoader("templates")) # Assuming 'templates' dir is at project root
+    env = Environment(loader=FileSystemLoader("templates"))
     template = env.get_template(template_file)
 
-    # ⭐ MODIFIED: Access 'Name' using .get() with a fallback to 'Description' or 'Not Available'
-    section_name_for_pdf = section_data.get('Name', section_data.get('Description', 'Not Available'))
+    # Prepare a list of section dicts for the template
+    sections_for_pdf = []
+    for section in sections:
+        section_name_for_pdf = section.get('Name', section.get('Description', 'Not Available'))
+        sections_for_pdf.append({
+            "bns_Section_Number": section['bns Section'],
+            "bns_Section_Name": section_name_for_pdf,
+            "bns_Section_Description": section['Description'],
+            "Punishment": section['Punishment'],
+            "Cognizability": section['Cognizable/Non-Cognizable'],
+            "Bailability": section['Bailable/Non-Bailable'],
+            "Offence_Category": section['Category'],
+        })
 
     html_out = template.render(
         Current_Date=datetime.date.today().strftime("%d-%m-%Y"),
         Police_Station_or_Department_Name="Concerned Police Station",
         District_City=user_location,
-        bns_Section_Number=section_data['bns Section'],
-        bns_Section_Name=section_name_for_pdf, # ⭐ MODIFIED: Now uses the safely retrieved name
-        bns_Section_Description=section_data['Description'],
-        Punishment=section_data['Punishment'],
-        Cognizability=section_data['Cognizable/Non-Cognizable'],
-        Bailability=section_data['Bailable/Non-Bailable'],
-        Offence_Category=section_data['Category'],
+        Sections=sections_for_pdf,  # Pass the list
         Full_Name=user_name,
         Age=age,
         Full_Address=user_location,
@@ -128,7 +134,6 @@ def create_letter_pdf(user_name, user_location, details, section_data, other_sec
         Email=email,
         Signature_or_Thumb="Signature",
         Village_District=user_location,
-        Other_bns_Sections=other_sections or []
     )
     HTML(string=html_out).write_pdf(output_file)
     return output_file
@@ -190,8 +195,8 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
     text, original_lang = transcribe_audio(audio_path)
 
     bns_sections = classify_bns(text)
-    main_section = bns_sections[0] if bns_sections else {} # Ensure main_section is not empty
-    other_sections = bns_sections[1:] if len(bns_sections) > 1 else []
+    # main_section = bns_sections[0] if bns_sections else {} # Ensure main_section is not empty
+    # other_sections = bns_sections[1:] if len(bns_sections) > 1 else []
 
     translator = GoogleTranslator(source='auto', target=original_lang)
 
@@ -280,7 +285,6 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
 
     audio_file_url = speak_text(comprehensive_audio_text, original_lang, audio_file_path_full)
 
-
     # ✅ Generate detailed PDFs with enhanced information
     # Generate unique IDs for PDF filenames
     pdf_en_unique_id = str(uuid.uuid4())
@@ -292,7 +296,8 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
     pdf_en = create_letter_pdf(
         conditional_translate(user_details['name'], 'en'),
         conditional_translate(user_details['location'], 'en'),
-        text, main_section, other_sections, # main_section and other_sections already processed for 'Name' field
+        text,
+        bns_sections,  # Pass the list of top 3 sections
         user_details['gender'], user_details['age'],
         user_details['phone'], user_details['id_number'], user_details['email'],
         original_lang='en', output_file=pdf_en_path
@@ -302,9 +307,7 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
         conditional_translate(user_details['name'], original_lang),
         conditional_translate(user_details['location'], original_lang),
         translator.translate(text),
-        # Pass the translated main_section and other_sections which now correctly use 'Name' or its fallback
-        deep_translate_section(main_section, translator), # This call to deep_translate_section needs fixing
-        [deep_translate_section(sec, translator) for sec in other_sections], # This call to deep_translate_section needs fixing
+        [deep_translate_section(sec, translator) for sec in bns_sections],  # List of translated sections
         user_details['gender'], user_details['age'],
         user_details['phone'], user_details['id_number'], user_details['email'],
         original_lang=original_lang, output_file=pdf_regional_path
@@ -322,12 +325,12 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
     bns_summary = {
         "total_sections_found": len(bns_sections),
         "main_section": {
-            "section_number": main_section['bns Section'],
-            "description": translator.translate(main_section['Description']),
-            "punishment": translator.translate(main_section['Punishment']),
-            "bailability": translator.translate(main_section['Bailable/Non-Bailable']),
-            "cognizable": translator.translate(main_section['Cognizable/Non-Cognizable']),
-            "category": translator.translate(main_section['Category'])
+            "section_number": bns_sections[0]['bns Section'],
+            "description": translator.translate(bns_sections[0]['Description']),
+            "punishment": translator.translate(bns_sections[0]['Punishment']),
+            "bailability": translator.translate(bns_sections[0]['Bailable/Non-Bailable']),
+            "cognizable": translator.translate(bns_sections[0]['Cognizable/Non-Cognizable']),
+            "category": translator.translate(bns_sections[0]['Category'])
         },
         "other_sections": [
             {
@@ -338,7 +341,7 @@ def process_audio_pipeline(audio_path, user_details, output_dir="static"):
                 "cognizable": translator.translate(sec['Cognizable/Non-Cognizable']),
                 "category": translator.translate(sec['Category'])
             }
-            for sec in other_sections
+            for sec in bns_sections[1:]
         ],
         "recommended_actions": [
             translator.translate("File complaint at nearest police station"),

@@ -49,36 +49,20 @@
   </div>
 
   <div class="section">
-    <strong>Main BNS Section:</strong>
+    <strong>BNS Sections:</strong>
+    {% for section in Sections %}
     <div class="box">
-      <p><strong>{{BNS_Section_Number}} – {{BNS_Section_Name}}</strong></p>
-      <p>{{BNS_Section_Description}}</p>
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
       <ul>
-        <li>Punishment: {{Punishment}}</li>
-        <li>Cognizable: {{Cognizability}}</li>
-        <li>Bailable: {{Bailability}}</li>
-        <li>Category: {{Offence_Category}}</li>
-      </ul>
-    </div>
-  </div>
-
-  {% if Other_BNS_Sections %}
-  <div class="section">
-    <strong>Other Relevant Sections:</strong>
-    {% for sec in Other_BNS_Sections %}
-    <div class="box">
-      <p><strong>{{sec.BNS_Section}} – {{sec.Name}}</strong></p>
-      <p>{{sec.Description}}</p>
-      <ul>
-        <li>Punishment: {{sec.Punishment}}</li>
-        <li>Cognizable: {{sec.Cognizability}}</li>
-        <li>Bailable: {{sec.Bailability}}</li>
-        <li>Category: {{sec.Category}}</li>
+        <li>Punishment: {{ section.Punishment }}</li>
+        <li>Cognizable: {{ section.Cognizability }}</li>
+        <li>Bailable: {{ section.Bailability }}</li>
+        <li>Category: {{ section.Offence_Category }}</li>
       </ul>
     </div>
     {% endfor %}
   </div>
-  {% endif %}
 
   <div class="section">
     <strong>Complainant Details:</strong>

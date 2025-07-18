@@ -49,36 +49,20 @@
   </div>
 
   <div class="section">
-    <strong>ਮੁੱਖ BNS ਧਾਰਾ:</strong>
+    <strong>ਸਾਰੀਆਂ BNS ਧਾਰਾਵਾਂ:</strong>
+    {% for section in Sections %}
     <div class="box">
-      <p><strong>{{BNS_Section_Number}} – {{BNS_Section_Name}}</strong></p>
-      <p>{{BNS_Section_Description}}</p>
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
       <ul>
-        <li>ਸਜ਼ਾ: {{Punishment}}</li>
-        <li>ਦਫ਼ਾ: {{Cognizability}}</li>
-        <li>ਜ਼ਮਾਨਤੀ: {{Bailability}}</li>
-        <li>ਸ਼੍ਰੇਣੀ: {{Offence_Category}}</li>
-      </ul>
-    </div>
-  </div>
-
-  {% if Other_BNS_Sections %}
-  <div class="section">
-    <strong>ਹੋਰ ਸੰਬੰਧਿਤ ਧਾਰਾਵਾਂ:</strong>
-    {% for sec in Other_BNS_Sections %}
-    <div class="box">
-      <p><strong>{{sec.BNS_Section}} – {{sec.Name}}</strong></p>
-      <p>{{sec.Description}}</p>
-      <ul>
-        <li>ਸਜ਼ਾ: {{sec.Punishment}}</li>
-        <li>ਦਫ਼ਾ: {{sec.Cognizability}}</li>
-        <li>ਜ਼ਮਾਨਤੀ: {{sec.Bailability}}</li>
-        <li>ਸ਼੍ਰੇਣੀ: {{sec.Category}}</li>
+        <li>ਸਜ਼ਾ: {{ section.Punishment }}</li>
+        <li>ਸੰਘਣੇਯੋਗ: {{ section.Cognizability }}</li>
+        <li>ਜ਼ਮਾਨਤੀਯੋਗ: {{ section.Bailability }}</li>
+        <li>ਸ਼੍ਰੇਣੀ: {{ section.Offence_Category }}</li>
       </ul>
     </div>
     {% endfor %}
   </div>
-  {% endif %}
 
   <div class="section">
     <strong>ਸ਼ਿਕਾਇਤਕਰਤਾ ਦਾ ਵੇਰਵਾ:</strong>
