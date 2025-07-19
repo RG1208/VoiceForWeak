@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Message = {
-    mimeType: string;
     isBotAudio: any;
     bns_sections: any;
     id: number;
