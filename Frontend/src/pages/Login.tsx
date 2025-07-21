@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -8,6 +11,14 @@ export default function Login() {
     });
 
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation();
+
+    useEffect(() => {
+        const lang = localStorage.getItem('language_preference');
+        if (lang && lang !== i18n.language) {
+            i18n.changeLanguage(lang);
+        }
+    }, [i18n]);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function handleChange(event: { target: { name: any; value: any; }; }) {
@@ -51,7 +62,7 @@ export default function Login() {
         <div className="min-h-screen flex items-center justify-center ">
             <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
                 <h1 className="text-3xl font-bold text-center text-blue-700 mb-8">
-                    Login to Your Account
+                    {t('login_title')}
                 </h1>
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>
@@ -59,7 +70,7 @@ export default function Login() {
                             htmlFor="email"
                             className="block text-sm font-semibold text-gray-700"
                         >
-                            Email
+                            {t('login_email')}
                         </label>
                         <input
                             type="text"
@@ -68,6 +79,7 @@ export default function Login() {
                             required
                             value={formData.email}
                             onChange={handleChange}
+                            placeholder={t('login_email_placeholder')}
                             className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -76,7 +88,7 @@ export default function Login() {
                             htmlFor="password"
                             className="block text-sm font-semibold text-gray-700"
                         >
-                            Password
+                            {t('login_password')}
                         </label>
                         <input
                             type="password"
@@ -85,6 +97,7 @@ export default function Login() {
                             required
                             value={formData.password}
                             onChange={handleChange}
+                            placeholder={t('login_password_placeholder')}
                             className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -92,17 +105,17 @@ export default function Login() {
                         type="submit"
                         className="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition duration-200"
                     >
-                        Login
+                        {t('login_button')}
                     </button>
                 </form>
                 <div className="mt-6 text-center">
                     <p className="text-sm text-gray-600">
-                        New User?{" "}
+                        {t('login_new_user')} {" "}
                         <button
                             onClick={() => navigate('/register')}
                             className="text-blue-600 font-semibold hover:underline"
                         >
-                            Register now
+                            {t('login_register_now')}
                         </button>
                     </p>
                 </div>

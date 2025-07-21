@@ -1,6 +1,7 @@
-import { Globe, Scale, LogOut } from 'lucide-react';
+import { Heart, LogOut } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function ProtectedHeader() {
     const [, setUsername] = useState('User');
@@ -26,20 +27,17 @@ export default function ProtectedHeader() {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                             <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                                <Scale className="h-6 w-6 text-white" />
+                                <Heart className="h-8 w-8 text-blue-600" />
                             </div>
                             <div>
-                                <h1 className="text-xl font-bold text-slate-800">LegalAI Assistant</h1>
+                                <h1 className="text-xl font-bold text-slate-800">Voice For The Weak</h1>
                                 <p className="text-sm text-slate-600">Your AI-powered legal companion</p>
                             </div>
                         </div>
 
                         <div className="flex items-center space-x-3">
-                            <div className="flex items-center space-x-1 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium">
-                                <Globe className="h-4 w-4" />
-                                <span>6 Languages</span>
-                            </div>
-
+                            {/* Language Switcher */}
+                            <LanguageSwitcher />
                             {/* Always Visible Logout Button */}
                             <button
                                 onClick={handleLogout}

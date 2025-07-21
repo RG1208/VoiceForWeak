@@ -1,7 +1,9 @@
 import React from 'react';
 import { Heart, Mail, Phone, MapPin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -9,27 +11,27 @@ const Footer: React.FC = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <Heart className="h-8 w-8 text-blue-400" />
-              <span className="text-xl font-bold">Voice for Weak</span>
+              <span className="text-xl font-bold">{t('footer_title')}</span>
             </div>
             <p className="text-gray-400 mb-4">
-              Empowering vulnerable individuals through AI-powered legal and welfare guidance.
+              {t('footer_tagline')}
             </p>
             <p className="text-sm text-gray-500">
-              Making justice and welfare accessible to everyone, everywhere.
+              {t('footer_accessible')}
             </p>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer_quick_links')}</h3>
             <ul className="space-y-2">
-              <li><a href="/voice-assistant" className="text-gray-400 hover:text-white transition-colors">Voice Assistant</a></li>
-              <li><a href="/scheme-recommender" className="text-gray-400 hover:text-white transition-colors">Scheme Recommender</a></li>
-              <li><a href="/contact" className="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+              <li><a href="/voice-assistant" className="text-gray-400 hover:text-white transition-colors">{t('footer_voice_assistant')}</a></li>
+              <li><a href="/scheme-recommender" className="text-gray-400 hover:text-white transition-colors">{t('footer_scheme_recommender')}</a></li>
+              <li><a href="/contact" className="text-gray-400 hover:text-white transition-colors">{t('footer_contact_us')}</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer_contact_info')}</h3>
             <ul className="space-y-3">
               <li className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-blue-400" />
@@ -41,7 +43,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4 text-blue-400" />
-                <span className="text-gray-400">Available Nationwide</span>
+                <span className="text-gray-400">{t('footer_available_nationwide')}</span>
               </li>
             </ul>
           </div>
@@ -49,7 +51,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            © {new Date().getFullYear()}  Voice for Weak. All rights reserved. Built with accessibility and compassion.
+            © {new Date().getFullYear()}  {t('footer_title')}. {t('footer_rights')}
           </p>
         </div>
       </div>

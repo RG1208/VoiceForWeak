@@ -9,14 +9,30 @@ import {
     Shield,
     ArrowRight,
     Sparkles,
-    Users,
     TrendingUp
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function Dashboard() {
+    const { t, i18n } = useTranslation();
     const [username, setUsername] = useState('User');
+
+    // Apply language from localStorage
+    useEffect(() => {
+        const lang = localStorage.getItem('language_preference');
+        if (lang && lang !== i18n.language) {
+            i18n.changeLanguage(lang);
+        }
+    }, [i18n]);
+
+    // Apply theme from localStorage
+    useEffect(() => {
+        const theme = localStorage.getItem('theme_preference') || 'light';
+        document.body.classList.remove('light', 'dark');
+        document.body.classList.add(theme);
+    }, []);
 
     useEffect(() => {
         const storedName = localStorage.getItem('user_name');
@@ -28,22 +44,22 @@ function Dashboard() {
     const recentActivity = [
         {
             id: 1,
-            title: 'Voice Analysis Completed',
-            description: 'Workplace harassment case analyzed - IPC 354A applicable',
+            title: t('recent_activity'),
+            description: t('ipc_analysis'),
             status: 'completed',
             time: '2 hours ago'
         },
         {
             id: 2,
-            title: 'Scheme Eligibility Updated',
-            description: 'Found 3 new schemes you qualify for',
+            title: t('scheme_eligibility_updated'),
+            description: t('found_new_schemes'),
             status: 'new',
             time: '4 hours ago'
         },
         {
             id: 3,
-            title: 'Legal Rights Summary',
-            description: 'Property dispute analysis completed',
+            title: t('legal_rights_summary'),
+            description: t('property_dispute_analysis'),
             status: 'completed',
             time: '1 day ago'
         },
@@ -52,8 +68,8 @@ function Dashboard() {
     const services = [
         {
             icon: Mic,
-            title: 'IPC Analysis',
-            description: 'Speak about your legal issue and get instant analysis with applicable IPC sections',
+            title: t('ipc_analysis'),
+            description: t('ipc_desc'),
             color: 'from-blue-500 to-blue-600',
             hoverColor: 'from-blue-600 to-blue-700',
             route: '/ipc-assistant',
@@ -61,8 +77,8 @@ function Dashboard() {
         },
         {
             icon: Shield,
-            title: 'BNS Analysis',
-            description: 'Get comprehensive analysis under the new Bharatiya Nyaya Sanhita',
+            title: t('bns_analysis'),
+            description: t('bns_desc'),
             color: 'from-purple-500 to-purple-600',
             hoverColor: 'from-purple-600 to-purple-700',
             route: '/bns-assistant',
@@ -70,8 +86,8 @@ function Dashboard() {
         },
         {
             icon: Award,
-            title: 'Government Schemes',
-            description: 'Discover personalized government schemes and benefits you qualify for',
+            title: t('schemes'),
+            description: t('schemes_desc'),
             color: 'from-emerald-500 to-emerald-600',
             hoverColor: 'from-emerald-600 to-emerald-700',
             route: '/scheme-recommender',
@@ -79,12 +95,12 @@ function Dashboard() {
         },
         {
             icon: Scale,
-            title: 'Legal Rights',
-            description: 'Understand your fundamental rights and legal protections',
+            title: t('legal_rights'),
+            description: t('legal_rights_desc'),
             color: 'from-orange-500 to-orange-600',
             hoverColor: 'from-orange-600 to-orange-700',
             route: '/legal-rights',
-            badge: 'Know Your Rights'
+            badge: t('legal_rights_desc')
         }
     ];
 
@@ -104,19 +120,15 @@ function Dashboard() {
                         <div className="relative z-10">
                             <div className="flex items-center space-x-3 mb-4">
                                 <Sparkles className="h-8 w-8 text-yellow-300" />
-                                <h2 className="text-3xl font-bold">Welcome back, {username}!</h2>
+                                <h2 className="text-3xl font-bold">{t('welcome', { username })}</h2>
                             </div>
                             <p className="text-xl opacity-90 mb-6">
-                                Your AI-powered legal companion is ready to help you navigate complex legal matters with ease.
+                                {t('ai_helper')}
                             </p>
                             <div className="flex items-center space-x-6">
                                 <div className="flex items-center space-x-2">
-                                    <Users className="h-5 w-5 text-blue-200" />
-                                    <span className="text-sm">25,000+ Users Helped</span>
-                                </div>
-                                <div className="flex items-center space-x-2">
                                     <TrendingUp className="h-5 w-5 text-green-200" />
-                                    <span className="text-sm">94% Success Rate</span>
+                                    <span className="text-sm">{t('success_rate')}</span>
                                 </div>
                             </div>
                         </div>
@@ -126,8 +138,8 @@ function Dashboard() {
                 {/* Main Services Section */}
                 <div className="mb-8">
                     <div className="text-center mb-8">
-                        <h3 className="text-3xl font-bold text-slate-800 mb-3">Our Legal Services</h3>
-                        <p className="text-lg text-slate-600">Choose the service that best fits your legal needs</p>
+                        <h3 className="text-3xl font-bold text-slate-800 mb-3">{t('our_services')}</h3>
+                        <p className="text-lg text-slate-600">{t('choose_service')}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -150,7 +162,7 @@ function Dashboard() {
                                 </h4>
                                 <p className="text-sm text-slate-600 leading-relaxed mb-4">{service.description}</p>
                                 <div className="flex items-center text-blue-600 text-sm font-medium group-hover:translate-x-1 transition-transform">
-                                    <span>Get Started</span>
+                                    <span>{t('get_started')}</span>
                                     <ArrowRight className="h-4 w-4 ml-1" />
                                 </div>
                             </div>
@@ -163,8 +175,8 @@ function Dashboard() {
                     {/* Recent Activity */}
                     <div className="lg:col-span-3 bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-slate-200">
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-xl font-semibold text-slate-800">Recent Activity</h3>
-                            <span className="text-sm text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Last 7 days</span>
+                            <h3 className="text-xl font-semibold text-slate-800">{t('recent_activity')}</h3>
+                            <span className="text-sm text-slate-500 bg-slate-100 px-3 py-1 rounded-full">{t('last_7_days')}</span>
                         </div>
 
                         <div className="space-y-4">
@@ -193,33 +205,33 @@ function Dashboard() {
 
                     {/* Support Section */}
                     <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-slate-200">
-                        <h3 className="text-xl font-semibold text-slate-800 mb-6">Need Assistance?</h3>
+                        <h3 className="text-xl font-semibold text-slate-800 mb-6">{t('need_assistance')}</h3>
 
                         <div className="space-y-4">
                             <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
                                 <div className="flex items-center space-x-2 mb-2">
                                     <Heart className="h-5 w-5 text-red-500" />
-                                    <h4 className="font-medium text-slate-800">Expert Support</h4>
+                                    <h4 className="font-medium text-slate-800">{t('expert_support')}</h4>
                                 </div>
-                                <p className="text-sm text-slate-600 mb-3">Get help from our legal experts anytime</p>
+                                <p className="text-sm text-slate-600 mb-3">{t('expert_support_desc')}</p>
                                 <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm">
-                                    Contact Support
+                                    {t('contact_support')}
                                 </button>
                             </div>
 
                             <div className="p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl border border-emerald-200">
-                                <h4 className="font-medium text-slate-800 mb-2">Quick Stats</h4>
+                                <h4 className="font-medium text-slate-800 mb-2">{t('quick_stats')}</h4>
                                 <div className="space-y-2 text-sm">
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">Cases Analyzed</span>
+                                        <span className="text-slate-600">{t('cases_analyzed')}</span>
                                         <span className="font-semibold text-emerald-600">1,247</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">Success Rate</span>
+                                        <span className="text-slate-600">{t('success_rate')}</span>
                                         <span className="font-semibold text-emerald-600">94.2%</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-slate-600">Avg Response</span>
+                                        <span className="text-slate-600">{t('avg_response')}</span>
                                         <span className="font-semibold text-emerald-600">&lt;2 min</span>
                                     </div>
                                 </div>
@@ -231,27 +243,26 @@ function Dashboard() {
                 {/* Company Mission */}
                 <div className="mt-12 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 rounded-2xl p-8 text-white">
                     <div className="text-center max-w-4xl mx-auto">
-                        <h3 className="text-2xl font-bold mb-4">Democratizing Legal Knowledge</h3>
+                        <h3 className="text-2xl font-bold mb-4">{t('company_mission')}</h3>
                         <p className="text-lg opacity-90 leading-relaxed mb-8">
-                            We're on a mission to make legal expertise accessible to everyone. Our AI-powered platform
-                            breaks down complex legal barriers, providing instant, accurate legal guidance in your preferred language.
+                            {t('mission_desc')}
                         </p>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                             <div className="text-center">
                                 <div className="text-3xl font-bold text-blue-400">6</div>
-                                <div className="text-sm opacity-80">Languages</div>
+                                <div className="text-sm opacity-80">{t('languages')}</div>
                             </div>
                             <div className="text-center">
                                 <div className="text-3xl font-bold text-emerald-400">500+</div>
-                                <div className="text-sm opacity-80">IPC Sections</div>
+                                <div className="text-sm opacity-80">{t('ipc_sections')}</div>
                             </div>
                             <div className="text-center">
                                 <div className="text-3xl font-bold text-purple-400">350+</div>
-                                <div className="text-sm opacity-80">BNS Sections</div>
+                                <div className="text-sm opacity-80">{t('bns_sections')}</div>
                             </div>
                             <div className="text-center">
                                 <div className="text-3xl font-bold text-orange-400">1300+</div>
-                                <div className="text-sm opacity-80">Govt Schemes</div>
+                                <div className="text-sm opacity-80">{t('govt_schemes')}</div>
                             </div>
                         </div>
                     </div>
