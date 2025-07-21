@@ -1,6 +1,6 @@
 import { Heart, LogOut } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
 
 export default function ProtectedHeader() {
@@ -26,14 +26,14 @@ export default function ProtectedHeader() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
-                            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                            <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition">
                                 <Heart className="h-8 w-8 text-blue-600" />
-                            </div>
-                            <div>
-                                <h1 className="text-xl font-bold text-slate-800">Voice For The Weak</h1>
-                                <p className="text-sm text-slate-600">Your AI-powered legal companion</p>
-                            </div>
+                                <div>
+                                    <h1 className="text-xl font-bold text-slate-800">Voice For The Weak</h1>
+                                </div>
+                            </Link>
                         </div>
+
 
                         <div className="flex items-center space-x-3">
                             {/* Language Switcher */}
