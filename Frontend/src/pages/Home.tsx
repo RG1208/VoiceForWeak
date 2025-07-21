@@ -13,8 +13,7 @@ const Home: React.FC = () => {
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               {t('home_title1')}
-              <span className="text-blue-200"> {t('home_title2')}</span>
-              <br />
+              <div className="text-blue-200"> {t('home_title2')}</div>
               {t('home_title3')}
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
