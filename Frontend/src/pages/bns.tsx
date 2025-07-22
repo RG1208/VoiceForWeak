@@ -90,47 +90,57 @@ const BSNSections: React.FC = () => {
         return new Blob([u8arr], { type: mime });
     };
 
+    // Helper: Get audio URL from message (reconstruct if needed)
+    function getAudioUrl(msg: Message): string | undefined {
+        // Debug: Log when getAudioUrl is called
+        console.debug('getAudioUrl called for message:', msg);
+        if (msg.audioUrl) {
+            console.debug('Returning existing audioUrl:', msg.audioUrl);
+            return msg.audioUrl;
+        }
+        if (msg.audioBase64) {
+            try {
+                const blob = base64ToBlob(msg.audioBase64);
+                const url = URL.createObjectURL(blob);
+                console.debug('Reconstructed audioUrl from base64:', url);
+                return url;
+            } catch (e) {
+                console.error('Error reconstructing audioUrl from base64:', e);
+                return undefined;
+            }
+        }
+        return undefined;
+    }
+
     // On load, reconstruct blob URLs for user audio messages with audioBase64
     useEffect(() => {
-        setChatSessions((sessions: ChatSession[]) =>
-            sessions.map((session: ChatSession) => ({
+        setChatSessions((sessions: ChatSession[]) => {
+            const newSessions = sessions.map((session: ChatSession) => ({
                 ...session,
                 messages: session.messages.map((msg: Message) => {
-                    if (
-                        msg.sender === 'user' &&
-                        (msg.type === 'audio' || msg.type === 'combined') &&
-                        msg.audioBase64 &&
-                        !msg.audioUrl
-                    ) {
-                        const blob = base64ToBlob(msg.audioBase64);
-                        const url = URL.createObjectURL(blob);
-                        return { ...msg, audioUrl: url };
-                    }
+                    // Remove any persisted audioUrl, always reconstruct at runtime
+                    if (msg.audioUrl) delete msg.audioUrl;
                     return msg;
                 }),
-            }))
-        );
+            }));
+            // Debug: Log sessions loaded from storage
+            console.debug('Loaded chatSessions from storage:', JSON.stringify(newSessions, null, 2));
+            return newSessions;
+        });
     }, []);
 
     useEffect(() => {
         if (!currentSession) return;
-        // Reconstruct blob URLs for user audio messages
+        // Remove any persisted audioUrl, always reconstruct at runtime
         const updatedMessages = currentSession.messages.map((msg: Message) => {
-            if (
-                msg.sender === 'user' &&
-                (msg.type === 'audio' || msg.type === 'combined') &&
-                msg.audioBase64 &&
-                !msg.audioUrl
-            ) {
-                const blob = base64ToBlob(msg.audioBase64);
-                const url = URL.createObjectURL(blob);
-                return { ...msg, audioUrl: url };
-            }
+            if (msg.audioUrl) delete msg.audioUrl;
             return msg;
         });
-        if (updatedMessages.some((m, i) => m !== currentSession.messages[i])) {
+        if (updatedMessages.some((m: Message, i: number) => m !== currentSession.messages[i])) {
             setCurrentSession({ ...currentSession, messages: updatedMessages });
         }
+        // Debug: Log currentSession after loading
+        console.debug('Loaded currentSession from storage:', JSON.stringify(currentSession, null, 2));
     }, [currentSession]);
 
     const handleLogout = () => {
@@ -257,6 +267,8 @@ const BSNSections: React.FC = () => {
             ) {
                 updatedMessage.audioBase64 = attachedAudio.base64;
             }
+            // Do NOT persist audioUrl
+            if (updatedMessage.audioUrl) delete updatedMessage.audioUrl;
             const updatedMessages = [...prevSession.messages, updatedMessage];
             const updatedSession: ChatSession = {
                 ...prevSession,
@@ -533,8 +545,8 @@ const BSNSections: React.FC = () => {
             case 'audio':
                 return (
                     <div>
-                        {msg.content && msg.content.trim() !== '' && (
-                            <AudioPlayer audioUrl={msg.content} />
+                        {getAudioUrl(msg) && (
+                            <AudioPlayer audioUrl={getAudioUrl(msg)!} />
                         )}
                     </div>
                 );
@@ -545,9 +557,9 @@ const BSNSections: React.FC = () => {
                         <div className="prose prose-sm max-w-none">
                             <p className="mb-0 whitespace-pre-wrap">{msg.content}</p>
                         </div>
-                        {msg.audioUrl && msg.audioUrl.trim() !== '' && (
+                        {getAudioUrl(msg) && (
                             <div className="border-t border-blue-200 pt-3">
-                                <AudioPlayer audioUrl={msg.audioUrl} />
+                                <AudioPlayer audioUrl={getAudioUrl(msg)!} />
                             </div>
                         )}
                     </div>
@@ -701,10 +713,10 @@ const BSNSections: React.FC = () => {
             sendTextMessage(msg.content);
         } else if (msg.type === 'audio' && msg.audioBase64) {
             const blob = base64ToBlob(msg.audioBase64);
-            sendAudioMessage({ file: blob, url: msg.audioUrl || '', name: 'Reloaded Audio' });
+            sendAudioMessage({ file: blob, url: getAudioUrl(msg)!, name: 'Reloaded Audio' });
         } else if (msg.type === 'combined' && msg.audioBase64) {
             const blob = base64ToBlob(msg.audioBase64);
-            sendCombinedMessage(msg.content, { file: blob, url: msg.audioUrl || '', name: 'Reloaded Audio' });
+            sendCombinedMessage(msg.content, { file: blob, url: getAudioUrl(msg)!, name: 'Reloaded Audio' });
         }
     };
 
@@ -713,7 +725,8 @@ const BSNSections: React.FC = () => {
         setEditText(msg.content);
         if (msg.audioBase64) {
             const blob = base64ToBlob(msg.audioBase64);
-            setEditAudio({ file: blob, url: msg.audioUrl || URL.createObjectURL(blob), name: 'Edit Audio', base64: msg.audioBase64 });
+            const url = URL.createObjectURL(blob);
+            setEditAudio({ file: blob, url, name: 'Edit Audio', base64: msg.audioBase64 });
         } else {
             setEditAudio(null);
         }
@@ -730,7 +743,8 @@ const BSNSections: React.FC = () => {
         };
         if (editAudio) {
             newMsg.audioBase64 = editAudio.base64;
-            newMsg.audioUrl = editAudio.url;
+            // Do NOT persist audioUrl
+            if (newMsg.audioUrl) delete newMsg.audioUrl;
         } else {
             delete newMsg.audioBase64;
             delete newMsg.audioUrl;
