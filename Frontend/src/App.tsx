@@ -6,7 +6,6 @@ import Home from './pages/Home';
 import IPCSections from './pages/VoiceAssistant';
 import SchemeRecommender from './pages/SchemeRecommender';
 import BSNSections from './pages/bns';
-import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './components/protectedDashboard';
@@ -21,7 +20,6 @@ function App() {
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="contact" element={<Contact />} />
         </Route>
 
         {/* ✅ Protected Layout Routes */}

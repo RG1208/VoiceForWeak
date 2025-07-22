@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Heart } from 'lucide-react';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
 
   const navigation = [
-    { name: 'Home', path: '/' },
-    { name: 'Contact', path: '/contact' },
-    { name: 'Login', path: '/login' },
+    { name: t('header_home'), path: '/' },
+    { name: t('header_login'), path: '/login' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -21,25 +23,28 @@ const Header: React.FC = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <Heart className="h-8 w-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">Voice for Weak</span>
+              <span className="text-xl font-bold text-gray-900">{t('header_title')}</span>
             </Link>
           </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive(item.path)
-                  ? 'bg-blue-100 text-blue-700'
-                  : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-                  }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+          <div className="flex items-center space-x-4">
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-8">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive(item.path)
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                    }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+          </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
