@@ -16,6 +16,9 @@ import smtplib
 from email.message import EmailMessage
 from flask import send_from_directory
 
+# Import shared model instances
+from .model_loader import shared_whisper_model as whisper_model, shared_bert_model as bert_model
+
 # ✅ Auto-install fonts for regional language PDF support
 def install_fonts():
     noto_path = "/usr/share/fonts/truetype/noto"
@@ -32,9 +35,9 @@ def install_fonts():
         print("✅ Fonts already installed.")
 
 # Load Models
-whisper_model = whisper.load_model("medium")
-text_model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
-sbert = SentenceTransformer('all-MiniLM-L6-v2')
+# Remove direct loading of whisper and Sentence-BERT models
+# text_model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
+# sbert = SentenceTransformer('all-MiniLM-L6-v2')
 translator_indic = IndicTranslator()
 
 # Load CSVs
@@ -54,15 +57,15 @@ for idx, row in df_queries.iterrows():
             all_queries.append(row[col])
             bns_mapping.append(row['BNS Section']) # Access 'BNS Section' from df_queries
 
-stored_embeddings = text_model.encode(all_queries, convert_to_tensor=True)
-query_embeddings = sbert.encode(all_queries, convert_to_tensor=True)
+stored_embeddings = bert_model.encode(all_queries, convert_to_tensor=True)
+query_embeddings = bert_model.encode(all_queries, convert_to_tensor=True)
 
 def transcribe_audio(path):
     result = whisper_model.transcribe(path, task="translate")
     return result['text'], result['language']
 
 def classify_bns(text, top_k=3):
-    input_embedding = sbert.encode(text, convert_to_tensor=True)
+    input_embedding = bert_model.encode(text, convert_to_tensor=True)
     cos_scores = util.pytorch_cos_sim(input_embedding, query_embeddings)[0]
     top_indices = torch.topk(cos_scores, k=top_k).indices.tolist()
     top_sections = []

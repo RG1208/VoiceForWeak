@@ -6,6 +6,9 @@ from sklearn.metrics.pairwise import cosine_similarity #type:ignore
 import os
 import torch  #type:ignore
 
+# Import shared model instances
+from .model_loader import shared_whisper_model as whisper_model, shared_bert_model as bert_model
+
 # Determine the base directory of the current script
 _script_dir = os.path.dirname(__file__)
 dataset_csv_path = os.path.join(_script_dir, 'data', 'Probability.csv')
@@ -25,24 +28,6 @@ except FileNotFoundError:
 except Exception as e:
     print(f"An error occurred while loading the dataset: {e}")
     dataset = pd.DataFrame() # Create an empty DataFrame
-
-# Load the Whisper model (large model is memory intensive, consider 'base' or 'small' for lighter deployment)
-try:
-    print("Loading Whisper model (medium)...")
-    whisper_model = whisper.load_model("medium")
-    print("Whisper model loaded.")
-except Exception as e:
-    print(f"Error loading Whisper model: {e}")
-    whisper_model = None
-
-# Load the Sentence-BERT model for semantic search
-try:
-    print("Loading Sentence-BERT model (nlpaueb/legal-bert-base-uncased)...")
-    bert_model = SentenceTransformer('nlpaueb/legal-bert-base-uncased')
-    print("Sentence-BERT model loaded.")
-except Exception as e:
-    print(f"Error loading Sentence-BERT model: {e}")
-    bert_model = None
 
 # Pre-encode the dataset contexts if models loaded successfully and dataset is not empty
 dataset_embeddings = None
