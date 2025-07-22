@@ -44,11 +44,6 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 df_queries = pd.read_csv(os.path.join(DATA_DIR, "BNS_Queries.csv"))
 df_sections = pd.read_csv(os.path.join(DATA_DIR, "BNS_Section.csv"))
 
-# Debug: Print columns of df_sections to confirm its structure
-print("Columns in df_sections:", df_sections.columns.tolist())
-print("Columns in df_queries:", df_queries.columns.tolist())
-
-
 # Correct the mapping for queries: 'BNS Section' is the column that holds the actual section number in BNS_Queries.csv
 # The header you provided was: BNS Section,Category,Query1,...
 query_columns = [f"Query{i}" for i in range(1, 11)]
