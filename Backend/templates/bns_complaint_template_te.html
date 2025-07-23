@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      /* Added "Noto Sans Telugu" for proper Telugu script rendering */
+      font-family: "DejaVu Sans", "Noto Sans Telugu", sans-serif;
+      margin: 2cm;
+      line-height: 1.6;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-top: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .box {
+      border: 1px solid #333;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <h2>న్యాయ సహాయ కేంద్రం</h2>
+    <p><strong>Voice For The Weak</strong></p>
+    <p>జిల్లా న్యాయ సేవా ప్రాధికార సంస్థ</p>
+  </div>
+
+  <!-- Date and Addressee -->
+  <p><strong>తేదీ:</strong> {{Current_Date}}</p>
+  <p><strong>వీరికి,</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <!-- Subject of the Complaint -->
+  <p><strong>విషయం:</strong> BNS సెక్షన్ {{BNS_Section_Number}} – {{BNS_Section_Name}} కింద ఫిర్యాదు</p>
+
+  <!-- Salutation and Introduction -->
+  <p><strong>గౌరవనీయులైన సర్/మేడమ్,</strong></p>
+  <p>నేను, {{Full_Name}}, వయస్సు {{Age}}, {{Full_Address}} నివాసి, దిగువ వివరించిన సంఘటనకు సంబంధించి ఫిర్యాదు చేయాలనుకుంటున్నాను:</p>
+
+  <!-- Incident Summary Section -->
+  <div class="section">
+    <strong>సంఘటన సారాంశం:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <!-- BNS Sections Details -->
+  <div class="section">
+    <strong>అన్ని BNS సెక్షన్లు:</strong>
+    {% for section in Sections %}
+    <div class="box">
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
+      <ul>
+        <li>శిక్ష: {{ section.Punishment }}</li>
+        <li>కాగ్నిజబుల్: {{ section.Cognizability }}</li>
+        <li>బెయిలబుల్: {{ section.Bailability }}</li>
+        <li>వర్గం: {{ section.Offence_Category }}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Complainant Details Section -->
+  <div class="section">
+    <strong>ఫిర్యాదుదారుడి వివరాలు:</strong>
+    <ul>
+      <li>పేరు: {{Full_Name}}</li>
+      <li>లింగం: {{Gender}}</li>
+      <li>వయస్సు: {{Age}}</li>
+      <li>ఫోన్: {{Phone_Number}}</li>
+      <li>ఐడి నంబర్: {{ID_Number}}</li>
+      <li>ఇమెయిల్: {{Email}}</li>
+    </ul>
+  </div>
+
+  <!-- Closing -->
+  <p>భవదీయులు,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

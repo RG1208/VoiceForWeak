@@ -4,11 +4,11 @@ import ProtectedHeader from '../components/protectedHeader';
 import { useTranslation } from 'react-i18next';
 
 interface PredictionResult {
-    accused_win_probability: number;
-    petitioner_win_probability: number;
-    role: string;
-    category: string;
-    suggested_evidence: string[];
+    accused_win_probability_local: number;
+    petitioner_win_probability_local: number;
+    role_local: string;
+    category_local: string;
+    suggested_evidence_local: string[];
 }
 
 interface UploadState {
@@ -121,7 +121,13 @@ function ProbabilityPrediction() {
             setUploadState(prev => ({ ...prev, progress: 100 }));
 
             setTimeout(() => {
-                setResult(data);
+                setResult({
+                  accused_win_probability_local: data.accused_win_probability_local,
+                  petitioner_win_probability_local: data.petitioner_win_probability_local,
+                  role_local: data.role_local,
+                  category_local: data.category_local,
+                  suggested_evidence_local: data.suggested_evidence_local || []
+                });
                 setUploadState({ isDragging: false, isUploading: false, progress: 0 });
             }, 500);
 
@@ -275,97 +281,74 @@ function ProbabilityPrediction() {
                     ) : (
                         /* Results Display */
                         <div className="space-y-8">
-                            <div className="text-center">
-                                <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center shadow-xl">
-                                    <CheckCircle className="w-10 h-10 text-white" />
-                                </div>
-                                <h2 className="text-4xl font-bold text-gray-800 mb-4">{t('analysis_complete')}</h2>
-                                <p className="text-gray-600 text-xl">{t('analysis_results')}</p>
+                          <div className="text-center">
+                            <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center shadow-xl">
+                              <CheckCircle className="w-10 h-10 text-white" />
                             </div>
-
-                            {/* Probability Cards */}
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border border-blue-200 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
-                                    <div className="text-center">
-                                        <h3 className="text-xl font-bold text-blue-800 mb-4">{t('accused_win_probability')}</h3>
-                                        <div className="text-6xl font-bold text-blue-700 mb-4">
-                                            {result.accused_win_probability}%
-                                        </div>
-                                        <div className="w-full bg-blue-200 rounded-full h-4">
-                                            <div
-                                                className="bg-gradient-to-r from-blue-500 to-blue-600 h-4 rounded-full transition-all duration-2000 shadow-lg"
-                                                style={{ width: `${result.accused_win_probability}%` }}
-                                            ></div>
-                                        </div>
-                                    </div>
+                            <h2 className="text-4xl font-bold text-gray-800 mb-4">{t('analysis_complete')}</h2>
+                          </div>
+                          <div className="grid md:grid-cols-2 gap-6">
+                            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border border-blue-200 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
+                              <div className="text-center">
+                                <h3 className="text-xl font-bold text-blue-800 mb-4">{t('accused_win_probability')}</h3>
+                                <div className="text-6xl font-bold text-blue-700 mb-4">
+                                  {result.accused_win_probability_local}%
                                 </div>
-
-                                <div className="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-8 border border-green-200 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
-                                    <div className="text-center">
-                                        <h3 className="text-xl font-bold text-green-800 mb-4">{t('petitioner_win_probability')}</h3>
-                                        <div className="text-6xl font-bold text-green-700 mb-4">
-                                            {result.petitioner_win_probability}%
-                                        </div>
-                                        <div className="w-full bg-green-200 rounded-full h-4">
-                                            <div
-                                                className="bg-gradient-to-r from-green-500 to-emerald-600 h-4 rounded-full transition-all duration-2000 shadow-lg"
-                                                style={{ width: `${result.petitioner_win_probability}%` }}
-                                            ></div>
-                                        </div>
-                                    </div>
-                                </div>
+                              </div>
                             </div>
-
-                            {/* Role and Category */}
-                            <div className="grid md:grid-cols-2 gap-8">
-                                <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500">
-                                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-3">
-                                        <Scale className="w-6 h-6 text-blue-600" />
-                                        {t('legal_role')}
-                                    </h3>
-                                    <div className="inline-flex items-center px-6 py-3 rounded-full text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg">
-                                        {result.role}
-                                    </div>
+                            <div className="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-8 border border-green-200 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
+                              <div className="text-center">
+                                <h3 className="text-xl font-bold text-green-800 mb-4">{t('petitioner_win_probability')}</h3>
+                                <div className="text-6xl font-bold text-green-700 mb-4">
+                                  {result.petitioner_win_probability_local}%
                                 </div>
-
-                                <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500">
-                                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-3">
-                                        <FileText className="w-6 h-6 text-indigo-600" />
-                                        {t('case_category')}
-                                    </h3>
-                                    <div className="inline-flex items-center px-6 py-3 rounded-full text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
-                                        {result.category}
-                                    </div>
-                                </div>
+                              </div>
                             </div>
-
-                            {/* Evidence Suggestions */}
-                            {result.suggested_evidence && result.suggested_evidence.length > 0 && (
-                                <div className="bg-white rounded-2xl p-8 border border-amber-200 shadow-xl">
-                                    <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                                        <FileText className="w-7 h-7 text-amber-600" />
-                                        {t('suggested_evidence')}
-                                    </h3>
-                                    <ul className="space-y-4">
-                                        {result.suggested_evidence.map((suggestion, index) => (
-                                            <li key={index} className="flex items-start gap-4 bg-white/70 rounded-xl p-4 hover:bg-white/90 transition-all duration-300 shadow-sm">
-                                                <div className="w-3 h-3 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 flex-shrink-0 shadow-lg"></div>
-                                                <span className="text-gray-700 text-lg leading-relaxed">{suggestion}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-
-                            {/* Action Buttons */}
-                            <div className="flex justify-center gap-6 pt-8">
-                                <button
-                                    onClick={resetForm}
-                                    className="bg-white hover:bg-gray-50 text-gray-800 font-bold py-4 px-8 rounded-2xl border border-gray-300 shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-105"
-                                >
-                                    {t('analyze_another_file')}
-                                </button>
+                          </div>
+                          <div className="grid md:grid-cols-2 gap-8">
+                            <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500">
+                              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-3">
+                                <Scale className="w-6 h-6 text-blue-600" />
+                                {t('legal_role')}
+                              </h3>
+                              <div className="inline-flex items-center px-6 py-3 rounded-full text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg">
+                                {result.role_local}
+                              </div>
                             </div>
+                            <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500">
+                              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-3">
+                                <FileText className="w-6 h-6 text-indigo-600" />
+                                {t('case_category')}
+                              </h3>
+                              <div className="inline-flex items-center px-6 py-3 rounded-full text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
+                                {result.category_local}
+                              </div>
+                            </div>
+                          </div>
+                          {result.suggested_evidence_local && result.suggested_evidence_local.length > 0 && (
+                            <div className="bg-white rounded-2xl p-8 border border-amber-200 shadow-xl mt-8">
+                              <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                                <FileText className="w-7 h-7 text-amber-600" />
+                                {t('suggested_evidence')}
+                              </h3>
+                              <ul className="space-y-4">
+                                {result.suggested_evidence_local.map((suggestion, index) => (
+                                  <li key={index} className="flex items-start gap-4 bg-white/70 rounded-xl p-4 hover:bg-white/90 transition-all duration-300 shadow-sm">
+                                    <div className="w-3 h-3 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 flex-shrink-0 shadow-lg"></div>
+                                    <span className="text-gray-700 text-lg leading-relaxed">{suggestion}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                          <div className="flex justify-center gap-6 pt-8">
+                            <button
+                              onClick={resetForm}
+                              className="bg-white hover:bg-gray-50 text-gray-800 font-bold py-4 px-8 rounded-2xl border border-gray-300 shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-105"
+                            >
+                              {t('analyze_another_file')}
+                            </button>
+                          </div>
                         </div>
                     )}
                 </div>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      /* Added "Noto Sans Assamese" for proper Assamese script rendering */
+      font-family: "DejaVu Sans", "Noto Sans Assamese", sans-serif;
+      margin: 2cm;
+      line-height: 1.6;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-top: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .box {
+      border: 1px solid #333;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <h2>আইনী সাহায্য কেন্দ্ৰ</h2>
+    <p><strong>Voice For The Weak</strong></p>
+    <p>জিলা আইন সেৱা প্ৰাধিকৰণ</p>
+  </div>
+
+  <!-- Date and Addressee -->
+  <p><strong>তাৰিখ:</strong> {{Current_Date}}</p>
+  <p><strong>লৈ,</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <!-- Subject of the Complaint -->
+  <p><strong>বিষয়:</strong> BNS ধাৰা {{BNS_Section_Number}} – {{BNS_Section_Name}} অধীনত অভিযোগ</p>
+
+  <!-- Salutation and Introduction -->
+  <p><strong>মাননীয় মহোদয়/মহোদয়া,</strong></p>
+  <p>মই, {{Full_Name}}, বয়স {{Age}}, ঠিকনা {{Full_Address}}ৰ নিবাসী, তলত বৰ্ণনা কৰা ঘটনা সন্দৰ্ভত এক অভিযোগ দাখিল কৰিব বিচাৰো:</p>
+
+  <!-- Incident Summary Section -->
+  <div class="section">
+    <strong>ঘটনাৰ সাৰಾಂಶ:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <!-- BNS Sections Details -->
+  <div class="section">
+    <strong>সকলো BNS ধাৰা:</strong>
+    {% for section in Sections %}
+    <div class="box">
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
+      <ul>
+        <li>শাস্তি: {{ section.Punishment }}</li>
+        <li>আমলযোগ্য: {{ section.Cognizability }}</li>
+        <li>জামিনযোগ্য: {{ section.Bailability }}</li>
+        <li>শ্ৰেণী: {{ section.Offence_Category }}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Complainant Details Section -->
+  <div class="section">
+    <strong>অভিযোগকাৰীৰ বিৱৰণ:</strong>
+    <ul>
+      <li>নাম: {{Full_Name}}</li>
+      <li>লিংগ: {{Gender}}</li>
+      <li>বয়স: {{Age}}</li>
+      <li>ফোন: {{Phone_Number}}</li>
+      <li>ID নম্বৰ: {{ID_Number}}</li>
+      <li>ইমেইল: {{Email}}</li>
+    </ul>
+  </div>
+
+  <!-- Closing -->
+  <p>భవদীয়,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

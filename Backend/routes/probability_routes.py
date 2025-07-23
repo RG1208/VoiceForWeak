@@ -41,18 +41,27 @@ def probability():
         # Extract evidence from form data if available
         evidence = request.form.get('evidence')
 
-        # Get accused and petitioner probabilities, role, category, and suggestions
-        accused_prob, petitioner_prob, role, category, evidence_suggestions = predict_case_probability(audio_path, evidence=evidence)
+        # Get prediction result as a dictionary
+        result = predict_case_probability(audio_path, evidence=evidence)
 
         # Clean up uploaded file
         os.remove(audio_path)
 
+        # Return both English and local language outputs
         return jsonify({
-            "accused_win_probability": round(accused_prob, 2),
-            "petitioner_win_probability": round(petitioner_prob, 2),
-            "role": role,
-            "category": category,
-            "suggested_evidence": evidence_suggestions
+            "accused_win_probability_en": round(result.get("accused_win_percentage_en", 0.0), 2),
+            "petitioner_win_probability_en": round(result.get("petitioner_win_percentage_en", 0.0), 2),
+            "role_en": result.get("role_en", "unknown"),
+            "category_en": result.get("case_category_en", "Unknown"),
+            "suggested_evidence_en": result.get("evidence_suggestions_en", []),
+            "summary_en": result.get("summary_en", ""),
+            "accused_win_probability_local": round(result.get("accused_win_percentage_local", 0.0), 2),
+            "petitioner_win_probability_local": round(result.get("petitioner_win_percentage_local", 0.0), 2),
+            "role_local": result.get("role_local", "unknown"),
+            "category_local": result.get("case_category_local", "Unknown"),
+            "suggested_evidence_local": result.get("evidence_suggestions_local", []),
+            "summary_local": result.get("summary_local", ""),
+            "language": result.get("language", "en")
         })
 
     except Exception as e:

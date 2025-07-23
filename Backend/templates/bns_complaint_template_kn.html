@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      /* Added "Noto Sans Kannada" for better Kannada script rendering */
+      font-family: "DejaVu Sans", "Noto Sans Kannada", sans-serif;
+      margin: 2cm;
+      line-height: 1.6;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-top: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .box {
+      border: 1px solid #333;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <h2>ಕಾನೂನು ನೆರವು ಕೇಂದ್ರ</h2>
+    <p><strong>Voice For The Weak</strong></p>
+    <p>ಜಿಲ್ಲಾ ಕಾನೂನು ಸೇವೆಗಳ ಪ್ರಾಧಿಕಾರ</p>
+  </div>
+
+  <!-- Date and Addressee -->
+  <p><strong>ದಿನಾಂಕ:</strong> {{Current_Date}}</p>
+  <p><strong>ಇವರಿಗೆ,</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <!-- Subject of the Complaint -->
+  <p><strong>ವಿಷಯ:</strong> BNS ಸೆಕ್ಷನ್ {{BNS_Section_Number}} – {{BNS_Section_Name}} ಅಡಿಯಲ್ಲಿ ದೂರು</p>
+
+  <!-- Salutation and Introduction -->
+  <p><strong>ಮಾನ್ಯರೇ,</strong></p>
+  <p>ನಾನು, {{Full_Name}}, ವಯಸ್ಸು {{Age}}, {{Full_Address}} ನಿವಾಸಿಯಾಗಿದ್ದು, ಕೆಳಗೆ ವಿವರಿಸಿದ ಘಟನೆಯ ಬಗ್ಗೆ ದೂರು ನೀಡಲು ಇಚ್ಛಿಸುತ್ತೇನೆ:</p>
+
+  <!-- Incident Summary Section -->
+  <div class="section">
+    <strong>ಘಟನೆಯ ಸಾರಾಂಶ:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <!-- BNS Sections Details -->
+  <div class="section">
+    <strong>ಎಲ್ಲಾ BNS ಸೆಕ್ಷನ್‌ಗಳು:</strong>
+    {% for section in Sections %}
+    <div class="box">
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
+      <ul>
+        <li>ಶಿಕ್ಷೆ: {{ section.Punishment }}</li>
+        <li>ಸಂಜ್ಞೇಯ: {{ section.Cognizability }}</li>
+        <li>ಜಾಮೀನುಯೋಗ್ಯ: {{ section.Bailability }}</li>
+        <li>ವರ್ಗ: {{ section.Offence_Category }}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Complainant Details Section -->
+  <div class="section">
+    <strong>ದೂರುದಾರರ ವಿವರಗಳು:</strong>
+    <ul>
+      <li>ಹೆಸರು: {{Full_Name}}</li>
+      <li>ಲಿಂಗ: {{Gender}}</li>
+      <li>ವಯಸ್ಸು: {{Age}}</li>
+      <li>ಫೋನ್: {{Phone_Number}}</li>
+      <li>ID ಸಂಖ್ಯೆ: {{ID_Number}}</li>
+      <li>ಇಮೇಲ್: {{Email}}</li>
+    </ul>
+  </div>
+
+  <!-- Closing -->
+  <p>ವಂದನೆಗಳೊಂದಿಗೆ,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

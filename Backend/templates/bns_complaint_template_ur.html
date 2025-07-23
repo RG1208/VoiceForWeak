@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      /* Added "Noto Nastaliq Urdu" for proper Urdu script rendering */
+      font-family: "DejaVu Sans", "Noto Nastaliq Urdu", sans-serif;
+      margin: 2cm;
+      line-height: 1.8; /* Adjusted for better readability in Urdu */
+      text-align: right; /* Default text alignment to the right */
+    }
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-top: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .box {
+      border: 1px solid #333;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <h2>قانونی امداد مرکز</h2>
+    <p><strong>Voice For The Weak</strong></p>
+    <p>ضلعی قانونی خدمات اتھارٹی</p>
+  </div>
+
+  <!-- Date and Addressee -->
+  <p><strong>تاریخ:</strong> {{Current_Date}}</p>
+  <p><strong>بخدمت،</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <!-- Subject of the Complaint -->
+  <p><strong>موضوع:</strong> BNS سیکشن {{BNS_Section_Number}} – {{BNS_Section_Name}} کے تحت شکایت</p>
+
+  <!-- Salutation and Introduction -->
+  <p><strong>جناب عالی/محترمہ،</strong></p>
+  <p>میں، {{Full_Name}}، عمر {{Age}}، پتہ {{Full_Address}} کا رہائشی، ذیل میں بیان کردہ واقعہ کے سلسلے میں شکایت درج کروانا چاہتا/چاہتی ہوں:</p>
+
+  <!-- Incident Summary Section -->
+  <div class="section">
+    <strong>واقعہ کا خلاصہ:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <!-- BNS Sections Details -->
+  <div class="section">
+    <strong>تمام BNS سیکشنز:</strong>
+    {% for section in Sections %}
+    <div class="box">
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
+      <ul>
+        <li>سزا: {{ section.Punishment }}</li>
+        <li>قابل دست اندازی: {{ section.Cognizability }}</li>
+        <li>قابل ضمانت: {{ section.Bailability }}</li>
+        <li>زمرہ: {{ section.Offence_Category }}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Complainant Details Section -->
+  <div class="section">
+    <strong>شکایت کنندہ کی تفصیلات:</strong>
+    <ul>
+      <li>نام: {{Full_Name}}</li>
+      <li>جنس: {{Gender}}</li>
+      <li>عمر: {{Age}}</li>
+      <li>فون: {{Phone_Number}}</li>
+      <li>شناختی کارڈ نمبر: {{ID_Number}}</li>
+      <li>ای میل: {{Email}}</li>
+    </ul>
+  </div>
+
+  <!-- Closing -->
+  <p>آپ کا مخلص،<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

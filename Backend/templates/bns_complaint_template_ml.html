@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      /* Added "Noto Sans Malayalam" for proper Malayalam script rendering */
+      font-family: "DejaVu Sans", "Noto Sans Malayalam", sans-serif;
+      margin: 2cm;
+      line-height: 1.6;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-top: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .box {
+      border: 1px solid #333;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <h2>നിയമ സഹായ കേന്ദ്രം</h2>
+    <p><strong>Voice For The Weak</strong></p>
+    <p>ജില്ലാ നിയമ സേവന അതോറിറ്റി</p>
+  </div>
+
+  <!-- Date and Addressee -->
+  <p><strong>തീയതി:</strong> {{Current_Date}}</p>
+  <p><strong>ലേക്ക്,</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <!-- Subject of the Complaint -->
+  <p><strong>വിഷയം:</strong> BNS വകുപ്പ് {{BNS_Section_Number}} – {{BNS_Section_Name}} പ്രകാരമുള്ള പരാതി</p>
+
+  <!-- Salutation and Introduction -->
+  <p><strong>ബഹുമാനപ്പെട്ട സർ/മാഡം,</strong></p>
+  <p>ഞാൻ, {{Full_Name}}, വയസ്സ് {{Age}}, {{Full_Address}} എന്ന വിലാസത്തിൽ താമസിക്കുന്നയാൾ, താഴെ വിവരിക്കുന്ന സംഭവത്തെക്കുറിച്ച് ഒരു പരാതി നൽകാൻ ആഗ്രഹിക്കുന്നു:</p>
+
+  <!-- Incident Summary Section -->
+  <div class="section">
+    <strong>സംഭവത്തിന്റെ സംഗ്രഹം:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <!-- BNS Sections Details -->
+  <div class="section">
+    <strong>എല്ലാ BNS വകുപ്പുകളും:</strong>
+    {% for section in Sections %}
+    <div class="box">
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
+      <ul>
+        <li>ശിക്ഷ: {{ section.Punishment }}</li>
+        <li>കോഗ്നിസബിൾ: {{ section.Cognizability }}</li>
+        <li>ജാമ്യം ലഭിക്കാവുന്നത്: {{ section.Bailability }}</li>
+        <li>വിഭാഗം: {{ section.Offence_Category }}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Complainant Details Section -->
+  <div class="section">
+    <strong>പരാതിക്കാരന്റെ വിശദാംശങ്ങൾ:</strong>
+    <ul>
+      <li>പേര്: {{Full_Name}}</li>
+      <li>ലിംഗം: {{Gender}}</li>
+      <li>വയസ്സ്: {{Age}}</li>
+      <li>ഫോൺ: {{Phone_Number}}</li>
+      <li>ഐഡി നമ്പർ: {{ID_Number}}</li>
+      <li>ഇമെയിൽ: {{Email}}</li>
+    </ul>
+  </div>
+
+  <!-- Closing -->
+  <p>വിശ്വസ്തതയോടെ,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

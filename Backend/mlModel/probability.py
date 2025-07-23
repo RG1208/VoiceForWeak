@@ -5,6 +5,7 @@ import pandas as pd #type:ignore
 from sklearn.metrics.pairwise import cosine_similarity #type:ignore
 import os
 import torch  #type:ignore
+from deep_translator import GoogleTranslator  # type:ignore
 
 # Import shared model instances
 from .model_loader import shared_whisper_model as whisper_model, shared_bert_model as bert_model
@@ -87,28 +88,52 @@ def predict_case_probability(audio_file_path: str, evidence=None, top_k: int = 1
         top_k (int): Number of similar cases to consider. Default is 15.
 
     Returns:
-        tuple: A tuple containing:
-            - accused_win_percentage (float): Estimated winning chance for the accused (0-100).
-            - petitioner_win_percentage (float): Estimated winning chance for the petitioner (0-100).
-            - role (str): The detected role of the user ('petitioner', 'accused', or 'unknown').
-            - case_category (str): The predicted category of the case.
-            - ranked_generic_suggestions (list): Top 5 generic evidence types to consider.
-            Returns (0.0, 0.0, 'unknown', 'Unknown', []) on error.
+        dict: Contains both English and translated outputs.
     """
     if dataset.empty or whisper_model is None or bert_model is None or dataset_embeddings is None:
         print("Required models or dataset are not loaded. Cannot predict probability.")
-        return 0.0, 0.0, 'unknown', 'Unknown', []
+        return {
+            'accused_win_percentage_en': 0.0,
+            'petitioner_win_percentage_en': 0.0,
+            'role_en': 'unknown',
+            'case_category_en': 'Unknown',
+            'evidence_suggestions_en': [],
+            'summary_en': '',
+            'accused_win_percentage_local': 0.0,
+            'petitioner_win_percentage_local': 0.0,
+            'role_local': 'unknown',
+            'case_category_local': 'Unknown',
+            'evidence_suggestions_local': [],
+            'summary_local': '',
+            'language': 'en'
+        }
 
     if not os.path.exists(audio_file_path):
         print(f"Error: Audio file not found at '{audio_file_path}'")
-        return 0.0, 0.0, 'unknown', 'Unknown', []
+        return {
+            'accused_win_percentage_en': 0.0,
+            'petitioner_win_percentage_en': 0.0,
+            'role_en': 'unknown',
+            'case_category_en': 'Unknown',
+            'evidence_suggestions_en': [],
+            'summary_en': '',
+            'accused_win_percentage_local': 0.0,
+            'petitioner_win_percentage_local': 0.0,
+            'role_local': 'unknown',
+            'case_category_local': 'Unknown',
+            'evidence_suggestions_local': [],
+            'summary_local': '',
+            'language': 'en'
+        }
 
     try:
         # Transcribe audio and determine user role
         print(f"Transcribing audio file: {audio_file_path}")
         result = whisper_model.transcribe(audio_file_path, task="translate")
         english_text = result["text"].strip()
+        input_lang = result.get("language", "en")
         print("English translation from Whisper:", english_text)
+        print("Detected input language:", input_lang)
         
         role = classify_user_role(english_text)
         print(f"Detected user role: {role}")
@@ -116,7 +141,21 @@ def predict_case_probability(audio_file_path: str, evidence=None, top_k: int = 1
         # Defensive check for empty or too short transcription
         if not english_text or len(english_text.split()) < 3:
             print("Transcription too short or empty. Cannot proceed.")
-            return 0.0, 0.0, role, 'Unknown', []
+            return {
+                'accused_win_percentage_en': 0.0,
+                'petitioner_win_percentage_en': 0.0,
+                'role_en': role,
+                'case_category_en': 'Unknown',
+                'evidence_suggestions_en': [],
+                'summary_en': '',
+                'accused_win_percentage_local': 0.0,
+                'petitioner_win_percentage_local': 0.0,
+                'role_local': role,
+                'case_category_local': 'Unknown',
+                'evidence_suggestions_local': [],
+                'summary_local': '',
+                'language': input_lang
+            }
 
         # Combine transcription with evidence if provided
         user_context = english_text
@@ -163,7 +202,21 @@ def predict_case_probability(audio_file_path: str, evidence=None, top_k: int = 1
         # Calculate probability of winning
         if 'Result' not in top_cases.columns:
             print("Error: 'Result' column missing in top cases. Cannot calculate probabilities.")
-            return 0.0, 0.0, role, case_category, []
+            return {
+                'accused_win_percentage_en': 0.0,
+                'petitioner_win_percentage_en': 0.0,
+                'role_en': role,
+                'case_category_en': case_category,
+                'evidence_suggestions_en': [],
+                'summary_en': '',
+                'accused_win_percentage_local': 0.0,
+                'petitioner_win_percentage_local': 0.0,
+                'role_local': role,
+                'case_category_local': case_category,
+                'evidence_suggestions_local': [],
+                'summary_local': '',
+                'language': input_lang
+            }
 
         win_count = (top_cases['Result'].str.lower() == 'won').sum()
         total_cases = len(top_cases)
@@ -187,40 +240,106 @@ def predict_case_probability(audio_file_path: str, evidence=None, top_k: int = 1
             try:
                 from collections import Counter
 
-                # Encode both specific evidences from cases and the generic types
-                specific_evidence_embeddings = bert_model.encode(
-                    GENERIC_EVIDENCE_TYPES, convert_to_tensor=True, normalize_embeddings=True
-                )
-                generic_evidence_embeddings = bert_model.encode(
-                    GENERIC_EVIDENCE_TYPES, convert_to_tensor=True, normalize_embeddings=True
-                )
+                # Instead of mapping GENERIC_EVIDENCE_TYPES to itself,
+                # extract evidence from top_cases:
+                evidence_columns = [col for col in top_cases.columns if 'Evidence' in col]
+                specific_evidence = []
+                for _, row in top_cases.iterrows():
+                    for col in evidence_columns:
+                        val = row.get(col)
+                        if pd.notna(val) and str(val).strip():
+                            specific_evidence.append(str(val).strip())
 
-                # Map each specific evidence to the most similar generic type
-                similarities = (specific_evidence_embeddings @ generic_evidence_embeddings.T)
-                best_matches = torch.argmax(similarities, dim=1)
+                print("Extracted specific evidence from top cases:", specific_evidence)
 
-                # Count the frequency of each generic type
-                mapped_generic_types = [GENERIC_EVIDENCE_TYPES[i] for i in best_matches]
-                type_counts = Counter(mapped_generic_types)
-
-                # Get the top 5 most common generic types
-                ranked_generic = [item for item, count in type_counts.most_common(5)]
-                print(f"Returning top {len(ranked_generic)} ranked generic evidence types.")
+                # Now map these to GENERIC_EVIDENCE_TYPES as before
+                if specific_evidence:
+                    specific_evidence_embeddings = bert_model.encode(
+                        specific_evidence, convert_to_tensor=True, normalize_embeddings=True
+                    )
+                    generic_evidence_embeddings = bert_model.encode(
+                        GENERIC_EVIDENCE_TYPES, convert_to_tensor=True, normalize_embeddings=True
+                    )
+                    similarities = (specific_evidence_embeddings @ generic_evidence_embeddings.T)
+                    best_matches = torch.argmax(similarities, dim=1)
+                    from collections import Counter
+                    mapped_generic_types = [GENERIC_EVIDENCE_TYPES[i] for i in best_matches]
+                    type_counts = Counter(mapped_generic_types)
+                    ranked_generic = [item for item, count in type_counts.most_common(5)]
+                    print(f"Returning top {len(ranked_generic)} ranked generic evidence types.")
+                else:
+                    print("No specific evidence found in top cases.")
+                    ranked_generic = GENERIC_EVIDENCE_TYPES[:5]
 
             except Exception as e:
                 print(f"Could not rank generic evidence types due to an error: {e}")
                 # Fallback to returning a subset of the generic list if something goes wrong
                 ranked_generic = GENERIC_EVIDENCE_TYPES[:5]
 
-        print(f"\n--- Probability Prediction ---")
-        print(f"Estimated Probability of the accused winning: {accused_win_probability * 100:.2f}%")
-        print(f"Estimated Probability of the petitioner winning: {petitioner_win_probability * 100:.2f}%")
+        # --- Prepare English output ---
+        accused_win_percentage_en = accused_win_probability * 100
+        petitioner_win_percentage_en = petitioner_win_probability * 100
+        role_en = role
+        case_category_en = case_category
+        evidence_suggestions_en = ranked_generic
+        summary_en = (
+            f"Estimated Probability of the accused winning: {accused_win_percentage_en:.2f}%\n"
+            f"Estimated Probability of the petitioner winning: {petitioner_win_percentage_en:.2f}%\n"
+            f"Detected User Role: {role_en}\n"
+            f"Predicted Case Category: {case_category_en}\n"
+            f"Top Evidence Suggestions: {', '.join(evidence_suggestions_en)}"
+        )
 
-        return accused_win_probability * 100, petitioner_win_probability * 100, role, case_category, ranked_generic
+        # --- Translate output to local language ---
+        def translate_output(text, target_lang):
+            if target_lang == "en":
+                return text
+            try:
+                return GoogleTranslator(source='en', target=target_lang).translate(text)
+            except Exception as e:
+                print(f"Translation error: {e}")
+                return text  # fallback to English if translation fails
+
+        accused_win_percentage_local = accused_win_percentage_en
+        petitioner_win_percentage_local = petitioner_win_percentage_en
+        role_local = translate_output(role_en, input_lang)
+        case_category_local = translate_output(case_category_en, input_lang)
+        evidence_suggestions_local = [translate_output(ev, input_lang) for ev in evidence_suggestions_en]
+        summary_local = translate_output(summary_en, input_lang)
+
+        return {
+            'accused_win_percentage_en': accused_win_percentage_en,
+            'petitioner_win_percentage_en': petitioner_win_percentage_en,
+            'role_en': role_en,
+            'case_category_en': case_category_en,
+            'evidence_suggestions_en': evidence_suggestions_en,
+            'summary_en': summary_en,
+            'accused_win_percentage_local': accused_win_percentage_local,
+            'petitioner_win_percentage_local': petitioner_win_percentage_local,
+            'role_local': role_local,
+            'case_category_local': case_category_local,
+            'evidence_suggestions_local': evidence_suggestions_local,
+            'summary_local': summary_local,
+            'language': input_lang
+        }
 
     except Exception as e:
         print(f"An error occurred during probability prediction: {e}")
-        return 0.0, 0.0, 'unknown', 'Unknown', []
+        return {
+            'accused_win_percentage_en': 0.0,
+            'petitioner_win_percentage_en': 0.0,
+            'role_en': 'unknown',
+            'case_category_en': 'Unknown',
+            'evidence_suggestions_en': [],
+            'summary_en': '',
+            'accused_win_percentage_local': 0.0,
+            'petitioner_win_percentage_local': 0.0,
+            'role_local': 'unknown',
+            'case_category_local': 'Unknown',
+            'evidence_suggestions_local': [],
+            'summary_local': '',
+            'language': 'en'
+        }
 
 # ----------------------------
 # Example usage (for testing when running this Python file directly)
@@ -232,23 +351,27 @@ if __name__ == "__main__":
     test_audio_file = "AUDIGO.mp3" # Or specify full path: "/path/to/your/audio.mp3"
 
     print(f"Attempting to run prediction with audio file: {test_audio_file}")
-    accused_prob, petitioner_prob, role, category, evidence_suggestions = predict_case_probability(test_audio_file, top_k=15)
+    prediction_result = predict_case_probability(test_audio_file, top_k=15)
 
-    if accused_prob > 0 or petitioner_prob > 0:
-        print("\n--- Final Prediction ---")
-        print(f"Detected User Role: {role.capitalize()}")
-        print(f"Predicted Case Category: {category}")
-        print(f"Accused Winning Chance: {accused_prob:.2f}%")
-        print(f"Petitioner Winning Chance: {petitioner_prob:.2f}%")
+    print("\n--- Final Prediction ---")
+    print(f"Input Language: {prediction_result['language']}")
+    print(f"English Summary: {prediction_result['summary_en']}")
+    print(f"Local Summary: {prediction_result['summary_local']}")
+
+    if prediction_result['accused_win_percentage_local'] > 0 or prediction_result['petitioner_win_percentage_local'] > 0:
+        print(f"Detected User Role (Local): {prediction_result['role_local'].capitalize()}")
+        print(f"Predicted Case Category (Local): {prediction_result['case_category_local']}")
+        print(f"Accused Winning Chance (Local): {prediction_result['accused_win_percentage_local']:.2f}%")
+        print(f"Petitioner Winning Chance (Local): {prediction_result['petitioner_win_percentage_local']:.2f}%")
         
-        if evidence_suggestions:
-            print("\n--- Top 5 Most Common Generic Evidence Types to Consider ---")
-            for i, ev in enumerate(evidence_suggestions, 1):
+        if prediction_result['evidence_suggestions_local']:
+            print("\n--- Top 5 Most Common Generic Evidence Types to Consider (Local) ---")
+            for i, ev in enumerate(prediction_result['evidence_suggestions_local'], 1):
                 print(f"{i}. {ev}")
         else:
-            print("\nNo specific evidence suggestions found from similar winning cases.")
+            print("\nNo specific evidence suggestions found from similar winning cases (Local).")
     else:
-        print("\n--- Prediction could not be performed or no relevant cases found ---")
+        print("\n--- Prediction could not be performed or no relevant cases found (Local) ---")
         print("Please check if 'data/Probability.csv' exists and is correctly formatted,")
         print(f"and if '{test_audio_file}' exists and is a valid audio file.")
         print("Also ensure all required Python packages and FFmpeg are installed.")

@@ -132,26 +132,28 @@ function Dashboard() {
                         <p className="text-lg text-slate-600">{t('choose_service')}</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center lg:justify-center flex lg:flex-row lg:items-stretch">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center items-center">
                         {services.map((service, index) => (
                             <div
                                 key={index}
-                                className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 hover:bg-white hover:shadow-xl transition-all duration-300 border border-slate-200 group cursor-pointer"
+                                className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 hover:bg-white hover:shadow-xl transition-all duration-300 border border-slate-200 group cursor-pointer flex flex-col items-center text-center"
                                 onClick={() => navigate(service.route)}
                             >
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className={`bg-gradient-to-r ${service.color} p-3 rounded-xl group-hover:scale-110 transition-transform duration-200`}>
-                                        <service.icon className="h-6 w-6 text-white" />
+                                <div className="flex items-center justify-between mb-4 w-full">
+                                    <div className="flex flex-col items-center w-full">
+                                        <div className={`bg-gradient-to-r ${service.color} p-3 rounded-xl group-hover:scale-110 transition-transform duration-200 mb-2`}>
+                                            <service.icon className="h-6 w-6 text-white" />
+                                        </div>
+                                        <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full font-medium mb-2">
+                                            {service.badge}
+                                        </span>
                                     </div>
-                                    <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full font-medium">
-                                        {service.badge}
-                                    </span>
                                 </div>
-                                <h4 className="text-lg font-semibold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">
+                                <h4 className="text-lg font-semibold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors w-full">
                                     {service.title}
                                 </h4>
-                                <p className="text-sm text-slate-600 leading-relaxed mb-4">{service.description}</p>
-                                <div className="flex items-center text-blue-600 text-sm font-medium group-hover:translate-x-1 transition-transform">
+                                <p className="text-sm text-slate-600 leading-relaxed mb-4 w-full">{service.description}</p>
+                                <div className="flex items-center justify-center text-blue-600 text-sm font-medium group-hover:translate-x-1 transition-transform w-full">
                                     <span>{t('get_started')}</span>
                                     <ArrowRight className="h-4 w-4 ml-1" />
                                 </div>
@@ -237,14 +239,10 @@ function Dashboard() {
                         <p className="text-lg opacity-90 leading-relaxed mb-8">
                             {t('mission_desc')}
                         </p>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                             <div className="text-center">
-                                <div className="text-3xl font-bold text-blue-400">6</div>
+                                <div className="text-3xl font-bold text-blue-400">12</div>
                                 <div className="text-sm opacity-80">{t('languages')}</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="text-3xl font-bold text-emerald-400">500+</div>
-                                <div className="text-sm opacity-80">{t('ipc_sections')}</div>
                             </div>
                             <div className="text-center">
                                 <div className="text-3xl font-bold text-purple-400">350+</div>

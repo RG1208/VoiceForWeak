@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      /* Added "Noto Sans Marathi" for proper Marathi script rendering */
+      font-family: "DejaVu Sans", "Noto Sans Marathi", sans-serif;
+      margin: 2cm;
+      line-height: 1.6;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-top: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .box {
+      border: 1px solid #333;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <h2>कायदेशीर मदत केंद्र</h2>
+    <p><strong>Voice For The Weak</strong></p>
+    <p>जिल्हा विधी सेवा प्राधिकरण</p>
+  </div>
+
+  <!-- Date and Addressee -->
+  <p><strong>तारीख:</strong> {{Current_Date}}</p>
+  <p><strong>प्रति,</strong><br>{{Police_Station_or_Department_Name}},<br>{{District_City}}</p>
+
+  <!-- Subject of the Complaint -->
+  <p><strong>विषय:</strong> BNS कलम {{BNS_Section_Number}} – {{BNS_Section_Name}} अंतर्गत तक्रार</p>
+
+  <!-- Salutation and Introduction -->
+  <p><strong>माननीय महोदय/महोदया,</strong></p>
+  <p>मी, {{Full_Name}}, वय {{Age}}, राहणार {{Full_Address}}, खालील घटनेसंबंधी तक्रार दाखल करू इच्छितो/इच्छिते:</p>
+
+  <!-- Incident Summary Section -->
+  <div class="section">
+    <strong>घटनेचा सारांश:</strong>
+    <div class="box">{{User_Complaint_Summary}}</div>
+  </div>
+
+  <!-- BNS Sections Details -->
+  <div class="section">
+    <strong>सर्व BNS कलमे:</strong>
+    {% for section in Sections %}
+    <div class="box">
+      <p><strong>{{ section.bns_Section_Number }} – {{ section.bns_Section_Name }}</strong></p>
+      <p>{{ section.bns_Section_Description }}</p>
+      <ul>
+        <li>शिक्षा: {{ section.Punishment }}</li>
+        <li>संज्ञेय: {{ section.Cognizability }}</li>
+        <li>जामीनपात्र: {{ section.Bailability }}</li>
+        <li>श्रेणी: {{ section.Offence_Category }}</li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Complainant Details Section -->
+  <div class="section">
+    <strong>तक्रारदाराचा तपशील:</strong>
+    <ul>
+      <li>नाव: {{Full_Name}}</li>
+      <li>लिंग: {{Gender}}</li>
+      <li>वय: {{Age}}</li>
+      <li>फोन: {{Phone_Number}}</li>
+      <li>ओळखपत्र क्रमांक: {{ID_Number}}</li>
+      <li>ईमेल: {{Email}}</li>
+    </ul>
+  </div>
+
+  <!-- Closing -->
+  <p>आपला विश्वासू,<br>{{Full_Name}}<br>{{Signature_or_Thumb}}</p>
+</body>
+</html>

@@ -84,8 +84,18 @@ def classify_bns(text, top_k=3):
 
 def speak_text(text, original_lang, filename="bns_output.mp3"):
     gtts_lang_map = {
-        "hi": "hi", "en": "en", "gu": "gu",
-        "ta": "ta", "bn": "bn", "pa": "pa"
+        "as": "as",  # Assamese
+        "bn": "bn",  # Bengali
+        "en": "en",  # English
+        "gu": "gu",  # Gujarati
+        "hi": "hi",  # Hindi
+        "kn": "kn",  # Kannada
+        "ml": "ml",  # Malayalam
+        "mr": "mr",  # Marathi
+        "pa": "pa",  # Punjabi
+        "ta": "ta",  # Tamil
+        "te": "te",  # Telugu
+        "ur": "ur"   # Urdu
     }
     lang_code = gtts_lang_map.get(original_lang, "en")
     try:
@@ -138,12 +148,18 @@ def create_letter_pdf(user_name, user_location, details, sections,  # <-- sectio
 
 def get_template_for_lang(original_lang):
     templates = {
-        "hi": "bns_complaint_template_hi.html",
-        "en": "bns_complaint_template_en.html",
-        "gu": "bns_complaint_template_gu.html",
-        "ta": "bns_complaint_template_ta.html",
-        "bn": "bns_complaint_template_bn.html",
-        "pa": "bns_complaint_template_pa.html",
+        "as": "bns_complaint_template_as.html",  # Assamese
+        "bn": "bns_complaint_template_bn.html",  # Bengali
+        "en": "bns_complaint_template_en.html",  # English
+        "gu": "bns_complaint_template_gu.html",  # Gujarati
+        "hi": "bns_complaint_template_hi.html",  # Hindi
+        "kn": "bns_complaint_template_kn.html",  # Kannada
+        "ml": "bns_complaint_template_ml.html",  # Malayalam
+        "mr": "bns_complaint_template_mr.html",  # Marathi
+        "pa": "bns_complaint_template_pa.html",  # Punjabi
+        "ta": "bns_complaint_template_ta.html",  # Tamil
+        "te": "bns_complaint_template_te.html",  # Telugu
+        "ur": "bns_complaint_template_ur.html",  # Urdu
     }
     return templates.get(original_lang, "bns_complaint_template_en.html")
 
