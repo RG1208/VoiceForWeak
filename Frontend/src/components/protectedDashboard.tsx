@@ -1,6 +1,5 @@
 import {
     Award,
-    Mic,
     CheckCircle,
     Clock,
     AlertCircle,
@@ -67,15 +66,6 @@ function Dashboard() {
 
     const services = [
         {
-            icon: Mic,
-            title: t('ipc_analysis'),
-            description: t('ipc_desc'),
-            color: 'from-blue-500 to-blue-600',
-            hoverColor: 'from-blue-600 to-blue-700',
-            route: '/ipc-assistant',
-            badge: '98% accuracy'
-        },
-        {
             icon: Shield,
             title: t('bns_analysis'),
             description: t('bns_desc'),
@@ -95,12 +85,12 @@ function Dashboard() {
         },
         {
             icon: Scale,
-            title: t('legal_rights'),
+            title: t('case_winning_probability'),
             description: t('legal_rights_desc'),
             color: 'from-orange-500 to-orange-600',
             hoverColor: 'from-orange-600 to-orange-700',
-            route: '/legal-rights',
-            badge: t('legal_rights_desc')
+            route: '/predict',
+            badge: t('badge_legal_rights')
         }
     ];
 
@@ -142,7 +132,7 @@ function Dashboard() {
                         <p className="text-lg text-slate-600">{t('choose_service')}</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center lg:justify-center flex lg:flex-row lg:items-stretch">
                         {services.map((service, index) => (
                             <div
                                 key={index}
