@@ -36,8 +36,6 @@ def install_fonts():
 
 # Load Models
 # Remove direct loading of whisper and Sentence-BERT models
-# text_model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
-# sbert = SentenceTransformer('all-MiniLM-L6-v2')
 translator_indic = IndicTranslator()
 
 # Load CSVs
