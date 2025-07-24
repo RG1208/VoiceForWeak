@@ -51,73 +51,128 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Voice Assistant Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow">
+            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow flex flex-col">
               <div className="flex items-center mb-6">
                 <div className="bg-blue-100 p-3 rounded-full mr-4">
                   <Mic className="h-8 w-8 text-blue-600" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900">{t('home_voice_card_title')}</h3>
               </div>
-              <p className="text-gray-600 mb-6">
-                {t('home_voice_card_desc')}
+              <p className="text-gray-600 mb-4 text-sm whitespace-pre-line">
+                {t('home_voice_card_desc_full')}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-sm text-gray-600">
+              <ul className="space-y-2 mb-4 text-xs">
+                <li className="flex items-center text-gray-600">
                   <ArrowRight className="h-4 w-4 text-blue-600 mr-2" />
                   {t('home_voice_card_feat1')}
                 </li>
-                <li className="flex items-center text-sm text-gray-600">
+                <li className="flex items-center text-gray-600">
                   <ArrowRight className="h-4 w-4 text-blue-600 mr-2" />
                   {t('home_voice_card_feat2')}
                 </li>
-                <li className="flex items-center text-sm text-gray-600">
+                <li className="flex items-center text-gray-600">
                   <ArrowRight className="h-4 w-4 text-blue-600 mr-2" />
                   {t('home_voice_card_feat3')}
                 </li>
+                <li className="flex items-center text-gray-600">
+                  <ArrowRight className="h-4 w-4 text-blue-600 mr-2" />
+                  {t('home_voice_card_feat4')}
+                </li>
               </ul>
-              <Link
-                to="/voice-assistant"
-                className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-800 transition-colors"
-              >
-                {t('home_try_voice')}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              <div className="mt-auto">
+                <div className="text-xs text-gray-500 mb-2">{t('home_voice_card_example')}</div>
+                <Link
+                  to="/bns-assistant"
+                  className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-800 transition-colors"
+                >
+                  {t('home_try_voice')}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Case Winning Probability Predictor Card */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow flex flex-col">
+              <div className="flex items-center mb-6">
+                <div className="bg-orange-100 p-3 rounded-full mr-4">
+                  <Shield className="h-8 w-8 text-orange-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">{t('home_case_card_title')}</h3>
+              </div>
+              <p className="text-gray-600 mb-4 text-sm whitespace-pre-line">
+                {t('home_case_card_desc_full')}
+              </p>
+              <ul className="space-y-2 mb-4 text-xs">
+                <li className="flex items-center text-gray-600">
+                  <ArrowRight className="h-4 w-4 text-orange-600 mr-2" />
+                  {t('home_case_card_feat1')}
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <ArrowRight className="h-4 w-4 text-orange-600 mr-2" />
+                  {t('home_case_card_feat2')}
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <ArrowRight className="h-4 w-4 text-orange-600 mr-2" />
+                  {t('home_case_card_feat3')}
+                </li>
+                <li className="flex items-center text-gray-600">
+                  <ArrowRight className="h-4 w-4 text-orange-600 mr-2" />
+                  {t('home_case_card_feat4')}
+                </li>
+              </ul>
+              <div className="mt-auto">
+                <div className="text-xs text-gray-500 mb-2">{t('home_case_card_example')}</div>
+                <Link
+                  to="/predict"
+                  className="inline-flex items-center text-orange-600 font-semibold hover:text-blue-800 transition-colors"
+                >
+                  {t('home_get_prediction')}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </div>
             </div>
 
             {/* Scheme Recommender Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow">
+            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow flex flex-col">
               <div className="flex items-center mb-6">
                 <div className="bg-teal-100 p-3 rounded-full mr-4">
                   <FileText className="h-8 w-8 text-teal-600" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900">{t('home_scheme_card_title')}</h3>
               </div>
-              <p className="text-gray-600 mb-6">
-                {t('home_scheme_card_desc')}
+              <p className="text-gray-600 mb-4 text-sm whitespace-pre-line">
+                {t('home_scheme_card_desc_full')}
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center text-sm text-gray-600">
+              <ul className="space-y-2 mb-4 text-xs">
+                <li className="flex items-center text-gray-600">
                   <ArrowRight className="h-4 w-4 text-teal-600 mr-2" />
                   {t('home_scheme_card_feat1')}
                 </li>
-                <li className="flex items-center text-sm text-gray-600">
+                <li className="flex items-center text-gray-600">
                   <ArrowRight className="h-4 w-4 text-teal-600 mr-2" />
                   {t('home_scheme_card_feat2')}
                 </li>
-                <li className="flex items-center text-sm text-gray-600">
+                <li className="flex items-center text-gray-600">
                   <ArrowRight className="h-4 w-4 text-teal-600 mr-2" />
                   {t('home_scheme_card_feat3')}
                 </li>
+                <li className="flex items-center text-gray-600">
+                  <ArrowRight className="h-4 w-4 text-teal-600 mr-2" />
+                  {t('home_scheme_card_feat4')}
+                </li>
               </ul>
-              <Link
-                to="/scheme-recommender"
-                className="inline-flex items-center text-teal-600 font-semibold hover:text-teal-800 transition-colors"
-              >
-                {t('home_find_schemes')}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              <div className="mt-auto">
+                <div className="text-xs text-gray-500 mb-2">{t('home_scheme_card_example')}</div>
+                <Link
+                  to="/scheme-recommender"
+                  className="inline-flex items-center text-teal-600 font-semibold hover:text-teal-800 transition-colors"
+                >
+                  {t('home_find_schemes')}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -154,11 +209,11 @@ const Home: React.FC = () => {
                     <div className="text-sm text-gray-600">{t('home_impact_feat1')}</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-teal-600">100+</div>
+                    <div className="text-3xl font-bold text-teal-600">1200+</div>
                     <div className="text-sm text-gray-600">{t('home_impact_feat2')}</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-orange-600">5+</div>
+                    <div className="text-3xl font-bold text-orange-600">12</div>
                     <div className="text-sm text-gray-600">{t('home_impact_feat3')}</div>
                   </div>
                   <div>
